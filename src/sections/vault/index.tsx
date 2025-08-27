@@ -15,7 +15,7 @@ export default function VaultView() {
         p: 3,
       }}
     >
-        <p>test</p>
+      <Typography sx={{...TYPOGRAPHY.headline2, color: 'primary.main',mt:'1rem'}}>GBN Vault</Typography>
     </Box>
   );
 }
