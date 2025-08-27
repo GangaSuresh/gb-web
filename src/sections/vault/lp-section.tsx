@@ -135,8 +135,10 @@ export default function LPSection({
 
       {/* Benefits Section */}
       <Benefits
-        benefitsExpanded={benefitsExpanded}
+        benefitsExpanded={benefitsExpanded} 
         lpcurrPoints={lpcurrPoints}
+        tiers={tier}
+        images={images}
       />
  
     </Box>

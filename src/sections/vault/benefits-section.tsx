@@ -1,150 +1,122 @@
-import { Box, Typography, Grid, Chip, Collapse } from '@mui/material';
+import React from 'react';
+import { Box, Typography, Grid, Collapse } from '@mui/material';
+import { camelToTitle } from 'src/utils/camel-to-title';
+import { Iconify } from 'src/components/iconify';
+import { TYPOGRAPHY } from 'src/theme/styles/fonts';
+
+interface Tier {
+  title: string;
+  range: string;
+  loyaltyPoints: string;
+  complimentaryPremiumContent: string;
+  accessToExclusiveMerch: boolean;
+  earlyAccessToEventRegistrations: boolean;
+  invitationToExclusiveEvents: boolean;
+  exclusiveWelcomeKit: boolean;
+}
 
 interface BenefitsProps {
   benefitsExpanded: boolean;
   lpcurrPoints: number;
+  tiers: Tier[];
+  images: Record<string, string>;
 }
 
-export default function BenefitsComponent({ benefitsExpanded, lpcurrPoints }: BenefitsProps) {
-  // Benefits data structure
-  const benefitsData = [
-    {
-      name: "Loyalty Points",
-      bronze: "1 X",
-      silver: "1.5 X",
-      gold: "2 X",
-      platinum: "3 X"
-    },
-    {
-      name: "Complimentary Premium Content",
-      bronze: "2 Premium Articles Monthly",
-      silver: "3 Premium Articles Monthly",
-      gold: "4 Premium Articles Monthly",
-      platinum: "5 Premium Articles Monthly"
-    },
-    {
-      name: "Access To Exclusive Merch.",
-      bronze: "X",
-      silver: "✔",
-      gold: "✔",
-      platinum: "✔"
-    },
-    {
-      name: "Early Access To Event Registrations",
-      bronze: "X",
-      silver: "X",
-      gold: "✔",
-      platinum: "✔"
-    },
-    {
-      name: "Invitations To Exclusive Events.",
-      bronze: "X",
-      silver: "X",
-      gold: "✔",
-      platinum: "✔"
-    },
-    {
-      name: "Exclusive Welcome Kit.",
-      bronze: "X",
-      silver: "X",
-      gold: "X",
-      platinum: "✔"
+export default function BenefitsComponent({
+  benefitsExpanded,
+  lpcurrPoints,
+  tiers,
+  images,
+}: BenefitsProps) {
+  // Extract all benefit keys except title and range
+  const benefitKeys = Object.keys(tiers[0]).filter(
+    (key) => key !== 'title' && key !== 'range'
+  ) as Array<keyof Omit<Tier, 'title' | 'range'>>;
+
+  // Format benefit values for display
+  const formatBenefitValue = (value: any): React.ReactNode => {
+    if (typeof value === 'boolean') {
+      return (
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <Iconify icon={value ? "mdi:check" : "mdi:close"} />
+        </Box>
+      );
     }
-  ];
+    return (
+      <Typography sx={{ ...TYPOGRAPHY.body2, fontWeight: 600, textAlign: 'center' }}>
+        {value}
+      </Typography>
+    );
+  };
 
   return (
     <Collapse in={benefitsExpanded}>
-      <Box sx={{
-        backgroundColor: 'primary.main',
-        color: 'white',
-        p: '1.5rem',
-        borderBottomLeftRadius: '16px',
-        borderBottomRightRadius: '16px',
-      }}>
-        <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2 }}>
-          Benefits
-        </Typography>
-        
+      <Box
+        sx={{
+          backgroundColor: 'primary.main',
+          color: 'white',
+          p: '1.5rem',
+          borderBottomLeftRadius: '16px',
+          borderBottomRightRadius: '16px',
+        }}
+      >
         <Grid container spacing={2} sx={{ mb: 2 }}>
-          <Grid item xs={3}>
-            <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-              Benefits
-            </Typography>
+          <Grid item xs={3} backgroundColor= 'primary.dark'>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                gap: '0.5rem',
+              }}
+            >
+              <img src={images.benefits} alt="benefits" style={{ marginBottom: '0.1rem' }} />
+              <Typography sx={{ ...TYPOGRAPHY.body1, fontWeight: 800 }}>Benefits</Typography>
+            </Box>
           </Grid>
-          <Grid item xs={2.25}>
-            <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-              Bronze (0 - 999 LP)
-            </Typography>
-          </Grid>
-          <Grid item xs={2.25}>
-            <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-              Silver (1000 - 2499 LP)
-            </Typography>
-          </Grid>
-          <Grid item xs={2.25}>
-            <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-              Gold (2500 - 4999 LP)
-            </Typography>
-          </Grid>
-          <Grid item xs={2.25}>
-            <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-              Platinum (5000+ LP)
-            </Typography>
-          </Grid>
+          {tiers.map((tier, index) => (
+            <Grid item xs={2} key={`tier-header-${index}`}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                }}
+              >
+                <img
+                  src={images[`${tier.title.toLowerCase()}-badge`]}
+                  alt={`${tier.title}-badge`}
+                  style={{ marginBottom: '0.1rem' }}
+                />
+                <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+                  {tier.title} ({tier.range})
+                </Typography>
+              </Box>
+            </Grid>
+          ))}
         </Grid>
 
-        {benefitsData.map((benefit, index) => (
-          <Grid 
-            container 
-            spacing={2} 
-            key={index}
-            sx={{ 
-              py: 1, 
-              borderBottom: index < benefitsData.length - 1 ? '1px solid rgba(255,255,255,0.2)' : 'none',
-              alignItems: 'center'
+        {benefitKeys.map((benefitKey, index) => (
+          <Grid
+            container
+            spacing={2}
+            key={`benefit-row-${index}`}
+            sx={{
+              py: 1,
+              alignItems: 'center',
             }}
           >
-            <Grid item xs={3}>
-              <Typography variant="body2">
-                {benefit.name}
+            <Grid item xs={3} backgroundColor= 'primary.dark'>
+              <Typography sx={{ ...TYPOGRAPHY.body2, fontWeight: 600 }}>
+                {camelToTitle(benefitKey)}
               </Typography>
             </Grid>
-            <Grid item xs={2.25}>
-              <Chip 
-                label={benefit.bronze} 
-                size="small" 
-                color={benefit.bronze === 'X' ? 'default' : 'primary'}
-                variant={benefit.bronze === 'X' ? 'outlined' : 'filled'}
-                sx={{ color: benefit.bronze === 'X' ? 'inherit' : 'white' }}
-              />
-            </Grid>
-            <Grid item xs={2.25}>
-              <Chip 
-                label={benefit.silver} 
-                size="small" 
-                color={benefit.silver === 'X' ? 'default' : 'primary'}
-                variant={benefit.silver === 'X' ? 'outlined' : 'filled'}
-                sx={{ color: benefit.silver === 'X' ? 'inherit' : 'white' }}
-              />
-            </Grid>
-            <Grid item xs={2.25}>
-              <Chip 
-                label={benefit.gold} 
-                size="small" 
-                color={benefit.gold === 'X' ? 'default' : 'primary'}
-                variant={benefit.gold === 'X' ? 'outlined' : 'filled'}
-                sx={{ color: benefit.gold === 'X' ? 'inherit' : 'white' }}
-              />
-            </Grid>
-            <Grid item xs={2.25}>
-              <Chip 
-                label={benefit.platinum} 
-                size="small" 
-                color={benefit.platinum === 'X' ? 'default' : 'primary'}
-                variant={benefit.platinum === 'X' ? 'outlined' : 'filled'}
-                sx={{ color: benefit.platinum === 'X' ? 'inherit' : 'white' }}
-              />
-            </Grid>
+            {tiers.map((tier, tierIndex) => (
+              <Grid item xs={2} key={`benefit-cell-${index}-${tierIndex}`}>
+                {formatBenefitValue(tier[benefitKey])}
+              </Grid>
+            ))}
           </Grid>
         ))}
       </Box>

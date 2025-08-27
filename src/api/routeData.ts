@@ -23,7 +23,8 @@ export const fetchRouteData = async (route: string): Promise<RouteDataResponse> 
           'bronze-badge': '/assets/icons/bronze-badge.png',
           'silver-badge': '/assets/icons/silver-badge.png',
           'gold-badge': '/assets/icons/gold-badge.png',
-          'platinum-badge': '/assets/icons/platinum-badge.png'
+          'platinum-badge': '/assets/icons/platinum-badge.png',
+          'benefits': '/assets/icons/benefits-icon.png'
         },
         staticText: {
           tier:[
@@ -100,11 +101,12 @@ export const fetchRouteData = async (route: string): Promise<RouteDataResponse> 
     case 'coin':
       return {
         images: {
-          'gbn-coin': '/assets/images/coin/gbn-coin.jpg',
-          'staking-pool': '/assets/images/coin/staking-pool.jpg',
-          'governance': '/assets/images/coin/governance.jpg',
-          'rewards': '/assets/images/coin/rewards.jpg',
-          'ecosystem': '/assets/images/coin/ecosystem.jpg'
+          'gbn-coin': '/assets/images/coin/gbn-coin.png',
+          'staking-pool': '/assets/images/coin/staking-pool.png',
+          'governance': '/assets/images/coin/governance.png',
+          'rewards': '/assets/images/coin/rewards.png',
+          'ecosystem': '/assets/images/coin/ecosystem.png',
+          'benefits': '/assets/images/coin/benefits-icon.png'
         },
         staticText: {
           title: 'GBN Coin',
