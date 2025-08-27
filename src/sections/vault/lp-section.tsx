@@ -20,7 +20,6 @@ export default function LPSection({
       sx={{
         width: '90%',
         mt: '2rem',
-        border: 'solid',
       }}
     >
       <Box
@@ -33,11 +32,25 @@ export default function LPSection({
           p: '1.5rem',
         }}
       >
-        <Box display="flex" gap="1rem" sx={{border:'solid'}}>
-          <Box display="flex" gap="1rem" width='100%'  sx={{border:'solid'}}>
+        {/* Left side - Points and Badge on same row */}
+        <Box 
+          display="flex" 
+          gap="2rem"
+          sx={{ flex: 1 }}
+        >
+          {/* Points Section */}
+          <Box display="flex" gap="1rem" alignItems="center" sx={{ minWidth: 0 }}>
             <img src={images.lp} alt="lp" />
-            <Box>
-              <Typography sx={{ ...TYPOGRAPHY.headline6, color: 'white', fontWeight: 800 }}>
+            <Box sx={{ minWidth: 0 }}>
+              <Typography 
+                sx={{ 
+                  ...TYPOGRAPHY.headline6, 
+                  color: 'white', 
+                  fontWeight: 800,
+                  wordBreak: 'break-word',
+                  overflowWrap: 'break-word'
+                }}
+              >
                 {lpcurrPoints} Points
               </Typography>
               <Box
@@ -45,8 +58,7 @@ export default function LPSection({
                   cursor: 'pointer',
                   color: 'white',
                   display: 'flex',
-                  alignItems: 'center',
-                  gap: '0rem',
+                  alignItems: 'center'
                 }}
                 onClick={onViewHistory}
               >
@@ -54,6 +66,7 @@ export default function LPSection({
                   sx={{
                     ...TYPOGRAPHY.body2,
                     textDecoration: 'underline',
+                    whiteSpace: 'nowrap'
                   }}
                 >
                   View Points History
@@ -62,10 +75,18 @@ export default function LPSection({
               </Box>
             </Box>
           </Box>
-          <Box display="flex" gap="1rem" width='100%'>
-            <img src={images['bronze-badge']} alt="lp" />
-            <Box>
-              <Typography sx={{ ...TYPOGRAPHY.body2, color: 'primary.lighter' }}>
+
+          {/* Badge Section */}
+          <Box display="flex" gap="1rem" alignItems="center" sx={{ minWidth: 0 }}>
+            <img src={images['bronze-badge']} alt="bronze-badge" />
+            <Box sx={{ minWidth: 0 }}>
+              <Typography 
+                sx={{ 
+                  ...TYPOGRAPHY.body2, 
+                  color: 'primary.lighter',
+                  whiteSpace: 'nowrap'
+                }}
+              >
                 Current Badge
               </Typography>
               <Typography
@@ -73,6 +94,8 @@ export default function LPSection({
                   ...TYPOGRAPHY.headline6,
                   color: 'white',
                   fontWeight: 700,
+                  wordBreak: 'break-word',
+                  overflowWrap: 'break-word'
                 }}
               >
                 {lpcurrBadge}
@@ -81,7 +104,8 @@ export default function LPSection({
           </Box>
         </Box>
 
-        <Box display="flex" gap="1rem">
+        {/* Right side - Button */}
+        <Box display="flex" alignItems="flex-start">
           <Button
             className="button-primary-outlined"
             variant="outlined"
@@ -93,7 +117,23 @@ export default function LPSection({
           </Button>
         </Box>
       </Box>
+      {/* progress */}
+      <Box sx={{border:'1px solid #BABABA',p:'1.5rem'}}>
       <p>remaining</p>
+
+      </Box>
+      {/* benefits */}
+      <Box sx={{
+        backgroundColor:'primary.main',
+        color:'white',
+        p:'1.5rem',
+        borderBottomLeftRadius:'16px',
+        borderBottomRightRadius:'16px',
+        }}>
+      <p>befints</p>
+
+      </Box>
+ 
     </Box>
   );
 }
