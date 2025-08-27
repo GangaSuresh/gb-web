@@ -122,6 +122,7 @@ export default function VaultView() {
         lpcurrPoints={100}
         lpcurrBadge='Bronze'
         onViewHistory={handleLPViewHistory}
+        tier={data.staticText.tier}
       />
     </Box>
   );

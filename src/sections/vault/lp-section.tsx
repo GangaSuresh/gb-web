@@ -1,12 +1,17 @@
+import { useState } from 'react';
 import { Iconify } from 'src/components/iconify';
 import { TYPOGRAPHY } from 'src/theme/styles/fonts';
 import { Box, Button, Typography } from '@mui/material';
+
+import Benefits from './benefits-section';
+import Milestone from './milestone-section';
 
 interface LPSectionProps {
   images: Record<string, string>;
   lpcurrPoints: number;
   lpcurrBadge: string;
   onViewHistory: () => void;
+  tier: Record<string, string>;
 }
 
 export default function LPSection({
@@ -14,7 +19,9 @@ export default function LPSection({
   lpcurrPoints,
   lpcurrBadge,
   onViewHistory,
+  tier
 }: LPSectionProps) {
+  const [benefitsExpanded, setBenefitsExpanded] = useState(true);
   return (
     <Box
       sx={{
@@ -117,22 +124,20 @@ export default function LPSection({
           </Button>
         </Box>
       </Box>
-      {/* progress */}
-      <Box sx={{border:'1px solid #BABABA',p:'1.5rem'}}>
-      <p>remaining</p>
+      {/* Milestone Section */}
+      <Milestone
+        tier={tier}
+        lpcurrPoints={lpcurrPoints} 
+        images={images}
+        benefitsExpanded={benefitsExpanded}
+        setBenefitsExpanded={setBenefitsExpanded}
+      />
 
-      </Box>
-      {/* benefits */}
-      <Box sx={{
-        backgroundColor:'primary.main',
-        color:'white',
-        p:'1.5rem',
-        borderBottomLeftRadius:'16px',
-        borderBottomRightRadius:'16px',
-        }}>
-      <p>befints</p>
-
-      </Box>
+      {/* Benefits Section */}
+      <Benefits
+        benefitsExpanded={benefitsExpanded}
+        lpcurrPoints={lpcurrPoints}
+      />
  
     </Box>
   );
