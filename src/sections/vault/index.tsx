@@ -11,12 +11,14 @@ import {
   Alert,
   Button,
   Chip,
+  useTheme,
 } from '@mui/material';
 
 import CoinSection from './coin-section';
 import LPSection from './lp-section';
 
 export default function VaultView() {
+  const theme = useTheme();
   const { data, isLoading, isError, error, refetch, hasImages, hasStaticText } =
     useRouteData('vault');
 
@@ -100,6 +102,7 @@ export default function VaultView() {
         justifyContent: 'flex-start',
         height: 'calc(100vh - 72px)',
         p: 3,
+        backgroundColor: theme.palette.backgroundColor.main,
       }}
     >
       <Typography sx={{ ...TYPOGRAPHY.headline2, color: 'primary.main', mt: '1rem' }}>
@@ -119,7 +122,7 @@ export default function VaultView() {
       {/* LP Section */}
       <LPSection
         images={data.images}
-        lpcurrPoints={100}
+        lpcurrPoints={500}
         lpcurrBadge='Bronze'
         onViewHistory={handleLPViewHistory}
         tier={data.staticText.tier}

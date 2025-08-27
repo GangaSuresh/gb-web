@@ -11,7 +11,7 @@ interface LPSectionProps {
   lpcurrPoints: number;
   lpcurrBadge: string;
   onViewHistory: () => void;
-  tier: Record<string, string>;
+  tier: Record<string, string>[];
 }
 
 export default function LPSection({
