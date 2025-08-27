@@ -18,6 +18,8 @@ export const Page404 = lazy(() => import('src/pages/page-not-found'));
 export const Page403 = lazy(() => import('src/pages/page-unauthorized'));
 export const MaintenancePage = lazy(() => import('src/pages/maintenance'));
 export const VaultPage = lazy(() => import('src/pages/vault'));
+export const CoinPage = lazy(() => import('src/pages/coin'));
+export const LpPage = lazy(() => import('src/pages/lp'));
 
 
 // ----------------------------------------------------------------------
@@ -68,6 +70,8 @@ export function Router() {
           index: true,
         },
         { path: 'vault/*', element:<VaultPage/> },
+        { path: 'coin/*', element:<CoinPage/> },
+        { path: 'lp/*', element:<LpPage/> },
       ],
     },
     {

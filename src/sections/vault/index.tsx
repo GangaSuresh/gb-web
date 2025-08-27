@@ -1,8 +1,95 @@
-import { Box, Typography, Grid, Card, CardContent, CircularProgress, Alert, Button } from "@mui/material";
-import { TYPOGRAPHY } from "src/theme/styles/fonts";
+import { Iconify } from 'src/components/iconify';
+import { TYPOGRAPHY } from 'src/theme/styles/fonts';
+import { useRouteData } from 'src/hooks/useRouteData';
+import {
+  Box,
+  Typography,
+  Grid,
+  Card,
+  CardContent,
+  CircularProgress,
+  Alert,
+  Button,
+  Chip,
+} from '@mui/material';
+
+import CoinSection from './coin-section';
+import LPSection from './lp-section';
 
 export default function VaultView() {
+  const { data, isLoading, isError, error, refetch, hasImages, hasStaticText } =
+    useRouteData('vault');
 
+  if (isLoading) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" height="calc(100vh - 72px)">
+        <CircularProgress />
+        <Typography sx={{ ml: 2 }}>Loading vault data...</Typography>
+      </Box>
+    );
+  }
+
+  if (isError) {
+    return (
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        height="calc(100vh - 72px)"
+      >
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {error?.message || 'Failed to load vault data. Please try again.'}
+        </Alert>
+        <Button variant="contained" onClick={() => refetch()}>
+          Retry
+        </Button>
+      </Box>
+    );
+  }
+
+  if (!data) {
+    return (
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        height="calc(100vh - 72px)"
+      >
+        <Typography variant="h6" sx={{ mb: 2 }}>
+          No vault data available
+        </Typography>
+        <Button variant="contained" onClick={() => refetch()}>
+          Load Data
+        </Button>
+      </Box>
+    );
+  }
+  const hasFaq = hasStaticText && data.staticText.faq.length > 0;
+  const hasTier = hasStaticText && data.staticText.tier.length > 0;
+
+  // Handler functions for coin section
+  const handleTopUp = () => {
+    // Handle top up coins logic
+    console.log('Top up coins clicked');
+  };
+
+  const handleKnowMore = () => {
+    // Handle know more logic
+    console.log('Know more clicked');
+  };
+
+  const handleViewHistory = () => {
+    // Handle view history logic
+    console.log('View history clicked');
+  };
+
+  // Handler function for LP section
+  const handleLPViewHistory = () => {
+    // Handle LP view history logic
+    console.log('LP view history clicked');
+  };
 
   return (
     <Box
@@ -15,7 +102,27 @@ export default function VaultView() {
         p: 3,
       }}
     >
-      <Typography sx={{...TYPOGRAPHY.headline2, color: 'primary.main',mt:'1rem'}}>GBN Vault</Typography>
+      <Typography sx={{ ...TYPOGRAPHY.headline2, color: 'primary.main', mt: '1rem' }}>
+        GBN Vault
+      </Typography>
+
+      {/* Coin Section */}
+      <CoinSection
+        coinImage={data.images['uj-coin']}
+        coinCount={0}
+        coinName="UJ Coins"
+        onTopUp={handleTopUp}
+        onKnowMore={handleKnowMore}
+        onViewHistory={handleViewHistory}
+      />
+
+      {/* LP Section */}
+      <LPSection
+        images={data.images}
+        lpcurrPoints={100}
+        lpcurrBadge='Bronze'
+        onViewHistory={handleLPViewHistory}
+      />
     </Box>
   );
 }

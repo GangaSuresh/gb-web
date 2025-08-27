@@ -33,6 +33,39 @@ const MuiButton: Components<Theme>['MuiButton'] = {
     sizeLarge: {
       minHeight: 48,
     },
+    // Custom white button styles
+    root: ({ theme, ownerState }) => {
+      const baseStyles = {
+        borderRadius: 8,
+      };
+
+      if (ownerState.className?.includes('button-white')) {
+        return {
+          ...baseStyles,
+          backgroundColor: theme.vars.palette.common.white,
+          color: theme.vars.palette.primary.main,
+          '&:hover': {
+            backgroundColor: theme.vars.palette.grey[50],
+            borderColor: theme.vars.palette.primary.dark,
+          },
+        };
+      }
+
+      if (ownerState.className?.includes('button-primary-outlined')) {
+        return {
+          ...baseStyles,
+          backgroundColor: theme.vars.palette.primary.light,
+          color: theme.vars.palette.common.white,
+          border: `1px solid ${theme.vars.palette.common.white}`,
+          '&:hover': {
+            backgroundColor: theme.vars.palette.primary.dark,
+            borderColor: theme.vars.palette.common.white,
+          },
+        };
+      }
+
+      return baseStyles;
+    },
   },
 };
 

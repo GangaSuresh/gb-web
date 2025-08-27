@@ -1,0 +1,36 @@
+import { useQuery } from '@tanstack/react-query';
+import { fetchRouteData, RouteDataResponse } from 'src/api/routeData';
+
+export const useRouteData = (route: 'vault' | 'coin' | 'lp') => {
+  const {
+    data,
+    isLoading,
+    isError,
+    error,
+    refetch,
+    isFetching,
+  } = useQuery({
+    queryKey: ['routeData', route],
+    queryFn: () => fetchRouteData(route),
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    retry: 2,
+  });
+
+  // Helper functions to check if data exists
+  const hasImages = data?.images && Object.keys(data.images).length > 0;
+  const hasStaticText = data?.staticText && Object.keys(data.staticText).length > 0;
+  return {
+    // Data
+    data,
+    // Loading states
+    isLoading,
+    isFetching,
+    isError,
+    error,
+    // Data availability checks
+    hasImages,
+    hasStaticText,
+    // Actions
+    refetch,
+  };
+};
