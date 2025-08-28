@@ -24,6 +24,10 @@ export default function BenefitsComponent({
     (key) => key !== 'title' && key !== 'range'
   ) as Array<keyof Omit<TierItem, 'title' | 'range'>>;
 
+  // Calculate dynamic grid sizes based on tier count
+  const benefitsColumnSize = 3; // Fixed size for benefits column
+  const tierColumnSize = (12 - benefitsColumnSize) / tiers.length; // Dynamic size for tier columns
+
   // Format benefit values for display
   const formatBenefitValue = (value: any): React.ReactNode => {
     if (typeof value === 'boolean') {
@@ -50,8 +54,8 @@ export default function BenefitsComponent({
         }}
       >
         {/* header section */}
-        <Grid container>
-          <Grid item xs={3} sx={{ backgroundColor: 'primary.dark' }}>
+        <Grid container spacing={0}>
+          <Grid item xs={12} md={benefitsColumnSize} sx={{ backgroundColor: 'primary.dark' }}>
             <Box
               sx={{
                 display: 'flex',
@@ -66,7 +70,13 @@ export default function BenefitsComponent({
             </Box>
           </Grid>
           {tiers.map((tier, index) => (
-            <Grid item xs={2} key={`tier-header-${index}`} sx={{ backgroundColor: 'primary.main' }}>
+            <Grid 
+              item 
+              xs={6} 
+              md={tierColumnSize} 
+              key={`tier-header-${index}`} 
+              sx={{ backgroundColor: 'primary.main' }}
+            >
               <Box
                 sx={{
                   display: 'flex',
@@ -90,14 +100,20 @@ export default function BenefitsComponent({
 
         {/* main section */}
         {benefitKeys.map((benefitKey, index) => (
-          <Grid container key={`benefit-row-${index}`}>
-            <Grid item xs={3} sx={{backgroundColor: 'primary.dark'}}>
+          <Grid container spacing={0} key={`benefit-row-${index}`}>
+            <Grid item xs={12} md={benefitsColumnSize} sx={{backgroundColor: 'primary.dark'}}>
               <Box sx={{ p: '1.2rem'}}>
                 <Typography sx={{ ...TYPOGRAPHY.body2 }}>{camelToTitle(benefitKey)}</Typography>
               </Box>
             </Grid>
             {tiers.map((tier, tierIndex) => (
-              <Grid item xs={2} key={`benefit-cell-${index}-${tierIndex}`} sx={{backgroundColor: 'primary.main'}}>
+              <Grid 
+                item 
+                xs={6} 
+                md={tierColumnSize} 
+                key={`benefit-cell-${index}-${tierIndex}`} 
+                sx={{backgroundColor: 'primary.main'}}
+              >
                 <Box sx={{ p: '1.2rem'}}>
                   {formatBenefitValue(tier[benefitKey])}
                 </Box>
