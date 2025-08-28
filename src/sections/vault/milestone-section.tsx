@@ -102,7 +102,9 @@ export default function MilestoneComponent({
       display:'flex',
       flexDirection:'column',
       alignItems:'center',
-      background:'white'
+      background:'white',
+      borderBottomLeftRadius:!benefitsExpanded && '16px',
+      borderBottomRightRadius:!benefitsExpanded &&'16px',
     }}>
       {/* Milestone Tiers with Progress */}
       <Box sx={{ mt:'11rem',width:'70%' }}>
@@ -230,8 +232,9 @@ export default function MilestoneComponent({
         alignItems: 'center', 
         justifyContent: 'space-between',
         backgroundColor: 'backgroundColor.lighter', 
-        borderBottomLeftRadius:!benefitsExpanded &&'16px',
+        borderBottomLeftRadius:!benefitsExpanded && '16px',
         borderBottomRightRadius:!benefitsExpanded &&'16px',
+       
         p: '0.5rem 4.8rem',
         width:'100%'
       }}>
