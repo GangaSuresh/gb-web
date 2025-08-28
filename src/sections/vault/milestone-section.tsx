@@ -1,17 +1,8 @@
 import { Iconify } from 'src/components/iconify';
-import { Box, Tooltip, Typography, IconButton, LinearProgress, Button } from '@mui/material';
 import { TYPOGRAPHY } from 'src/theme/styles/fonts';
+import { Box, Tooltip, Typography, IconButton, LinearProgress, Button } from '@mui/material';
 
-interface TierItem {
-  title: string;
-  range: string;
-  loyaltyPoints: string;
-  complimentaryPremiumContent: string;
-  accessToExclusiveMerch: boolean;
-  earlyAccessToEventRegistrations: boolean;
-  invitationToExclusiveEvents: boolean;
-  exclusiveWelcomeKit: boolean;
-}
+import type { TierItem } from './types';
 
 interface MilestoneProps {
   tier: TierItem[];
@@ -114,7 +105,7 @@ export default function MilestoneComponent({
       background:'white'
     }}>
       {/* Milestone Tiers with Progress */}
-      <Box sx={{ mt:'9rem',width:'70%' }}>
+      <Box sx={{ mt:'11rem',width:'70%' }}>
         {/* Badge Icons, Titles and Ranges positioned above milestone stops */}
         <Box sx={{ 
           display: 'flex', 
@@ -239,6 +230,8 @@ export default function MilestoneComponent({
         alignItems: 'center', 
         justifyContent: 'space-between',
         backgroundColor: 'backgroundColor.lighter', 
+        borderBottomLeftRadius:!benefitsExpanded &&'16px',
+        borderBottomRightRadius:!benefitsExpanded &&'16px',
         p: '0.5rem 4.8rem',
         width:'100%'
       }}>
@@ -251,7 +244,6 @@ export default function MilestoneComponent({
             }
           </Typography>
         </Box>
-        
         <Button 
         variant='outlined'
           onClick={() => setBenefitsExpanded(!benefitsExpanded)}

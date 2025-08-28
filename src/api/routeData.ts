@@ -30,7 +30,7 @@ export const fetchRouteData = async (route: string): Promise<RouteDataResponse> 
           tier:[
             {
               title:'Bronze',
-              range:'0-999 LP',
+              range:'0-3000 Points',
               loyaltyPoints:'1 X',
               complimentaryPremiumContent:'2 Premium Articles Monthly',
               accessToExclusiveMerch:false,
@@ -40,7 +40,7 @@ export const fetchRouteData = async (route: string): Promise<RouteDataResponse> 
             },
             {
               title:'Silver',
-              range:'1000-2499 LP',
+              range:'3001-7500 Points',
               loyaltyPoints:'1.5 X',
               complimentaryPremiumContent:'3 Premium Articles Monthly',
               accessToExclusiveMerch:true,
@@ -50,7 +50,7 @@ export const fetchRouteData = async (route: string): Promise<RouteDataResponse> 
             },
             {
               title:'Gold',
-              range:'2500-4999 LP',
+              range:'7501-15000 Points',
               loyaltyPoints:'2 X',
               complimentaryPremiumContent:'4 Premium Articles Monthly',
               accessToExclusiveMerch:true,
@@ -60,7 +60,7 @@ export const fetchRouteData = async (route: string): Promise<RouteDataResponse> 
             },
             {
               title:'Platinum',
-              range:'5000+ LP',
+              range:'15000+ Points',
               loyaltyPoints:'3 X',
               complimentaryPremiumContent:'5 Premium Articles Monthly',
               accessToExclusiveMerch:true,
