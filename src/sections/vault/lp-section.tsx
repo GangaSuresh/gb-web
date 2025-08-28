@@ -36,7 +36,7 @@ export default function LPSection({
           background: 'radial-gradient(ellipse at 104.35% 264%, #008AFA 12.86%, #0032AA 100%)',
           borderTopLeftRadius: '16px',
           borderTopRightRadius: '16px',
-          p: '1.5rem',
+          p: '1.5rem 4.8rem',
         }}
       >
         {/* Left side - Points and Badge on same row */}
@@ -72,7 +72,6 @@ export default function LPSection({
                 <Typography
                   sx={{
                     ...TYPOGRAPHY.body2,
-                    textDecoration: 'underline',
                     whiteSpace: 'nowrap'
                   }}
                 >
@@ -87,15 +86,6 @@ export default function LPSection({
           <Box display="flex" gap="1rem" alignItems="center" sx={{ minWidth: 0 }}>
             <img src={images['bronze-badge']} alt="bronze-badge" />
             <Box sx={{ minWidth: 0 }}>
-              <Typography 
-                sx={{ 
-                  ...TYPOGRAPHY.body2, 
-                  color: 'primary.lighter',
-                  whiteSpace: 'nowrap'
-                }}
-              >
-                Current Badge
-              </Typography>
               <Typography
                 sx={{
                   ...TYPOGRAPHY.headline6,
@@ -106,6 +96,15 @@ export default function LPSection({
                 }}
               >
                 {lpcurrBadge}
+              </Typography>
+              <Typography 
+                sx={{ 
+                  ...TYPOGRAPHY.body2, 
+                  color: 'primary.lighter',
+                  whiteSpace: 'nowrap'
+                }}
+              >
+                Your Current Badge
               </Typography>
             </Box>
           </Box>
@@ -124,6 +123,7 @@ export default function LPSection({
           </Button>
         </Box>
       </Box>
+      
       {/* Milestone Section */}
       <Milestone
         tier={tier}
