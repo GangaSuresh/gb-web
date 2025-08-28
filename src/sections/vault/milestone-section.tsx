@@ -24,8 +24,8 @@ export default function MilestoneComponent({
     const match = range.match(/(\d+)(?:-(\d+))?/);
     if (!match) return { min: 0, max: null };
     
-    const min = parseInt(match[1]);
-    const max = match[2] ? parseInt(match[2]) : null;
+    const min = parseInt(match[1], 10);
+    const max = match[2] ? parseInt(match[2], 10) : null;
     return { min, max };
   };
 
@@ -37,7 +37,7 @@ export default function MilestoneComponent({
     return {
       name: tierItem.title,
       points: min,
-      position: position,
+      position,
       tierData: tierItem
     };
   });
@@ -47,7 +47,7 @@ export default function MilestoneComponent({
 
   // Calculate progress and next badge info
   const getNextBadgeInfo = () => {
-    for (let i = 0; i < thresholdPoints.length; i++) {
+    for (let i = 0; i < thresholdPoints.length; i+=1) {
       if (lpcurrPoints < thresholdPoints[i]) {
         const nextMilestone = milestones.find(m => m.points === thresholdPoints[i]);
         return { 
@@ -62,7 +62,7 @@ export default function MilestoneComponent({
   const calculateProgress = () => {
     // Find current position between milestones
     let currentIndex = 0;
-    for (let i = thresholdPoints.length - 1; i >= 0; i--) {
+    for (let i = thresholdPoints.length - 1; i >= 0; i-=1) {
       if (lpcurrPoints >= thresholdPoints[i]) {
         currentIndex = i;
         break;
@@ -103,11 +103,11 @@ export default function MilestoneComponent({
       flexDirection:'column',
       alignItems:'center',
       background:'white',
-      borderBottomLeftRadius:!benefitsExpanded && '16px',
-      borderBottomRightRadius:!benefitsExpanded &&'16px',
+      borderBottomLeftRadius: !benefitsExpanded ? '16px' : undefined,
+      borderBottomRightRadius: !benefitsExpanded ? '16px' : undefined,
     }}>
       {/* Milestone Tiers with Progress */}
-      <Box sx={{ mt:'11rem',width:'70%' }}>
+      <Box sx={{ mt: '11rem', width: '70%' }}>
         {/* Badge Icons, Titles and Ranges positioned above milestone stops */}
         <Box sx={{ 
           display: 'flex', 
@@ -174,6 +174,7 @@ export default function MilestoneComponent({
           {/* Milestone Stops */}
           {milestones.map((milestone) => (
               <Box
+                key={milestone.name}
                 sx={{
                   position: 'absolute',
                   left: `${milestone.position}%`,
@@ -232,11 +233,10 @@ export default function MilestoneComponent({
         alignItems: 'center', 
         justifyContent: 'space-between',
         backgroundColor: 'backgroundColor.lighter', 
-        borderBottomLeftRadius:!benefitsExpanded && '16px',
-        borderBottomRightRadius:!benefitsExpanded &&'16px',
-       
+        borderBottomLeftRadius: !benefitsExpanded ? '16px' : undefined,
+        borderBottomRightRadius: !benefitsExpanded ? '16px' : undefined,
         p: '0.5rem 4.8rem',
-        width:'100%'
+        width: '100%'
       }}>
         <Box sx={{ display: 'flex', alignItems: 'center', flex: 1 }}>
           <Iconify icon="mdi:information-outline" sx={{ mr: 1, color: 'primary.main' }} />
