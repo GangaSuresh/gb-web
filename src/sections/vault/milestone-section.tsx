@@ -140,7 +140,8 @@ export default function MilestoneComponent({
               <Typography 
                 sx={{ 
                   ...TYPOGRAPHY.body2,
-                  color: 'info.light'
+                  color: 'info.light',
+                  whiteSpace: 'nowrap'
                 }}
               >
                 {milestone.tierData.range}
