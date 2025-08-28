@@ -16,6 +16,7 @@ import {
 
 import CoinSection from './coin-section';
 import LPSection from './lp-section';
+import FAQ from './faq-section';
 
 export default function VaultView() {
   const theme = useTheme();
@@ -126,6 +127,10 @@ export default function VaultView() {
         lpcurrBadge='Bronze'
         onViewHistory={handleLPViewHistory}
         tier={data.staticText.tier}
+      />
+
+      <FAQ 
+        faqs={data.staticText.faq}
       />
     </Box>
   );
