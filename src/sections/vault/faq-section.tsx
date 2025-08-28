@@ -25,7 +25,6 @@ export default function FAQComponent({ faqExpanded, faqs }: FAQProps) {
     <Box
       sx={{
         pt: '2.5rem',
-        boxShadow: 1,
         width: '90%',
         mb: '5rem',
       }}
@@ -43,7 +42,7 @@ export default function FAQComponent({ faqExpanded, faqs }: FAQProps) {
       </Typography>
 
       {faqs.map((faq, index) => (
-        <Box key={index} sx={{ borderRadius: '12px', mb: '0.625rem', pt: 1.5, pl: 1.875 }}>
+        <Box key={index} sx={{ borderRadius: '12px', mb: '0.625rem', pt: 1.5,pb: 1.5, pl: 1.875,background:'white' }}>
           <Box
             sx={{
               display: 'flex',
@@ -77,7 +76,6 @@ export default function FAQComponent({ faqExpanded, faqs }: FAQProps) {
             <Typography
               sx={{
                 ...TYPOGRAPHY.body1,
-                mb: '1.5rem',
               }}
             >
               {faq.answer}

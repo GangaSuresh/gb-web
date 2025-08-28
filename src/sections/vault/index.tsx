@@ -101,8 +101,7 @@ export default function VaultView() {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        height: 'calc(100vh - 72px)',
-        p: 3,
+        height: '100%',
         backgroundColor: theme.palette.backgroundColor.main,
       }}
     >
