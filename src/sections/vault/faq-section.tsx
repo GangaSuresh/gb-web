@@ -10,11 +10,10 @@ interface FAQItem {
 }
 
 interface FAQProps {
-  faqExpanded: boolean;
   faqs: FAQItem[];
 }
 
-export default function FAQComponent({ faqExpanded, faqs }: FAQProps) {
+export default function FAQComponent({faqs }: FAQProps) {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
   const handleToggle = (index: number) => {

@@ -50,6 +50,16 @@ const MuiButton: Components<Theme>['MuiButton'] = {
           },
         };
       }
+      if (ownerState.className?.includes('button-yellow')) {
+        return {
+          ...baseStyles,
+          background: 'linear-gradient(95.28deg, #FDEFAF 32.25%, #DCB152 120.54%)',
+          color: theme.vars.palette.primary.main,
+          '&:hover': {
+            borderColor: theme.vars.palette.primary.dark,
+          },
+        };
+      }
 
       if (ownerState.className?.includes('button-primary-outlined')) {
         return {

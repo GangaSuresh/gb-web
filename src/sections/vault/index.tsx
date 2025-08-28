@@ -105,7 +105,18 @@ export default function VaultView() {
         backgroundColor: theme.palette.backgroundColor.main,
       }}
     >
-      <Typography sx={{ ...TYPOGRAPHY.headline2, color: 'primary.main', mt: '1rem' }}>
+      <Typography
+        sx={{
+          fontSize: '3rem',
+          fontFamily: 'Sinerva',
+          background: 'radial-gradient(78.38% 362.85% at 104.35% 264%, #D70000 12.86%, #004BE3 100%)',
+          backgroundClip: 'text',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          mt: '2.5rem',
+          fontWeight: 400,
+        }}
+      >
         GBN Vault
       </Typography>
 
@@ -123,14 +134,12 @@ export default function VaultView() {
       <LPSection
         images={data.images}
         lpcurrPoints={500}
-        lpcurrBadge='Bronze'
+        lpcurrBadge="Bronze"
         onViewHistory={handleLPViewHistory}
         tier={data.staticText.tier}
       />
 
-      <FAQ 
-        faqs={data.staticText.faq}
-      />
+      <FAQ faqs={data.staticText.faq} />
     </Box>
   );
 }
