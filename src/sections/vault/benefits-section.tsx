@@ -73,7 +73,7 @@ export default function BenefitsComponent({
                   flexDirection: 'column',
                   alignItems: 'center',
                   gap: '0.5rem',
-                  p: '1.875rem',
+                  p: '1.875rem 1.875rem 0 1.875rem',
                 }}
               >
                 <img
