@@ -3,6 +3,8 @@ import { Iconify } from 'src/components/iconify';
 import { TYPOGRAPHY } from 'src/theme/styles/fonts';
 import { Box, Button, Typography } from '@mui/material';
 
+import type { TierItem } from './types';
+
 import Benefits from './benefits-section';
 import Milestone from './milestone-section';
 
@@ -11,7 +13,7 @@ interface LPSectionProps {
   lpcurrPoints: number;
   lpcurrBadge: string;
   onViewHistory: () => void;
-  tier: Record<string, string>[];
+  tier: TierItem[];
 }
 
 export default function LPSection({
