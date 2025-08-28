@@ -1,8 +1,10 @@
 import { Iconify } from 'src/components/iconify';
 import { TYPOGRAPHY } from 'src/theme/styles/fonts';
-import { Box, Tooltip, Typography, IconButton, LinearProgress, Button } from '@mui/material';
+import { Box, Button, Typography, LinearProgress } from '@mui/material';
 
 import type { TierItem } from './types';
+
+import { ProgressTooltip } from './progress-tooltip';
 
 interface MilestoneProps {
   tier: TierItem[];
@@ -88,14 +90,6 @@ export default function MilestoneComponent({
   const progressValue = calculateProgress();
 
   const isReached = (points: number) => lpcurrPoints >= points;
-
-  const getTooltipText = (milestone: typeof milestones[0]) => {
-    if (isReached(milestone.points)) {
-      return `${milestone.name} achieved!`;
-    }
-    const pointsNeeded = milestone.points - lpcurrPoints;
-    return `${pointsNeeded.toLocaleString()} points needed for ${milestone.name}`;
-  };
 
   return (
     <Box sx={{
@@ -210,22 +204,18 @@ export default function MilestoneComponent({
         </Box>
       </Box>
 
-      {/* Progress Information */}
-      <Box sx={{ mb: 3 }}>
-        <Typography 
-          variant="h6" 
-          sx={{ 
-            fontWeight: 'bold', 
-            mb: 2,
-            color: 'primary.main'
-          }}
-        >
-          {nextBadge.name !== "Max" ? 
-            `Earn ${nextBadge.needed.toLocaleString()} more for The ${nextBadge.name} Badge` :
-            "Congratulations! You've reached the highest tier!"
-          }
-        </Typography>
-      </Box>
+      <Box sx={{ 
+  position: 'relative',
+  mb: 3,
+  mt: 1,
+  display: 'flex',
+  justifyContent: 'center'
+}}>
+  <ProgressTooltip 
+    nextBadgeName={nextBadge.name} 
+    pointsNeeded={nextBadge.needed} 
+  />
+</Box>
 
       {/* Information and Toggle Section */}
       <Box sx={{ 
