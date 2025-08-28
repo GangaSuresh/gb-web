@@ -25,7 +25,7 @@ export default function CoinSection({
       sx={{
         width: '90%',
         mt: '2rem',
-        p: '1.5rem',
+        p: '1.5rem 4.8rem',
         justifyContent: 'space-between',
         borderRadius: '16px',
         background: 'radial-gradient(ellipse at 0% 264%, #D70000 12.86%, #004BE3 100%)',
@@ -47,31 +47,19 @@ export default function CoinSection({
             }}
             onClick={onViewHistory}
           >
-            <Typography
-              sx={{
-                ...TYPOGRAPHY.body2,
-                textDecoration: 'underline',
-              }}
-            >
-              View Points History
-            </Typography>
+            <Typography sx={{ ...TYPOGRAPHY.body2 }}>View Points History</Typography>
             <Iconify icon="icon-park-outline:right" />
           </Box>
         </Box>
       </Box>
       <Box display="flex" gap="1rem">
-        <Button 
-          className="button-white" 
-          variant="outlined" 
-          size="large"
-          onClick={onTopUp}
-        >
-          Top up Coins
-          <Iconify icon="icon-park-outline:right" />
+        <Button className="button-yellow" variant="outlined" size="large" onClick={onTopUp}>
+          <Iconify icon="material-symbols:add-rounded" />
+          Add Coins
         </Button>
-        <Button 
-          className="button-primary-outlined" 
-          variant="outlined" 
+        <Button
+          className="button-primary-outlined"
+          variant="outlined"
           size="large"
           onClick={onKnowMore}
         >
