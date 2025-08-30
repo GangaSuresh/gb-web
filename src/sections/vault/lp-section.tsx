@@ -118,6 +118,7 @@ export default function LPSection({
             className="button-primary-outlined"
             variant="outlined"
             size="large"
+            sx={{backgroundColor:'transparent'}}
             onClick={() => {}}
           >
             Know More

@@ -62,6 +62,7 @@ export default function CoinSection({
           variant="outlined"
           size="large"
           onClick={onKnowMore}
+          sx={{backgroundColor:'transparent'}}
         >
           Know More
           <Iconify icon="icon-park-outline:right" />

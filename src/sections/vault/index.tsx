@@ -18,7 +18,7 @@ import CoinSection from './coin-section';
 import LPSection from './lp-section';
 import FAQ from './faq-section';
 
-export default function VaultView() {
+export default function VaultView() { 
   const theme = useTheme();
   const { data, isLoading, isError, error, refetch, hasImages, hasStaticText } =
     useRouteData('vault');
