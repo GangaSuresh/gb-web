@@ -8,6 +8,7 @@ import {
   Button,
   useTheme,
   Typography,
+  useMediaQuery,
 } from '@mui/material';
 
 import FAQ from './faq-section';
@@ -17,6 +18,7 @@ import CoinSection from './coin-section';
 export default function VaultView() { 
   const theme = useTheme();
   const navigate = useNavigate();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const { data, isLoading, isError, error, refetch, hasImages, hasStaticText, hasFaq, hasTier } =
     useRouteData('vault');
 
@@ -168,7 +170,7 @@ export default function VaultView() {
             backgroundClip: 'text',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
-            mt: '2.5rem',
+            mt: isMobile ? '0.5rem':'2.5rem',
             fontWeight: 400,
             textAlign: 'center',
           }}
@@ -184,6 +186,7 @@ export default function VaultView() {
           onTopUp={handleTopUp}
           onKnowMore={handleKnowMore}
           onViewHistory={handleUJViewHistory}
+          isMobile={isMobile}
         />
 
         {/* LP Section - Only render if tier data exists */}
@@ -194,6 +197,7 @@ export default function VaultView() {
             lpcurrBadge="Bronze"
             onViewHistory={handleLPViewHistory}
             tier={getTierData()}
+            isMobile={isMobile}
           />
         )}
 

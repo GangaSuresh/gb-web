@@ -1,7 +1,7 @@
-import { useState, useMemo, useCallback } from 'react';
 import { Iconify } from 'src/components/iconify';
 import { TYPOGRAPHY } from 'src/theme/styles/fonts';
-import { Box, Button, useTheme, Typography, useMediaQuery, Divider } from '@mui/material';
+import { useMemo, useState, useCallback } from 'react';
+import { Box, Button, Divider, Typography } from '@mui/material';
 
 import type { TierItem } from './types';
 
@@ -14,6 +14,7 @@ interface LPSectionProps {
   lpcurrBadge: string;
   onViewHistory: () => void;
   tier: TierItem[];
+  isMobile: boolean;
 }
 
 // Extracted reusable components for better maintainability
@@ -131,10 +132,9 @@ export default function LPSection({
   lpcurrBadge,
   onViewHistory,
   tier,
+  isMobile
 }: LPSectionProps) {
   const [benefitsExpanded, setBenefitsExpanded] = useState(true);
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   // Memoize the gradient background to prevent unnecessary recalculations
   const gradientBackground = useMemo(() => 
@@ -279,6 +279,7 @@ export default function LPSection({
         images={images}
         benefitsExpanded={benefitsExpanded}
         setBenefitsExpanded={handleBenefitsExpandedChange}
+        isMobile={isMobile}
       />
 
       {/* Benefits Section */}

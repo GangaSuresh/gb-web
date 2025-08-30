@@ -1,6 +1,6 @@
 import { Iconify } from 'src/components/iconify';
 import { TYPOGRAPHY } from 'src/theme/styles/fonts';
-import { Box, Button, useTheme, Typography, useMediaQuery } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 
 interface CoinSectionProps {
   coinImage: string | null;
@@ -9,6 +9,7 @@ interface CoinSectionProps {
   onTopUp: () => void;
   onKnowMore: () => void;
   onViewHistory: () => void;
+  isMobile: boolean;
 }
 
 export default function CoinSection({
@@ -18,9 +19,9 @@ export default function CoinSection({
   onTopUp,
   onKnowMore,
   onViewHistory,
+  isMobile
 }: CoinSectionProps) {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
 
   return (
     <Box

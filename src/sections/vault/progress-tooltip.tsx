@@ -1,11 +1,13 @@
 import { Box, Typography } from "@mui/material";
+import { TYPOGRAPHY } from "src/theme/styles/fonts";
 
 interface ProgressTooltipProps {
     nextBadgeName: string;
     pointsNeeded: number;
+    isMobile: boolean;
   }
   
-  export function ProgressTooltip({ nextBadgeName, pointsNeeded }: ProgressTooltipProps) {
+  export function ProgressTooltip({ nextBadgeName, pointsNeeded,isMobile }: ProgressTooltipProps) {
     return (
       <Box sx={{
         backgroundColor: 'primary.main',
@@ -17,10 +19,10 @@ interface ProgressTooltipProps {
         gap: 8,
         fontWeight: 'medium'
       }}>
-        <Typography variant="body2" sx={{ fontWeight: 'inherit', color: 'inherit' }}>
+        <Typography  sx={{  ...(TYPOGRAPHY.caption), color: 'inherit' }}>
           Just {pointsNeeded.toLocaleString()} points to {nextBadgeName}
         </Typography>
-        <Typography variant="body2" sx={{ fontWeight: 'inherit', color: 'inherit',textDecoration:'underline' }}>
+        <Typography  sx={{  ...(TYPOGRAPHY.caption), color: 'inherit',textDecoration:'underline' }}>
           Keep Earning
         </Typography>
       </Box>
