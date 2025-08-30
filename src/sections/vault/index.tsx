@@ -17,12 +17,45 @@ import CoinSection from './coin-section';
 export default function VaultView() { 
   const theme = useTheme();
   const navigate = useNavigate();
-  const { data, isLoading, isError, error, refetch, hasImages, hasStaticText } =
+  const { data, isLoading, isError, error, refetch, hasImages, hasStaticText, hasFaq, hasTier } =
     useRouteData('vault');
+
+  // Data extraction with fallbacks to prevent crashes
+  const vaultData = {
+    images: data?.images || {},
+    staticText: data?.staticText || {},
+  };
+
+  // Safe image extraction - return null if no image
+  const getCoinImage = () => {
+    try {
+      return vaultData.images['uj-coin'] || null;
+    } catch {
+      return null;
+    }
+  };
+
+  // Safe tier data extraction
+  const getTierData = () => {
+    try {
+      return hasTier ? vaultData.staticText.tier : [];
+    } catch {
+      return [];
+    }
+  };
+
+  // Safe FAQ data extraction
+  const getFaqData = () => {
+    try {
+      return hasFaq ? vaultData.staticText.faq : [];
+    } catch {
+      return [];
+    }
+  };
 
   if (isLoading) {
     return (
-      <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" flex="1 1 auto" gap={2}>
+      <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" flex="1 1 auto" gap={2} minHeight="60vh">
         <Typography variant="h6" sx={{ mb: 1 }}>
           Loading vault data...
         </Typography>
@@ -45,48 +78,64 @@ export default function VaultView() {
         flexDirection="column"
         alignItems="center"
         justifyContent="center"
-        height="calc(100vh - 72px)"
+        minHeight="60vh"
+        gap={2}
       >
-        <Alert severity="error" sx={{ mb: 2 }}>
+        <Alert severity="error" sx={{ mb: 2, maxWidth: 600 }}>
           {error?.message || 'Failed to load vault data. Please try again.'}
         </Alert>
-        <Button variant="contained" onClick={() => refetch()}>
+        <Button 
+          variant="contained" 
+          onClick={() => refetch()}
+          sx={{ minWidth: 120 }}
+        >
           Retry
         </Button>
       </Box>
     );
   }
 
-  if (!data) {
+  if (!data || !hasImages || !hasStaticText) {
     return (
       <Box
         display="flex"
         flexDirection="column"
         alignItems="center"
         justifyContent="center"
-        height="calc(100vh - 72px)"
+        minHeight="60vh"
+        gap={2}
       >
         <Typography variant="h6" sx={{ mb: 2 }}>
-          No vault data available
+          {!data ? 'No vault data available' : 'Incomplete vault data'}
         </Typography>
-        <Button variant="contained" onClick={() => refetch()}>
+        <Button 
+          variant="contained" 
+          onClick={() => refetch()}
+          sx={{ minWidth: 120 }}
+        >
           Load Data
         </Button>
       </Box>
     );
   }
-  const hasFaq = hasStaticText && data.staticText.faq.length > 0;
-  const hasTier = hasStaticText && data.staticText.tier.length > 0;
 
   // Handler functions for coin section
   const handleTopUp = () => {
-    // Handle top up coins logic
-    console.log('Top up coins clicked');
+    try {
+      // Handle top up coins logic
+      console.log('Top up coins clicked');
+    } catch (err) {
+      console.error('Error in handleTopUp:', err);
+    }
   };
 
   const handleKnowMore = () => {
-    // Handle know more logic
-    console.log('Know more clicked');
+    try {
+      // Handle know more logic
+      console.log('Know more clicked');
+    } catch (err) {
+      console.error('Error in handleKnowMore:', err);
+    }
   };
 
   const handleUJViewHistory = () => {
@@ -106,45 +155,50 @@ export default function VaultView() {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        height: '100%',
-        backgroundColor: theme.palette.backgroundColor.main,
+        minHeight: '100%',
+        backgroundColor: theme.palette?.backgroundColor?.main || theme.palette?.background?.default || '#f5f5f5',
+        py: 3,
       }}
     >
-      <Typography
-        sx={{
-          fontSize: '3rem',
-          fontFamily: 'Sinerva',
-          background: 'radial-gradient(78.38% 362.85% at 104.35% 264%, #D70000 12.86%, #004BE3 100%)',
-          backgroundClip: 'text',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          mt: '2.5rem',
-          fontWeight: 400,
-        }}
-      >
-        GBN Vault
-      </Typography>
+        <Typography
+          sx={{
+            fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
+            fontFamily: 'Sinerva, serif',
+            background: 'radial-gradient(78.38% 362.85% at 104.35% 264%, #D70000 12.86%, #004BE3 100%)',
+            backgroundClip: 'text',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            mt: '2.5rem',
+            fontWeight: 400,
+            textAlign: 'center',
+          }}
+        >
+          GBN Vault
+        </Typography>
 
-      {/* Coin Section */}
-      <CoinSection
-        coinImage={data.images['uj-coin']}
-        coinCount={0}
-        coinName="UJ Coins"
-        onTopUp={handleTopUp}
-        onKnowMore={handleKnowMore}
-        onViewHistory={handleUJViewHistory}
-      />
+        {/* Coin Section */}
+        <CoinSection
+          coinImage={getCoinImage()}
+          coinCount={0}
+          coinName="UJ Coins"
+          onTopUp={handleTopUp}
+          onKnowMore={handleKnowMore}
+          onViewHistory={handleUJViewHistory}
+        />
 
-      {/* LP Section */}
-      <LPSection
-        images={data.images}
-        lpcurrPoints={500}
-        lpcurrBadge="Bronze"
-        onViewHistory={handleLPViewHistory}
-        tier={data.staticText.tier}
-      />
+        {/* LP Section - Only render if tier data exists */}
+        {hasTier && (
+          <LPSection
+            images={vaultData.images}
+            lpcurrPoints={500}
+            lpcurrBadge="Bronze"
+            onViewHistory={handleLPViewHistory}
+            tier={getTierData()}
+          />
+        )}
 
-      <FAQ faqs={data.staticText.faq} />
-    </Box>
-  );
-}
+                 {/* FAQ Section - Only render if FAQ data exists */}
+         {hasFaq && <FAQ faqs={getFaqData()} />}
+       </Box>
+   );
+ }

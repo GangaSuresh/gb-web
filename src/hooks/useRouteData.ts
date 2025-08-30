@@ -19,6 +19,16 @@ export const useRouteData = (route: 'vault' | 'coin' | 'lp') => {
   // Helper functions to check if data exists
   const hasImages = data?.images && Object.keys(data.images).length > 0;
   const hasStaticText = data?.staticText && Object.keys(data.staticText).length > 0;
+  
+  // Additional checks for specific data types
+  const hasFaq = hasStaticText && 
+    Array.isArray(data?.staticText?.faq) && 
+    data.staticText.faq.length > 0;
+  
+  const hasTier = hasStaticText && 
+    Array.isArray(data?.staticText?.tier) && 
+    data.staticText.tier.length > 0;
+
   return {
     // Data
     data,
@@ -30,6 +40,8 @@ export const useRouteData = (route: 'vault' | 'coin' | 'lp') => {
     // Data availability checks
     hasImages,
     hasStaticText,
+    hasFaq,
+    hasTier,
     // Actions
     refetch,
   };

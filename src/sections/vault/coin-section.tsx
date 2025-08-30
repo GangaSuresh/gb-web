@@ -3,7 +3,7 @@ import { TYPOGRAPHY } from 'src/theme/styles/fonts';
 import { Box, Button, Typography } from '@mui/material';
 
 interface CoinSectionProps {
-  coinImage: string;
+  coinImage: string | null;
   coinCount: number;
   coinName: string;
   onTopUp: () => void;
@@ -32,7 +32,7 @@ export default function CoinSection({
       }}
     >
       <Box display="flex" gap="1rem">
-        <img src={coinImage} alt={coinName} />
+        {coinImage && <img src={coinImage} alt={coinName} />}
         <Box>
           <Typography sx={{ ...TYPOGRAPHY.headline6, color: 'info.main' }}>
             <b>{coinCount}</b> {coinName}
