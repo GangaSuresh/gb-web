@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { Iconify } from 'src/components/iconify';
 import { TYPOGRAPHY } from 'src/theme/styles/fonts';
 import { Box, Button, useTheme, Typography, useMediaQuery, Divider } from '@mui/material';
@@ -16,6 +16,115 @@ interface LPSectionProps {
   tier: TierItem[];
 }
 
+// Extracted reusable components for better maintainability
+const PointsSection = ({ 
+  points, 
+  imageSrc, 
+  onViewHistory, 
+  isMobile 
+}: { 
+  points: number; 
+  imageSrc: string; 
+  onViewHistory: () => void; 
+  isMobile: boolean; 
+}) => (
+  <Box display="flex" gap={isMobile ? 0 : "1rem"} alignItems="center" sx={{ minWidth: 0 }} flexDirection= {isMobile ? 'column' :'row'}   textAlign={isMobile ?'center' :'left'}>
+    <img 
+      src={imageSrc} 
+      alt="lp" 
+      style={isMobile ? { width: '28px', height: '28px' } : undefined}
+    />
+    <Box sx={{ minWidth: 0 }}>
+      <Typography
+        sx={{
+          ...(isMobile ? TYPOGRAPHY.body1 : TYPOGRAPHY.headline6),
+          color: 'white',
+          fontWeight: isMobile ? 500 : 800,
+          wordBreak: 'break-word',
+          overflowWrap: 'break-word',
+        }}
+      >
+        {isMobile ? `${points} LP` : `${points} Points`}
+      </Typography>
+      <Box
+        sx={{
+          cursor: 'pointer',
+          color: 'white',
+          display: 'flex',
+          alignItems: 'center',
+        }}
+        onClick={onViewHistory}
+      >
+        <Typography
+          sx={{
+            ...(isMobile ? TYPOGRAPHY.caption : TYPOGRAPHY.body2),
+            whiteSpace: 'nowrap',
+          }}
+        >
+          {isMobile ? 'View Points' : 'View Points History'}
+        </Typography>
+        <Iconify 
+          icon="icon-park-outline:right" 
+          width={isMobile ? 14 : undefined} 
+        />
+      </Box>
+    </Box>
+  </Box>
+);
+
+const BadgeSection = ({ 
+  badge, 
+  imageSrc, 
+  isMobile 
+}: { 
+  badge: string; 
+  imageSrc: string; 
+  isMobile: boolean; 
+}) => (
+  <Box display="flex" gap={isMobile ? 0 : "1rem"} alignItems="center" sx={{ minWidth: 0 }} flexDirection= {isMobile ? 'column' :'row'}   textAlign={isMobile ?'center' :'left'}>
+    <img 
+      src={imageSrc} 
+      alt="bronze-badge" 
+      style={isMobile ? { width: '28px', height: '28px' } : undefined}
+    />
+    <Box sx={{ minWidth: 0 }}>
+      <Typography
+        sx={{
+          ...(isMobile ? TYPOGRAPHY.body1 : TYPOGRAPHY.headline6),
+          color: 'white',
+          fontWeight: isMobile ? 500 : 700,
+          wordBreak: 'break-word',
+          overflowWrap: 'break-word',
+        }}
+      >
+        {badge}
+      </Typography>
+      <Typography
+        sx={{
+          ...(isMobile ? TYPOGRAPHY.caption : TYPOGRAPHY.body2),
+          color: 'primary.lighter',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        Your Current Badge
+      </Typography>
+    </Box>
+  </Box>
+);
+
+const KnowMoreButton = ({ isMobile }: { isMobile: boolean }) => (
+  <Button
+    className="button-primary-outlined"
+    variant="outlined"
+    size={isMobile ? "small" : "large"}
+    sx={{ backgroundColor: 'transparent' }}
+    onClick={() => {}}
+  >
+    Know More
+    <Iconify icon="icon-park-outline:right" />
+  </Button>
+);
+
 export default function LPSection({
   images,
   lpcurrPoints,
@@ -26,7 +135,29 @@ export default function LPSection({
   const [benefitsExpanded, setBenefitsExpanded] = useState(true);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const isTablet = useMediaQuery(theme.breakpoints.down('md'));
+
+  // Memoize the gradient background to prevent unnecessary recalculations
+  const gradientBackground = useMemo(() => 
+    'radial-gradient(ellipse at 104.35% 264%, #008AFA 12.86%, #0032AA 100%)', 
+    []
+  );
+
+  // Memoize the onViewHistory callback to prevent unnecessary re-renders
+  const handleViewHistory = useCallback(() => {
+    onViewHistory();
+  }, [onViewHistory]);
+
+  // Memoize the benefits expanded setter
+  const handleBenefitsExpandedChange = useCallback((expanded: boolean) => {
+    setBenefitsExpanded(expanded);
+  }, []);
+
+  // Common styles object to reduce duplication
+  const commonStyles = useMemo(() => ({
+    background: gradientBackground,
+    borderTopLeftRadius: '16px',
+    borderTopRightRadius: '16px',
+  }), [gradientBackground]);
 
   return (
     <Box
@@ -42,9 +173,7 @@ export default function LPSection({
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            background: 'radial-gradient(ellipse at 104.35% 264%, #008AFA 12.86%, #0032AA 100%)',
-            borderTopLeftRadius: '16px',
-            borderTopRightRadius: '16px',
+            ...commonStyles,
             p: {
               sm: '1.25rem 2rem',
               md: '1.5rem 3rem',
@@ -55,83 +184,22 @@ export default function LPSection({
         >
           {/* Left side - Points and Badge */}
           <Box display="flex" gap="2rem" sx={{ flex: 1 }}>
-            {/* Points Section */}
-            <Box display="flex" gap="1rem" alignItems="center" sx={{ minWidth: 0 }}>
-              <img src={images.lp} alt="lp" />
-              <Box sx={{ minWidth: 0 }}>
-                <Typography
-                  sx={{
-                    ...TYPOGRAPHY.headline6,
-                    color: 'white',
-                    fontWeight: 800,
-                    wordBreak: 'break-word',
-                    overflowWrap: 'break-word',
-                  }}
-                >
-                  {lpcurrPoints} Points
-                </Typography>
-                <Box
-                  sx={{
-                    cursor: 'pointer',
-                    color: 'white',
-                    display: 'flex',
-                    alignItems: 'center',
-                  }}
-                  onClick={onViewHistory}
-                >
-                  <Typography
-                    sx={{
-                      ...TYPOGRAPHY.body2,
-                      whiteSpace: 'nowrap',
-                    }}
-                  >
-                    View Points History
-                  </Typography>
-                  <Iconify icon="icon-park-outline:right" />
-                </Box>
-              </Box>
-            </Box>
-
-            {/* Badge Section */}
-            <Box display="flex" gap="1rem" alignItems="center" sx={{ minWidth: 0 }}>
-              <img src={images['bronze-badge']} alt="bronze-badge" />
-              <Box sx={{ minWidth: 0 }}>
-                <Typography
-                  sx={{
-                    ...TYPOGRAPHY.headline6,
-                    color: 'white',
-                    fontWeight: 700,
-                    wordBreak: 'break-word',
-                    overflowWrap: 'break-word',
-                  }}
-                >
-                  {lpcurrBadge}
-                </Typography>
-                <Typography
-                  sx={{
-                    ...TYPOGRAPHY.body2,
-                    color: 'primary.lighter',
-                    whiteSpace: 'nowrap',
-                  }}
-                >
-                  Your Current Badge
-                </Typography>
-              </Box>
-            </Box>
+            <PointsSection 
+              points={lpcurrPoints} 
+              imageSrc={images.lp} 
+              onViewHistory={handleViewHistory} 
+              isMobile={false} 
+            />
+            <BadgeSection 
+              badge={lpcurrBadge} 
+              imageSrc={images['bronze-badge']} 
+              isMobile={false} 
+            />
           </Box>
 
           {/* Right side - Button */}
           <Box display="flex" alignItems="flex-start">
-            <Button
-              className="button-primary-outlined"
-              variant="outlined"
-              size="large"
-              sx={{ backgroundColor: 'transparent' }}
-              onClick={() => {}}
-            >
-              Know More
-              <Iconify icon="icon-park-outline:right" />
-            </Button>
+            <KnowMoreButton isMobile={false} />
           </Box>
         </Box>
       ) : (
@@ -139,9 +207,7 @@ export default function LPSection({
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            background: 'radial-gradient(ellipse at 104.35% 264%, #008AFA 12.86%, #0032AA 100%)',
-            borderTopLeftRadius: '16px',
-            borderTopRightRadius: '16px',
+            ...commonStyles,
             p: '1.5rem 1rem',
           }}
         >
@@ -161,16 +227,7 @@ export default function LPSection({
             >
               GBN Loyalty Programme
             </Typography>
-            <Button
-              className="button-primary-outlined"
-              variant="outlined"
-              size="small"
-              sx={{ backgroundColor: 'transparent' }}
-              onClick={() => {}}
-            >
-              Know More
-              <Iconify icon="icon-park-outline:right" />
-            </Button>
+            <KnowMoreButton isMobile />
           </Box>
           <Box sx={{ display: 'flex', p: '1.5rem 2.5rem 0 2.5rem', gap: '4rem' }}>
             {/* Points Section */}
@@ -182,42 +239,12 @@ export default function LPSection({
                 alignItems: 'center',
               }}
             >
-              <img
-                src={images.lp}
-                alt="lp"
-                style={{
-                  width: '28px',
-                  height: '28px',
-                }}
+              <PointsSection 
+                points={lpcurrPoints} 
+                imageSrc={images.lp} 
+                onViewHistory={handleViewHistory} 
+                isMobile
               />
-              <Typography
-                sx={{
-                  ...TYPOGRAPHY.body1,
-                  color: 'white',
-                  fontWeight: 500,
-                }}
-              >
-                {lpcurrPoints} LP
-              </Typography>
-              <Box
-                sx={{
-                  cursor: 'pointer',
-                  color: 'white',
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-                onClick={onViewHistory}
-              >
-                <Typography
-                  sx={{
-                    ...TYPOGRAPHY.caption,
-                    whiteSpace: 'nowrap',
-                  }}
-                >
-                  View Points
-                </Typography>
-                <Iconify icon="icon-park-outline:right" width={14} />
-              </Box>
             </Box>
             <Divider
               orientation="vertical"
@@ -235,34 +262,11 @@ export default function LPSection({
                 alignItems: 'center',
               }}
             >
-              <img
-                src={images['bronze-badge']}
-                alt="bronze-badge"
-                style={{
-                  width: '28px',
-                  height: '28px',
-                }}
+              <BadgeSection 
+                badge={lpcurrBadge} 
+                imageSrc={images['bronze-badge']} 
+                isMobile 
               />
-              <Typography
-                sx={{
-                  ...TYPOGRAPHY.body1,
-                  color: 'white',
-                  fontWeight: 500,
-                  wordBreak: 'break-word',
-                  overflowWrap: 'break-word',
-                }}
-              >
-                {lpcurrBadge}
-              </Typography>
-              <Typography
-                sx={{
-                  ...TYPOGRAPHY.caption,
-                  whiteSpace: 'nowrap',
-                  color: 'primary.lighter',
-                }}
-              >
-                Your Current Badge
-              </Typography>
             </Box>
           </Box>
         </Box>
@@ -274,7 +278,7 @@ export default function LPSection({
         lpcurrPoints={lpcurrPoints}
         images={images}
         benefitsExpanded={benefitsExpanded}
-        setBenefitsExpanded={setBenefitsExpanded}
+        setBenefitsExpanded={handleBenefitsExpandedChange}
       />
 
       {/* Benefits Section */}
@@ -286,4 +290,4 @@ export default function LPSection({
       />
     </Box>
   );
-}
+} 
