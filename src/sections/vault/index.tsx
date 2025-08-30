@@ -1,22 +1,17 @@
-import { Iconify } from 'src/components/iconify';
-import { TYPOGRAPHY } from 'src/theme/styles/fonts';
+import { varAlpha } from 'src/theme/styles';
 import { useRouteData } from 'src/hooks/useRouteData';
+import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import {
   Box,
-  Typography,
-  Grid,
-  Card,
-  CardContent,
-  CircularProgress,
   Alert,
   Button,
-  Chip,
   useTheme,
+  Typography,
 } from '@mui/material';
 
-import CoinSection from './coin-section';
-import LPSection from './lp-section';
 import FAQ from './faq-section';
+import LPSection from './lp-section';
+import CoinSection from './coin-section';
 
 export default function VaultView() { 
   const theme = useTheme();
@@ -25,9 +20,18 @@ export default function VaultView() {
 
   if (isLoading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" height="calc(100vh - 72px)">
-        <CircularProgress />
-        <Typography sx={{ ml: 2 }}>Loading vault data...</Typography>
+      <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" flex="1 1 auto" gap={2}>
+        <Typography variant="h6" sx={{ mb: 1 }}>
+          Loading vault data...
+        </Typography>
+        <LinearProgress
+          sx={{
+            width: 1,
+            maxWidth: 320,
+            bgcolor: varAlpha(theme.vars.palette.text.primaryChannel, 0.16),
+            [`& .${linearProgressClasses.bar}`]: { bgcolor: 'text.primary' },
+          }}
+        />
       </Box>
     );
   }
