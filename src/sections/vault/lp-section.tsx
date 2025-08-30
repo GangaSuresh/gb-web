@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Iconify } from 'src/components/iconify';
 import { TYPOGRAPHY } from 'src/theme/styles/fonts';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, useTheme, Typography, useMediaQuery, Divider } from '@mui/material';
 
 import type { TierItem } from './types';
 
@@ -21,89 +21,244 @@ export default function LPSection({
   lpcurrPoints,
   lpcurrBadge,
   onViewHistory,
-  tier
+  tier,
 }: LPSectionProps) {
   const [benefitsExpanded, setBenefitsExpanded] = useState(true);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isTablet = useMediaQuery(theme.breakpoints.down('md'));
+
   return (
     <Box
       sx={{
-        width: '90%',
-        mt: '2rem',
+        width: { xs: '100%', sm: '90%' },
+        mt: { xs: '1.25rem', sm: '2rem' },
+        mx: 'auto',
       }}
     >
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          background: 'radial-gradient(ellipse at 104.35% 264%, #008AFA 12.86%, #0032AA 100%)',
-          borderTopLeftRadius: '16px',
-          borderTopRightRadius: '16px',
-          p: '1.5rem 4.8rem',
-        }}
-      >
-        {/* Left side - Points and Badge on same row */}
-        <Box 
-          display="flex" 
-          gap="2rem"
-          sx={{ flex: 1 }}
+      {!isMobile ? (
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            background: 'radial-gradient(ellipse at 104.35% 264%, #008AFA 12.86%, #0032AA 100%)',
+            borderTopLeftRadius: '16px',
+            borderTopRightRadius: '16px',
+            p: {
+              sm: '1.25rem 2rem',
+              md: '1.5rem 3rem',
+              lg: '1.5rem 4.8rem',
+            },
+            gap: '1.5rem',
+          }}
         >
-          {/* Points Section */}
-          <Box display="flex" gap="1rem" alignItems="center" sx={{ minWidth: 0 }}>
-            <img src={images.lp} alt="lp" />
-            <Box sx={{ minWidth: 0 }}>
-              <Typography 
-                sx={{ 
-                  ...TYPOGRAPHY.headline6, 
-                  color: 'white', 
-                  fontWeight: 800,
-                  wordBreak: 'break-word',
-                  overflowWrap: 'break-word'
+          {/* Left side - Points and Badge */}
+          <Box display="flex" gap="2rem" sx={{ flex: 1 }}>
+            {/* Points Section */}
+            <Box display="flex" gap="1rem" alignItems="center" sx={{ minWidth: 0 }}>
+              <img src={images.lp} alt="lp" />
+              <Box sx={{ minWidth: 0 }}>
+                <Typography
+                  sx={{
+                    ...TYPOGRAPHY.headline6,
+                    color: 'white',
+                    fontWeight: 800,
+                    wordBreak: 'break-word',
+                    overflowWrap: 'break-word',
+                  }}
+                >
+                  {lpcurrPoints} Points
+                </Typography>
+                <Box
+                  sx={{
+                    cursor: 'pointer',
+                    color: 'white',
+                    display: 'flex',
+                    alignItems: 'center',
+                  }}
+                  onClick={onViewHistory}
+                >
+                  <Typography
+                    sx={{
+                      ...TYPOGRAPHY.body2,
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    View Points History
+                  </Typography>
+                  <Iconify icon="icon-park-outline:right" />
+                </Box>
+              </Box>
+            </Box>
+
+            {/* Badge Section */}
+            <Box display="flex" gap="1rem" alignItems="center" sx={{ minWidth: 0 }}>
+              <img src={images['bronze-badge']} alt="bronze-badge" />
+              <Box sx={{ minWidth: 0 }}>
+                <Typography
+                  sx={{
+                    ...TYPOGRAPHY.headline6,
+                    color: 'white',
+                    fontWeight: 700,
+                    wordBreak: 'break-word',
+                    overflowWrap: 'break-word',
+                  }}
+                >
+                  {lpcurrBadge}
+                </Typography>
+                <Typography
+                  sx={{
+                    ...TYPOGRAPHY.body2,
+                    color: 'primary.lighter',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  Your Current Badge
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+
+          {/* Right side - Button */}
+          <Box display="flex" alignItems="flex-start">
+            <Button
+              className="button-primary-outlined"
+              variant="outlined"
+              size="large"
+              sx={{ backgroundColor: 'transparent' }}
+              onClick={() => {}}
+            >
+              Know More
+              <Iconify icon="icon-park-outline:right" />
+            </Button>
+          </Box>
+        </Box>
+      ) : (
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            background: 'radial-gradient(ellipse at 104.35% 264%, #008AFA 12.86%, #0032AA 100%)',
+            borderTopLeftRadius: '16px',
+            borderTopRightRadius: '16px',
+            p: '1.5rem 1rem',
+          }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              width: '100%',
+            }}
+          >
+            <Typography
+              sx={{
+                ...TYPOGRAPHY.body2,
+                color: 'white',
+              }}
+            >
+              GBN Loyalty Programme
+            </Typography>
+            <Button
+              className="button-primary-outlined"
+              variant="outlined"
+              size="small"
+              sx={{ backgroundColor: 'transparent' }}
+              onClick={() => {}}
+            >
+              Know More
+              <Iconify icon="icon-park-outline:right" />
+            </Button>
+          </Box>
+          <Box sx={{ display: 'flex', p: '1.5rem 2.5rem 0 2.5rem', gap: '4rem' }}>
+            {/* Points Section */}
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <img
+                src={images.lp}
+                alt="lp"
+                style={{
+                  width: '28px',
+                  height: '28px',
+                }}
+              />
+              <Typography
+                sx={{
+                  ...TYPOGRAPHY.body1,
+                  color: 'white',
+                  fontWeight: 500,
                 }}
               >
-                {lpcurrPoints} Points
+                {lpcurrPoints} LP
               </Typography>
               <Box
                 sx={{
                   cursor: 'pointer',
                   color: 'white',
                   display: 'flex',
-                  alignItems: 'center'
+                  alignItems: 'center',
                 }}
                 onClick={onViewHistory}
               >
                 <Typography
                   sx={{
-                    ...TYPOGRAPHY.body2,
-                    whiteSpace: 'nowrap'
+                    ...TYPOGRAPHY.caption,
+                    whiteSpace: 'nowrap',
                   }}
                 >
-                  View Points History
+                  View Points
                 </Typography>
-                <Iconify icon="icon-park-outline:right" />
+                <Iconify icon="icon-park-outline:right" width={14} />
               </Box>
             </Box>
-          </Box>
-
-          {/* Badge Section */}
-          <Box display="flex" gap="1rem" alignItems="center" sx={{ minWidth: 0 }}>
-            <img src={images['bronze-badge']} alt="bronze-badge" />
-            <Box sx={{ minWidth: 0 }}>
+            <Divider
+              orientation="vertical"
+              flexItem
+              sx={{
+                borderRightWidth: '2px',
+              }}
+            />
+            {/* Badge Section */}
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <img
+                src={images['bronze-badge']}
+                alt="bronze-badge"
+                style={{
+                  width: '28px',
+                  height: '28px',
+                }}
+              />
               <Typography
                 sx={{
-                  ...TYPOGRAPHY.headline6,
+                  ...TYPOGRAPHY.body1,
                   color: 'white',
-                  fontWeight: 700,
+                  fontWeight: 500,
                   wordBreak: 'break-word',
-                  overflowWrap: 'break-word'
+                  overflowWrap: 'break-word',
                 }}
               >
                 {lpcurrBadge}
               </Typography>
-              <Typography 
-                sx={{ 
-                  ...TYPOGRAPHY.body2, 
+              <Typography
+                sx={{
+                  ...TYPOGRAPHY.caption,
+                  whiteSpace: 'nowrap',
                   color: 'primary.lighter',
-                  whiteSpace: 'nowrap'
                 }}
               >
                 Your Current Badge
@@ -111,26 +266,12 @@ export default function LPSection({
             </Box>
           </Box>
         </Box>
+      )}
 
-        {/* Right side - Button */}
-        <Box display="flex" alignItems="flex-start">
-          <Button
-            className="button-primary-outlined"
-            variant="outlined"
-            size="large"
-            sx={{backgroundColor:'transparent'}}
-            onClick={() => {}}
-          >
-            Know More
-            <Iconify icon="icon-park-outline:right" />
-          </Button>
-        </Box>
-      </Box>
-      
       {/* Milestone Section */}
       <Milestone
         tier={tier}
-        lpcurrPoints={lpcurrPoints} 
+        lpcurrPoints={lpcurrPoints}
         images={images}
         benefitsExpanded={benefitsExpanded}
         setBenefitsExpanded={setBenefitsExpanded}
@@ -138,12 +279,11 @@ export default function LPSection({
 
       {/* Benefits Section */}
       <Benefits
-        benefitsExpanded={benefitsExpanded} 
+        benefitsExpanded={benefitsExpanded}
         lpcurrPoints={lpcurrPoints}
         tiers={tier}
         images={images}
       />
- 
     </Box>
   );
 }

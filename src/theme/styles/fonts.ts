@@ -89,6 +89,13 @@ export const TYPOGRAPHY = {
     fontSize: '1rem',       // 16px
     fontWeight: FONT_WEIGHTS.bold
   },
+
+  body4: {
+    fontFamily: FONTS.primary,
+    fontSize: '0.625rem',       // 10px
+    fontWeight: FONT_WEIGHTS.regular
+  },
+  
   
   // Captions and Small Text
   caption: {
