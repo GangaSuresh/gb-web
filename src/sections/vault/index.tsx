@@ -1,4 +1,5 @@
 import { varAlpha } from 'src/theme/styles';
+import { useNavigate } from 'react-router-dom';
 import { useRouteData } from 'src/hooks/useRouteData';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import {
@@ -15,6 +16,7 @@ import CoinSection from './coin-section';
 
 export default function VaultView() { 
   const theme = useTheme();
+  const navigate = useNavigate();
   const { data, isLoading, isError, error, refetch, hasImages, hasStaticText } =
     useRouteData('vault');
 
@@ -87,9 +89,8 @@ export default function VaultView() {
     console.log('Know more clicked');
   };
 
-  const handleViewHistory = () => {
-    // Handle view history logic
-    console.log('View history clicked');
+  const handleUJViewHistory = () => {
+    navigate('/coin/history');
   };
 
   // Handler function for LP section
@@ -131,7 +132,7 @@ export default function VaultView() {
         coinName="UJ Coins"
         onTopUp={handleTopUp}
         onKnowMore={handleKnowMore}
-        onViewHistory={handleViewHistory}
+        onViewHistory={handleUJViewHistory}
       />
 
       {/* LP Section */}
