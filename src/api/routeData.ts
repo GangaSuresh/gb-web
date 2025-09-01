@@ -101,31 +101,30 @@ export const fetchRouteData = async (route: string): Promise<RouteDataResponse> 
     case 'coin':
       return {
         images: {
-          'gbn-coin': '/assets/images/coin/gbn-coin.png',
-          'staking-pool': '/assets/images/coin/staking-pool.png',
-          'governance': '/assets/images/coin/governance.png',
-          'rewards': '/assets/images/coin/rewards.png',
-          'ecosystem': '/assets/images/coin/ecosystem.png',
-          'benefits': '/assets/images/coin/benefits-icon.png'
+          'gbn-coin': '/assets/images/coin/gbn-coin.png'
         },
         staticText: {
-          title: 'GBN Coin',
-          description: 'The native cryptocurrency powering the GBN ecosystem',
-          imagesTitle: 'Coin Gallery',
-          featuresTitle: 'Coin Features',
-          features: [
-            'Staking rewards',
-            'Governance voting',
-            'Transaction fees',
-            'Liquidity provision',
-            'Cross-chain compatibility'
-          ],
           faq: [
-            'How do I earn staking rewards? - Stake your GBN coins in our staking pools to earn passive income and governance rights.',
-            'What is the minimum stake amount? - The minimum stake amount is 100 GBN coins to start earning rewards.',
-            'How does governance voting work? - Hold GBN tokens to participate in protocol decisions and earn additional rewards.',
-            'What are the staking rewards? - Current APY ranges from 8-15% depending on lock period and pool size.',
-            'Can I unstake anytime? - Yes, with a 7-day unbonding period for security.'
+            {
+              question: 'How do I earn staking rewards?',
+              answer: 'Stake your GBN coins in our staking pools to earn passive income and governance rights.'
+            },
+            {
+              question: 'What is the minimum stake amount?',
+              answer: 'The minimum stake amount is 100 GBN coins to start earning rewards.'
+            },
+            {
+              question: 'How does governance voting work?',
+              answer: 'Hold GBN tokens to participate in protocol decisions and earn additional rewards.'
+            },
+            {
+              question: 'What are the staking rewards?',
+              answer: 'Current APY ranges from 8-15% depending on lock period and pool size.'
+            },
+            {
+              question: 'Can I unstake anytime?',
+              answer: 'Yes, with a 7-day unbonding period for security.'
+            }
           ]
         }
       };
