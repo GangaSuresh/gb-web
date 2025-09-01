@@ -2,20 +2,20 @@ import React from 'react';
 import { Iconify } from 'src/components/iconify';
 import { TYPOGRAPHY } from 'src/theme/styles/fonts';
 import { camelToTitle } from 'src/utils/camel-to-title';
-import { Box, Grid, Collapse, Typography } from '@mui/material';
+import { Box, Collapse, Typography } from '@mui/material';
 
 import type { TierItem } from './types';
 
 interface BenefitsProps {
   benefitsExpanded: boolean;
-  lpcurrPoints: number;
   tiers: TierItem[];
   images: Record<string, string>;
+  isMobile:boolean;
 }
 
 export default function BenefitsComponent({
   benefitsExpanded,
-  lpcurrPoints,
+  isMobile,
   tiers,
   images,
 }: BenefitsProps) {
@@ -24,9 +24,7 @@ export default function BenefitsComponent({
     (key) => key !== 'title' && key !== 'range'
   ) as Array<keyof Omit<TierItem, 'title' | 'range'>>;
 
-  // Calculate dynamic grid sizes based on tier count
-  const benefitsColumnSize = 3; // Fixed size for benefits column
-  const tierColumnSize = (12 - benefitsColumnSize) / tiers.length; // Dynamic size for tier columns
+  // Note: Grid-based sizing removed in favor of flexbox layout for better responsiveness
 
   // Format benefit values for display
   const formatBenefitValue = (value: any): React.ReactNode => {
@@ -38,7 +36,7 @@ export default function BenefitsComponent({
       );
     }
     return (
-        <Typography sx={{ ...TYPOGRAPHY.body2, fontWeight: 600, textAlign: 'center' }}>
+        <Typography sx={{ ...(isMobile ? TYPOGRAPHY.caption:TYPOGRAPHY.body2), fontWeight: 600, textAlign: 'center' }}>
           {value}
         </Typography>
     );
@@ -51,11 +49,41 @@ export default function BenefitsComponent({
           color: 'white',
           borderBottomLeftRadius: '16px',
           borderBottomRightRadius: '16px',
+          overflow: 'hidden',
         }}
       >
-        {/* header section */}
-        <Grid container spacing={0}>
-          <Grid item xs={12} md={benefitsColumnSize} sx={{ backgroundColor: 'primary.dark' }}>
+        {/* Responsive container with horizontal scroll */}
+        <Box
+          sx={{
+            display: 'flex',
+            minWidth: 0, // Allow flex item to shrink below content size
+            ...(isMobile && {
+              overflowX: 'auto',
+              '&::-webkit-scrollbar': {
+                height: '6px',
+              },
+              '&::-webkit-scrollbar-track': {
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                backgroundColor: 'rgba(255, 255, 255, 0.3)',
+                borderRadius: '3px',
+              },
+            }),
+          }}
+        >
+          {/* Sticky Benefits Column */}
+          <Box
+            sx={{
+              maxWidth: isMobile ? '150px' : 'auto',
+              flexShrink: 0,
+              position: isMobile ? 'sticky' : 'static',
+              left: 0,
+              zIndex: 1,
+              backgroundColor: 'primary.dark',
+            }}
+          >
+            {/* Benefits Header */}
             <Box
               sx={{
                 display: 'flex',
@@ -63,64 +91,88 @@ export default function BenefitsComponent({
                 alignItems: 'flex-start',
                 gap: '0.5rem',
                 p: '1.875rem 1.875rem 0 1.875rem',
+                height:isMobile?'8rem':'10rem',
               }}
             >
               <img src={images.benefits} alt="benefits" />
-              <Typography sx={{ ...TYPOGRAPHY.body1, fontWeight: 600 }}>Benefits</Typography>
+              <Typography sx={{ ...(isMobile ? TYPOGRAPHY.caption:TYPOGRAPHY.body1), fontWeight: 600 }}>Benefits</Typography>
             </Box>
-          </Grid>
-          {tiers.map((tier, index) => (
-            <Grid 
-              item 
-              xs={6} 
-              md={tierColumnSize} 
-              key={`tier-header-${index}`} 
-              sx={{ backgroundColor: 'primary.main' }}
-            >
+
+            {/* Benefits Rows */}
+            {benefitKeys.map((benefitKey, index) => (
               <Box
+                key={`benefit-row-${index}`}
                 sx={{
+                  height: '80px',
                   display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                  p: '1.875rem 1.875rem 0 1.875rem',
+                  alignItems: 'center'
                 }}
               >
-                <img
-                  src={images[`${tier.title.toLowerCase()}-badge`]}
-                  alt={`${tier.title}-badge`}
-                  style={{ marginBottom: '0.1rem' }}
-                />
-                <Typography sx={{ ...TYPOGRAPHY.body1, fontWeight: 500 }}>{tier.title}</Typography>
-                <Typography sx={{ ...TYPOGRAPHY.body2 }}>{tier.range}</Typography>
-              </Box>
-            </Grid>
-          ))}
-        </Grid>
-
-        {/* main section */}
-        {benefitKeys.map((benefitKey, index) => (
-          <Grid container spacing={0} key={`benefit-row-${index}`}>
-            <Grid item xs={12} md={benefitsColumnSize} sx={{backgroundColor: 'primary.dark'}}>
-              <Box sx={{ p: '1.2rem'}}>
-                <Typography sx={{ ...TYPOGRAPHY.body2 }}>{camelToTitle(benefitKey)}</Typography>
-              </Box>
-            </Grid>
-            {tiers.map((tier, tierIndex) => (
-              <Grid 
-                item 
-                xs={6} 
-                md={tierColumnSize} 
-                key={`benefit-cell-${index}-${tierIndex}`} 
-                sx={{backgroundColor: 'primary.main'}}
-              >
-                <Box sx={{ p: '1.2rem'}}>
-                  {formatBenefitValue(tier[benefitKey])}
+                <Box sx={{ p: '1.2rem', width: '100%' }}>
+                  <Typography sx={{ ...(isMobile ? TYPOGRAPHY.caption:TYPOGRAPHY.body2) }}>{camelToTitle(benefitKey)}</Typography>
                 </Box>
-              </Grid>
+              </Box>
             ))}
-          </Grid>
-        ))}
+          </Box>
+
+          {/* Scrollable Tier Columns */}
+          <Box
+            sx={{
+              display: 'flex',
+              maxWidth: isMobile ? `${tiers.length * 150}px` : 'auto',
+              flex: 1,
+            }}
+          >
+            {tiers.map((tier, tierIndex) => (
+              <Box
+                key={`tier-column-${tierIndex}`}
+                sx={{
+                  maxWidth: isMobile ? '150px' : 'auto',
+                  flex: isMobile ? 'none' : 1,
+                  backgroundColor: 'primary.main',
+                }}
+              >
+                {/* Tier Header */}
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    p: '1.875rem 1.875rem 0 1.875rem',
+                    height:isMobile?'8rem':'10rem',
+                    textAlign: 'center',
+                  }}
+                >
+                  <img
+                    src={images[`${tier.title.toLowerCase()}-badge`]}
+                    alt={`${tier.title}-badge`}
+                    style={{  width: isMobile ? '30px' : 'auto', height: isMobile ? '40px' : 'auto'  }}
+                  />
+                  <Typography sx={{ ...(isMobile ? TYPOGRAPHY.caption : TYPOGRAPHY.body1), fontWeight: 500 }}>{tier.title}</Typography>
+                  <Typography sx={{ ...(isMobile ? TYPOGRAPHY.caption : TYPOGRAPHY.body2) }}>{tier.range}</Typography>
+                </Box>
+
+                {/* Tier Benefit Rows */}
+                {benefitKeys.map((benefitKey, benefitIndex) => (
+                  <Box
+                    key={`tier-benefit-${tierIndex}-${benefitIndex}`}
+                    sx={{
+                      height: '80px',
+                      display: 'flex',
+                      alignItems: 'center',
+                    
+                    }}
+                  >
+                    <Box sx={{ p: '1.2rem', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      {formatBenefitValue(tier[benefitKey])}
+                    </Box>
+                  </Box>
+                ))}
+              </Box>
+            ))}
+          </Box>
+        </Box>
       </Box>
     </Collapse>
   );
