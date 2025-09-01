@@ -25,12 +25,13 @@ export default function FAQComponent({faqs }: FAQProps) {
         mt:'1.5rem',
         pt: '1.5rem',
         width:'100%',
-        mb: '5rem',
         background: 'linear-gradient(180deg,  rgba(65, 34, 137, 0.9), rgba(0, 44, 151, 0.8))',
         color: 'white',
         display:'flex',
         flexDirection:'column',
         alignItems:'center',
+        borderTopLeftRadius:'40px',
+        borderTopRightRadius:'40px'
       }}
     >
       <Typography
@@ -64,6 +65,7 @@ export default function FAQComponent({faqs }: FAQProps) {
               sx={{
                 ...TYPOGRAPHY.body1,
                 flexGrow: 1,
+                color: 'white',
               }}
             >
               {faq.question}
@@ -84,6 +86,7 @@ export default function FAQComponent({faqs }: FAQProps) {
               sx={{
                 ...TYPOGRAPHY.body2,
                 fontWeight: 300,
+                color: 'white',
               }}
             >
               {faq.answer}

@@ -1,10 +1,10 @@
+import FAQ from 'src/components/faq';
 import { varAlpha } from 'src/theme/styles';
 import { useNavigate } from 'react-router-dom';
 import { useRouteData } from 'src/hooks/useRouteData';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import { Box, Alert, Button, useTheme, Typography, useMediaQuery } from '@mui/material';
 
-import FAQ from './faq-section';
 import LPSection from './lp-section';
 import CoinSection from './coin-section';
 
@@ -116,21 +116,11 @@ export default function VaultView() {
 
   // Handler functions for coin section
   const handleTopUp = () => {
-    try {
-      // Handle top up coins logic
-      console.log('Top up coins clicked');
-    } catch (err) {
-      console.error('Error in handleTopUp:', err);
-    }
+    navigate('/coin/add');
   };
 
   const handleKnowMore = () => {
-    try {
-      // Handle know more logic
-      console.log('Know more clicked');
-    } catch (err) {
-      console.error('Error in handleKnowMore:', err);
-    }
+    navigate('/coin/info');
   };
 
   const handleUJViewHistory = () => {
@@ -150,10 +140,7 @@ export default function VaultView() {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        minHeight: '100%',
-        backgroundColor:
-          theme.palette?.backgroundColor?.main || theme.palette?.background?.default || '#f5f5f5',
-        py: 3,
+        backgroundColor:theme.palette?.backgroundColor?.main || theme.palette?.background?.default || '#f5f5f5',
       }}
     >
       <Typography
@@ -197,6 +184,7 @@ export default function VaultView() {
         )}
         {/* FAQ Section - Only render if FAQ data exists */}
         {hasFaq && <FAQ faqs={getFaqData()} />}
+
     </Box>
   );
 }
