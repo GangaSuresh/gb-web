@@ -1,18 +1,24 @@
 import FAQ from 'src/components/faq';
-import { TYPOGRAPHY } from "src/theme/styles/fonts";
-import { useRouteData } from "src/hooks/useRouteData";
-import { Box, Typography, Grid, Card, CardContent, CircularProgress, Alert, Button, useMediaQuery, useTheme } from "@mui/material";
-
+import { TYPOGRAPHY } from 'src/theme/styles/fonts';
+import { useRouteData } from 'src/hooks/useRouteData';
+import {
+  Box,
+  Alert,
+  Button,
+  useTheme,
+  Typography,
+  useMediaQuery,
+  CircularProgress,
+} from '@mui/material';
+import {
+  COIN_SUBTITLE,
+  COIN_DESCRIPTION,
+  COIN_EARN_METHODS,
+  COIN_INFO_IMAGE,
+  COIN_NAME,
+} from './constants';
 export default function CoinView() {
-  const { 
-    data, 
-    isLoading, 
-    isError, 
-    error, 
-    refetch, 
-    hasImages, 
-    hasFaq,
-  } = useRouteData('coin');
+  const { data, isLoading, isError, error, refetch, hasImages, hasFaq } = useRouteData('coin');
 
   const coinData = {
     images: data?.images || {},
@@ -32,7 +38,13 @@ export default function CoinView() {
 
   if (isError) {
     return (
-      <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" height="calc(100vh - 72px)">
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        height="calc(100vh - 72px)"
+      >
         <Alert severity="error" sx={{ mb: 2 }}>
           {error?.message || 'Failed to load coin data. Please try again.'}
         </Alert>
@@ -45,8 +57,16 @@ export default function CoinView() {
 
   if (!data) {
     return (
-      <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" height="calc(100vh - 72px)">
-        <Typography variant="h6" sx={{ mb: 2 }}>No coin data available</Typography>
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        height="calc(100vh - 72px)"
+      >
+        <Typography variant="h6" sx={{ mb: 2 }}>
+          No coin data available
+        </Typography>
         <Button variant="contained" onClick={() => refetch()}>
           Load Data
         </Button>
@@ -62,6 +82,14 @@ export default function CoinView() {
     }
   };
 
+  const getCoinImage = () => {
+    try {
+      return coinData.images['uj-coin'] || null;
+    } catch {
+      return null;
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -70,30 +98,35 @@ export default function CoinView() {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'flex-start',
+        color: 'white',
+        textAlign:'center',
       }}
     >
       {/* Header Section */}
       <Typography
         sx={{
-          fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
-          fontFamily: 'Sinerva, serif',
-          background:
-            'yellow',
-          backgroundClip: 'text',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          mt: isMobile ? '0.5rem' : '2.5rem',
-          fontWeight: 400,
+          fontSize: { xs: '1.5rem', sm: '2.5rem', md: '3.75rem' },
+          fontFamily: 'Lora',
+          color: 'info.light',
+          mt: isMobile ? '1rem' : '2.5rem',
+          fontWeight: 700,
           textAlign: 'center',
         }}
       >
-        GBN Vault
+        {COIN_NAME}
       </Typography>
-      
+      <Typography
+        sx={{
+          ...(isMobile ? TYPOGRAPHY.body2 : TYPOGRAPHY.headline6),
+        }}
+      >
+        {COIN_SUBTITLE}
+      </Typography>
+      <img src={getCoinImage() || ''} alt={COIN_NAME} 
+      style={{ width: isMobile ? '84px' : 'auto', height: isMobile ? '84px' : 'auto',marginTop:isMobile ? '2rem' : '3.5rem' }} />
 
       {/* FAQ Section */}
       {hasFaq && <FAQ faqs={getFaqData()} />}
-
     </Box>
   );
 }
