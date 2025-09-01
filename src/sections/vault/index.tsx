@@ -174,7 +174,6 @@ export default function VaultView() {
       </Typography>
 
       {/* Coin Section */}
-      <Box sx={{ maxWidth: '1140px' }}>
         <CoinSection
           coinImage={getCoinImage()}
           coinCount={0}
@@ -198,7 +197,6 @@ export default function VaultView() {
         )}
         {/* FAQ Section - Only render if FAQ data exists */}
         {hasFaq && <FAQ faqs={getFaqData()} />}
-      </Box>
     </Box>
   );
 }

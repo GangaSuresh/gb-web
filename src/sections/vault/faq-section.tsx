@@ -24,7 +24,7 @@ export default function FAQComponent({faqs }: FAQProps) {
     <Box
       sx={{
         pt: '2.5rem',
-        width: '90%',
+        width: { xs: '95%', sm: '1140px' },
         mb: '5rem',
       }}
     >

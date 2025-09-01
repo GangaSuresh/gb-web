@@ -163,6 +163,7 @@ export default function LPSection({
     <Box
       sx={{
         mt: { xs: '1.25rem', sm: '2rem' },
+        width: { xs: '95%', sm: '100%',md:'1140px' },
         mx: 'auto',
       }}
     >
@@ -284,9 +285,9 @@ export default function LPSection({
       {/* Benefits Section */}
       <Benefits
         benefitsExpanded={benefitsExpanded}
-        lpcurrPoints={lpcurrPoints}
         tiers={tier}
         images={images}
+        isMobile={isMobile}
       />
     </Box>
   );
