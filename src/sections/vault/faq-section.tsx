@@ -1,7 +1,6 @@
 import { useState } from 'react';
+import { Iconify } from 'src/components/iconify';
 import { TYPOGRAPHY } from 'src/theme/styles/fonts';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { Box, Collapse, Typography, IconButton } from '@mui/material';
 
 interface FAQItem {
@@ -23,16 +22,21 @@ export default function FAQComponent({faqs }: FAQProps) {
   return (
     <Box
       sx={{
-        pt: '2.5rem',
-        width: { xs: '95%', sm: '1140px' },
+        mt:'1.5rem',
+        pt: '1.5rem',
+        width:'100%',
         mb: '5rem',
+        background: 'linear-gradient(180deg,  rgba(65, 34, 137, 0.9), rgba(0, 44, 151, 0.8))',
+        color: 'white',
+        display:'flex',
+        flexDirection:'column',
+        alignItems:'center',
       }}
     >
       <Typography
         sx={{
           fontFamily: 'Sinerva',
           fontSize: '1.8rem',
-          color: 'primary.main',
           textAlign: 'center',
           mb: '1.8rem',
         }}
@@ -41,20 +45,24 @@ export default function FAQComponent({faqs }: FAQProps) {
       </Typography>
 
       {faqs.map((faq, index) => (
-        <Box key={index} sx={{ borderRadius: '12px', mb: '0.625rem', pt: 1.5,pb: 1.5, pl: 1.875,background:'white' }}>
+        <Box key={index} sx={{ 
+          mb: '0.625rem', 
+          p: '0 1rem 1rem 1rem',
+          
+          width: { xs: '95%', sm: '100%',md:'1140px' },
+          borderBottom: index < faqs.length - 1 ? '0.5px solid #FFFFFF66' : 'none'
+          }}>
           <Box
             sx={{
               display: 'flex',
               alignItems: 'flex-start',
               cursor: 'pointer',
-              color: expandedIndex === index ? 'primary.main' : 'black',
             }}
             onClick={() => handleToggle(index)}
           >
             <Typography
               sx={{
                 ...TYPOGRAPHY.body1,
-                fontWeight: 700,
                 flexGrow: 1,
               }}
             >
@@ -63,18 +71,19 @@ export default function FAQComponent({faqs }: FAQProps) {
             <IconButton
               size="small"
               sx={{
-                color: 'primary.main',
+                color: 'white',
               }}
               onClick={() => handleToggle(index)}
             >
-              {expandedIndex === index ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+              <Iconify icon={expandedIndex === index ? 'ic:outline-minus' : 'material-symbols:add-rounded'} />
             </IconButton>
           </Box>
 
           <Collapse in={expandedIndex === index}>
             <Typography
               sx={{
-                ...TYPOGRAPHY.body1,
+                ...TYPOGRAPHY.body2,
+                fontWeight: 300,
               }}
             >
               {faq.answer}
