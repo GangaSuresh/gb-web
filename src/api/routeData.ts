@@ -101,7 +101,7 @@ export const fetchRouteData = async (route: string): Promise<RouteDataResponse> 
     case 'coin':
       return {
         images: {
-          'gbn-coin': '/assets/images/coin/gbn-coin.png'
+          'uj-coin': '/assets/images/coin/coin-with-shadow.png',
         },
         staticText: {
           faq: [
