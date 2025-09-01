@@ -11,7 +11,6 @@ export default function LpView() {
     refetch, 
     hasImages, 
     hasStaticText, 
-    hasFeatures, 
     hasFaq 
   } = useRouteData('lp');
 
@@ -137,25 +136,7 @@ export default function LpView() {
         </Box>
       )}
 
-      {/* Features Section */}
-      {hasFeatures && (
-        <Box sx={{ width: '100%', mt: 4 }}>
-          <Typography sx={{ ...TYPOGRAPHY.headline5, mb: 2, textAlign: 'center' }}>
-            {data.staticText.featuresTitle || 'Pool Features'}
-          </Typography>
-          <Grid container spacing={2}>
-            {Array.isArray(data.staticText.features) && data.staticText.features.map((feature: string, index: number) => (
-              <Grid item xs={12} sm={6} md={3} key={index}>
-                <Card>
-                  <CardContent sx={{ textAlign: 'center' }}>
-                    <Typography variant="body1">{feature}</Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
-      )}
+
     </Box>
   );
 }
