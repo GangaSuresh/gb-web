@@ -2,20 +2,13 @@ import { varAlpha } from 'src/theme/styles';
 import { useNavigate } from 'react-router-dom';
 import { useRouteData } from 'src/hooks/useRouteData';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
-import {
-  Box,
-  Alert,
-  Button,
-  useTheme,
-  Typography,
-  useMediaQuery,
-} from '@mui/material';
+import { Box, Alert, Button, useTheme, Typography, useMediaQuery } from '@mui/material';
 
 import FAQ from './faq-section';
 import LPSection from './lp-section';
 import CoinSection from './coin-section';
 
-export default function VaultView() { 
+export default function VaultView() {
   const theme = useTheme();
   const navigate = useNavigate();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -57,7 +50,15 @@ export default function VaultView() {
 
   if (isLoading) {
     return (
-      <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" flex="1 1 auto" gap={2} minHeight="60vh">
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        flex="1 1 auto"
+        gap={2}
+        minHeight="60vh"
+      >
         <Typography variant="h6" sx={{ mb: 1 }}>
           Loading vault data...
         </Typography>
@@ -86,11 +87,7 @@ export default function VaultView() {
         <Alert severity="error" sx={{ mb: 2, maxWidth: 600 }}>
           {error?.message || 'Failed to load vault data. Please try again.'}
         </Alert>
-        <Button 
-          variant="contained" 
-          onClick={() => refetch()}
-          sx={{ minWidth: 120 }}
-        >
+        <Button variant="contained" onClick={() => refetch()} sx={{ minWidth: 120 }}>
           Retry
         </Button>
       </Box>
@@ -110,11 +107,7 @@ export default function VaultView() {
         <Typography variant="h6" sx={{ mb: 2 }}>
           {!data ? 'No vault data available' : 'Incomplete vault data'}
         </Typography>
-        <Button 
-          variant="contained" 
-          onClick={() => refetch()}
-          sx={{ minWidth: 120 }}
-        >
+        <Button variant="contained" onClick={() => refetch()} sx={{ minWidth: 120 }}>
           Load Data
         </Button>
       </Box>
@@ -158,27 +151,30 @@ export default function VaultView() {
         alignItems: 'center',
         justifyContent: 'flex-start',
         minHeight: '100%',
-        backgroundColor: theme.palette?.backgroundColor?.main || theme.palette?.background?.default || '#f5f5f5',
+        backgroundColor:
+          theme.palette?.backgroundColor?.main || theme.palette?.background?.default || '#f5f5f5',
         py: 3,
       }}
     >
-        <Typography
-          sx={{
-            fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
-            fontFamily: 'Sinerva, serif',
-            background: 'radial-gradient(78.38% 362.85% at 104.35% 264%, #D70000 12.86%, #004BE3 100%)',
-            backgroundClip: 'text',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            mt: isMobile ? '0.5rem':'2.5rem',
-            fontWeight: 400,
-            textAlign: 'center',
-          }}
-        >
-          GBN Vault
-        </Typography>
+      <Typography
+        sx={{
+          fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
+          fontFamily: 'Sinerva, serif',
+          background:
+            'radial-gradient(78.38% 362.85% at 104.35% 264%, #D70000 12.86%, #004BE3 100%)',
+          backgroundClip: 'text',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          mt: isMobile ? '0.5rem' : '2.5rem',
+          fontWeight: 400,
+          textAlign: 'center',
+        }}
+      >
+        GBN Vault
+      </Typography>
 
-        {/* Coin Section */}
+      {/* Coin Section */}
+      <Box sx={{ maxWidth: '1140px' }}>
         <CoinSection
           coinImage={getCoinImage()}
           coinCount={0}
@@ -200,9 +196,9 @@ export default function VaultView() {
             isMobile={isMobile}
           />
         )}
-
-                 {/* FAQ Section - Only render if FAQ data exists */}
-         {hasFaq && <FAQ faqs={getFaqData()} />}
-       </Box>
-   );
- }
+        {/* FAQ Section - Only render if FAQ data exists */}
+        {hasFaq && <FAQ faqs={getFaqData()} />}
+      </Box>
+    </Box>
+  );
+}

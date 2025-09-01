@@ -28,7 +28,6 @@ export default function CoinSection({
       display="flex"
       flexDirection={isMobile ? 'column' : 'row'}
       sx={{
-        width: { xs: '95%', sm: '90%' },
         mt: { xs: '1.5rem', sm: '2rem' },
         p: {
           xs: '1rem',

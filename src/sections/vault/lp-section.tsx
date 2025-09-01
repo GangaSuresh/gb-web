@@ -162,7 +162,6 @@ export default function LPSection({
   return (
     <Box
       sx={{
-        width: { xs: '100%', sm: '90%' },
         mt: { xs: '1.25rem', sm: '2rem' },
         mx: 'auto',
       }}
