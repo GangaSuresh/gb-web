@@ -5,10 +5,8 @@ import {
   Box,
   Card,
   Chip,
-  useTheme,
   IconButton,
   Typography,
-  useMediaQuery,
 } from '@mui/material';
 
 import { GOLDEN_BADGE } from './constants';
