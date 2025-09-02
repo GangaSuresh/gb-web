@@ -124,44 +124,61 @@ const LPEarningMethods: React.FC<LPEarningMethodsProps> = ({ earnMethods, isMobi
     // );
   // }
 
-  // Desktop view - Grid
+  // Desktop view - Flexbox
   return (
-    <Box sx={{ p: 3 }}>
-      <Grid container spacing={3}>
+    <Box sx={{ p: 3, display: 'flex', justifyContent: 'center' }}>
+      <Box sx={{ 
+        display: 'flex', 
+        flexWrap: 'wrap', 
+        gap: '1.5rem',
+        maxWidth: '1000px',
+        justifyContent: 'center'
+      }}>
         {earnMethods.map((method, index) => (
-          <Grid item xs={12} sm={6} md={2} key={index}>
-            <Card 
-              sx={{ 
-                height: '100%',
-                p:'1rem 1.25rem',
-                borderRadius: '16px',
-                border:'0.5px solid #B6C9D9'
-              }}
-            >
-                 <img src={GOLDEN_BADGE} alt="badge-image" />
-                <Typography sx={{...TYPOGRAPHY.body1}}>
-                  {method.title}
-                </Typography>
-                
-                <Chip 
-                  label={method.value} 
-                  color="primary" 
-                  sx={{ 
-                    ...TYPOGRAPHY.headline6,
-                    fontWeight: 800,
-                    mt:'0.8rem',
-                    mb:'1.25rem'
+          <Card 
+            key={index}
+            sx={{ 
+              height: '236px',
+              width: '180px',
+              p:'1rem 0.8rem',
+              borderRadius: '16px',
+              border:'0.5px solid #B6C9D9',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              textAlign: 'center'
+            }}
+          >
+               <img src={GOLDEN_BADGE} alt="badge-image" />
+              <Typography sx={{...TYPOGRAPHY.body1,mt:'0.5rem'}}>
+                {method.title}
+              </Typography>
+              
+              <Chip 
+                label={
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    {method.value}
+                    <img src={lpicon} alt="lp-icon" style={{ width: '16px', height: '16px' }} />
+                  </Box>
+                }
+                color="primary" 
+                sx={{ 
+                  ...TYPOGRAPHY.body3,
+                  fontWeight: 600,
+                  mt:'0.8rem',
+                  mb:'1.25rem'
 
-                  }} 
-                />
-                
-                <Typography sx={{...TYPOGRAPHY.caption, color: 'info.dark'}}>
-                  {method.description}<br/>({method.maxPerDay})
-                </Typography>
-            </Card>
-          </Grid>
+                }} 
+              />
+              
+              
+              <Typography sx={{...TYPOGRAPHY.caption, color: 'info.dark'}}>
+                {method.description}<br/>({method.maxPerDay})
+              </Typography>
+          </Card>
         ))}
-      </Grid>
+      </Box>
     </Box>
   );
 };

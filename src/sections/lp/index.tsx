@@ -184,7 +184,7 @@ export default function LPView() {
           <img src={LP_INFO_IMAGE} alt="lp-info-image" style={{ marginTop: '3rem' }} />
         )}
       </Box>
-      <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',border:'solid',textAlign:'center',width:'100%'}}>
+      <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',textAlign:'center',width:'100%'}}>
         <Typography
           sx={{
             ...(isMobile ? TYPOGRAPHY.headline6 : TYPOGRAPHY.headline4),
