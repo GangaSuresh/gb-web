@@ -61,6 +61,19 @@ const MuiButton: Components<Theme>['MuiButton'] = {
         };
       }
 
+      if (ownerState.className?.includes('button-basic-yellow')) {
+        return {
+          ...baseStyles,
+          background: '#FED669',
+          color: 'black',
+          width:theme.breakpoints.down('sm') ?'150px':'200px',
+          height:theme.breakpoints.down('sm') ?'44px':'52px',
+          '&:hover': {
+            borderColor: theme.vars.palette.primary.dark,
+          },
+        };
+      }
+
       if (ownerState.className?.includes('button-primary-outlined')) {
         return {
           ...baseStyles,

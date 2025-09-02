@@ -1,4 +1,5 @@
 import FAQ from 'src/components/faq';
+import { useNavigate } from 'react-router-dom';
 import { TYPOGRAPHY } from 'src/theme/styles/fonts';
 import { useRouteData } from 'src/hooks/useRouteData';
 import {
@@ -10,16 +11,20 @@ import {
   useMediaQuery,
   CircularProgress,
 } from '@mui/material';
+
 import {
+  COIN_NAME,
+  GOLDEN_BADGE,
   COIN_SUBTITLE,
+  COIN_INFO_IMAGE,
   COIN_DESCRIPTION,
   COIN_EARN_METHODS,
-  COIN_INFO_IMAGE,
-  COIN_NAME,
+  COIN_INFO_IMAGE_MOBILE,
 } from './constants';
-export default function CoinView() {
-  const { data, isLoading, isError, error, refetch, hasImages, hasFaq } = useRouteData('coin');
 
+export default function CoinView() {
+  const { data, isLoading, isError, error, refetch, hasFaq } = useRouteData('coin');
+const navigate = useNavigate();
   const coinData = {
     images: data?.images || {},
     staticText: data?.staticText || {},
@@ -99,31 +104,103 @@ export default function CoinView() {
         alignItems: 'center',
         justifyContent: 'flex-start',
         color: 'white',
-        textAlign:'center',
       }}
     >
-      {/* Header Section */}
-      <Typography
+      <Box sx={{ textAlign: 'center' }}>
+        {/* Header Section */}
+        <Typography
+          sx={{
+            fontSize: { xs: '1.5rem', sm: '2.5rem', md: '3.75rem' },
+            fontFamily: 'Lora',
+            color: 'info.light',
+            mt: isMobile ? '1rem' : '2.5rem',
+            fontWeight: 700,
+            textAlign: 'center',
+          }}
+        >
+          {COIN_NAME}
+        </Typography>
+        <Typography
+          sx={{
+            ...(isMobile ? TYPOGRAPHY.body2 : TYPOGRAPHY.headline6),
+          }}
+        >
+          {COIN_SUBTITLE}
+        </Typography>
+        <img
+          src={getCoinImage() || ''}
+          alt={COIN_NAME}
+          style={{
+            width: isMobile ? '84px' : 'auto',
+            height: isMobile ? '84px' : 'auto',
+            marginTop: isMobile ? '2rem' : '3.5rem',
+          }}
+        />
+        {/* Main Section */}
+        <Typography
+          sx={{
+            ...(isMobile ? TYPOGRAPHY.headline6 : TYPOGRAPHY.headline2),
+            fontWeight: 600,
+            mt: isMobile ? '2rem' : '3.5rem',
+          }}
+        >
+          What are UJ Coins & their Benefits?
+        </Typography>
+        {isMobile ? (
+          <img src={COIN_INFO_IMAGE_MOBILE} alt="coin-info-image" style={{ marginTop: '1rem' }} />
+        ) : (
+          <>
+            <Typography sx={{ ...TYPOGRAPHY.headline6 }}>{COIN_DESCRIPTION}</Typography>
+            <img src={COIN_INFO_IMAGE} alt="coin-info-image" style={{ marginTop: '3rem' }} />
+          </>
+        )}
+        <Typography
+          sx={{
+            ...(isMobile ? TYPOGRAPHY.headline6 : TYPOGRAPHY.headline4),
+            mt: isMobile ? '2.5rem' : '5rem',
+          }}
+        >
+          How to Get UJ Coins?
+        </Typography>
+        <Typography sx={{ ...(isMobile ? TYPOGRAPHY.body1 : TYPOGRAPHY.headline6) }}>
+          You can collect UJ Coins in two simple ways
+        </Typography>
+      </Box>
+      <Box
         sx={{
-          fontSize: { xs: '1.5rem', sm: '2.5rem', md: '3.75rem' },
-          fontFamily: 'Lora',
-          color: 'info.light',
-          mt: isMobile ? '1rem' : '2.5rem',
-          fontWeight: 700,
-          textAlign: 'center',
+          display: 'flex',
+          gap: '1rem',
+          flexDirection: isMobile ? 'column' : 'row',
+          p: '1rem',
         }}
       >
-        {COIN_NAME}
-      </Typography>
-      <Typography
-        sx={{
-          ...(isMobile ? TYPOGRAPHY.body2 : TYPOGRAPHY.headline6),
-        }}
-      >
-        {COIN_SUBTITLE}
-      </Typography>
-      <img src={getCoinImage() || ''} alt={COIN_NAME} 
-      style={{ width: isMobile ? '84px' : 'auto', height: isMobile ? '84px' : 'auto',marginTop:isMobile ? '2rem' : '3.5rem' }} />
+        {COIN_EARN_METHODS.map((method, index) => (
+          <Box
+            key={index}
+            sx={{
+              border: '1px solid',
+              borderColor: 'info.lighter',
+              borderRadius: '20px',
+              p: '1rem',
+            }}
+          >
+            <Box
+              sx={{ display: 'flex', flexDirection: 'row', gap: '1rem', alignItems: 'flex-start' }}
+            >
+              <img src={GOLDEN_BADGE} alt="badge-image" />
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                <Typography sx={{ ...(isMobile ? TYPOGRAPHY.body1 : TYPOGRAPHY.headline6) }}>
+                  {method.title}
+                </Typography>
+                <Typography sx={{...TYPOGRAPHY.body2  }}>
+                  {method.description}
+                </Typography>
+                <Button className="button-basic-yellow" onClick={() => navigate(method.buttonLink)}>{method.buttonText}</Button>
+              </Box>
+            </Box>
+          </Box>
+        ))}
+      </Box>
 
       {/* FAQ Section */}
       {hasFaq && <FAQ faqs={getFaqData()} />}
