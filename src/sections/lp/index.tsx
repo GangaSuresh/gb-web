@@ -10,27 +10,20 @@ import {
   Typography,
   useMediaQuery,
   CircularProgress,
-  List,
-  ListItemIcon,
-  ListItemText,
-  Chip,
-  ListItem,
 } from '@mui/material';
 
+import LPEarningMethods from './lp-earning-cards';
 import {
   LP_NAME,
-  GOLDEN_BADGE,
   LP_SUBTITLE,
   LP_INFO_IMAGE,
   LP_DESCRIPTION,
-  LP_EARN_METHODS,
   LP_INFO_IMAGE_MOBILE,
 } from './constants';
-import LPEarningMethods from './lp-earning-cards';
+import BenefitsComponent from '../vault/benefits-section';
 
 export default function LPView() {
   const { data, isLoading, isError, error, refetch, hasFaq } = useRouteData('lp');
-  const navigate = useNavigate();
   const lpData = {
     images: data?.images || {},
     staticText: data?.staticText || {},
@@ -110,7 +103,9 @@ export default function LPView() {
 
   const getEarnMethodsData = () => {
     try {
-      return hasFaq && Array.isArray(lpData.staticText.earnMethods) ? lpData.staticText.earnMethods : [];
+      return hasFaq && Array.isArray(lpData.staticText.earnMethods)
+        ? lpData.staticText.earnMethods
+        : [];
     } catch {
       return [];
     }
@@ -184,7 +179,15 @@ export default function LPView() {
           <img src={LP_INFO_IMAGE} alt="lp-info-image" style={{ marginTop: '3rem' }} />
         )}
       </Box>
-      <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',textAlign:'center',width:'100%'}}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          textAlign: 'center',
+          width: '100%',
+        }}
+      >
         <Typography
           sx={{
             ...(isMobile ? TYPOGRAPHY.headline6 : TYPOGRAPHY.headline4),
@@ -201,11 +204,49 @@ export default function LPView() {
           <br />
           various activities to earn loyalty points
         </Typography>
-        <LPEarningMethods earnMethods={getEarnMethodsData()} isMobile={isMobile} lpicon={getLPIcon()} />
+        <LPEarningMethods
+          earnMethods={getEarnMethodsData()}
+          isMobile={isMobile}
+          lpicon={getLPIcon()}
+        />
       </Box>
 
-      {/* FAQ Section */}
-      {hasFaq && <FAQ faqs={getFaqData()} />}
+      <Box
+        sx={{
+          width: '100%',
+          background: 'radial-gradient(ellipse at 104.35% 264%, #008AFA 12.86%, #0032AA 100%)',
+          display: 'flex',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          alignItems: 'center',
+          color: 'white',
+        }}
+      >
+        <p>Milestone Benefits</p>
+
+        <Typography
+          sx={{ ...(isMobile ? TYPOGRAPHY.headline6 : TYPOGRAPHY.headline4), fontFamily: 'Lora' }}
+        >
+          Your LP Unlock Exclusive Perks
+        </Typography>
+        <Typography
+          sx={{ ...(isMobile ? TYPOGRAPHY.body2 : TYPOGRAPHY.body1), fontFamily: 'Lora' }}
+        >
+          As you accumulate Loyalty Points, you&apos;ll climb through loyalty tiers, each offering
+          increasingly valuable perks and exclusive access within the GBN community.
+        </Typography>
+        <Box sx={{ width: { xs: '95%', sm: '100%', md: '1140px' }, mb: '1rem',mt:isMobile?'1rem':'3rem' }}>
+          <BenefitsComponent
+            tiers={lpData.staticText.tier}
+            images={lpData.images}
+            benefitsExpanded
+            isMobile={isMobile}
+          />
+        </Box>
+
+        {/* FAQ Section */}
+        {hasFaq && <FAQ faqs={getFaqData()} />}
+      </Box>
     </Box>
   );
 }
