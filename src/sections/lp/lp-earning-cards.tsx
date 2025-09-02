@@ -5,15 +5,13 @@ import {
   Box,
   Card,
   Chip,
-  IconButton,
   useTheme,
-  useMediaQuery,
+  IconButton,
   Typography,
+  useMediaQuery,
 } from '@mui/material';
 
 import { GOLDEN_BADGE } from './constants';
-
-
 
 interface EarnMethod {
   title: string;
@@ -33,12 +31,9 @@ const LPEarningMethods: React.FC<LPEarningMethodsProps> = ({ earnMethods, isMobi
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const theme = useTheme();
-  const isSmallMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  // Calculate how many cards to show per slide based on screen size
-  const cardsPerSlide = isSmallMobile ? 1 : 2;
-  const totalSlides = Math.ceil(earnMethods.length / cardsPerSlide);
+  const cardsPerSlide =  1;
+  const totalSlides = earnMethods.length;
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % totalSlides);
@@ -139,7 +134,7 @@ const LPEarningMethods: React.FC<LPEarningMethodsProps> = ({ earnMethods, isMobi
             sx={{
               display: 'flex',
               transition: 'transform 0.3s ease-in-out',
-              transform: `translateX(-${currentSlide * 100}%)`,
+              transform: `translateX(-${currentSlide * (100 / totalSlides)}%)`,
               width: `${totalSlides * 100}%`
             }}
           >
@@ -147,20 +142,20 @@ const LPEarningMethods: React.FC<LPEarningMethodsProps> = ({ earnMethods, isMobi
               <Box
                 key={slideIndex}
                 sx={{
-                  width: `${100 / totalSlides}%`,
+                    height: '236px',
+                    width: '180px',
                   display: 'flex',
                   gap: 2,
                   px: 1
                 }}
               >
-                {earnMethods
-                  .slice(slideIndex * cardsPerSlide, (slideIndex + 1) * cardsPerSlide)
+                {earnMethods.slice(slideIndex * cardsPerSlide, (slideIndex + 1) * cardsPerSlide)
                   .map((method, cardIndex) => (
                     <Card
                       key={slideIndex * cardsPerSlide + cardIndex}
                       sx={{
                         flex: 1,
-                        minWidth: 0,
+                        width: 0,
                         height: '280px',
                         borderRadius: '16px',
                         border: '0.5px solid #B6C9D9',
