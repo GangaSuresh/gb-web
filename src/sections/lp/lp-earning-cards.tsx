@@ -1,15 +1,14 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { TYPOGRAPHY } from 'src/theme/styles/fonts';
 import { ChevronLeft, ChevronRight } from '@mui/icons-material';
 import {
   Box,
   Card,
-  CardContent,
-  Typography,
   Chip,
   IconButton,
-  Grid,
   useTheme,
+  useMediaQuery,
+  Typography,
 } from '@mui/material';
 
 import { GOLDEN_BADGE } from './constants';
@@ -26,105 +25,225 @@ interface EarnMethod {
 interface LPEarningMethodsProps {
   earnMethods: EarnMethod[];
   isMobile: boolean;
-  lpicon: string;
+  lpicon: string|null;
 }
 
-const LPEarningMethods: React.FC<LPEarningMethodsProps> = ({ earnMethods, isMobile,lpicon }) => {
+const LPEarningMethods: React.FC<LPEarningMethodsProps> = ({ earnMethods, isMobile, lpicon }) => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const theme = useTheme();
+  const isSmallMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
+  // Calculate how many cards to show per slide based on screen size
+  const cardsPerSlide = isSmallMobile ? 1 : 2;
+  const totalSlides = Math.ceil(earnMethods.length / cardsPerSlide);
 
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    arrows: false,
-    adaptiveHeight: true
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % totalSlides);
   };
 
-  // Mobile view - Slider
-  // if (isMobile) {
-    // return (
-    //   <Box sx={{ position: 'relative', px: 2, py: 3 }}>
-    //     {/* Navigation Arrows */}
-    //     <IconButton
-    //       onClick={previous}
-    //       sx={{
-    //         position: 'absolute',
-    //         left: 0,
-    //         top: '50%',
-    //         transform: 'translateY(-50%)',
-    //         zIndex: 2,
-    //         bgcolor: 'background.paper',
-    //         boxShadow: 1,
-    //         '&:hover': { bgcolor: 'grey.100' }
-    //       }}
-    //     >
-    //       <ChevronLeft />
-    //     </IconButton>
-        
-    //     <IconButton
-    //       onClick={next}
-    //       sx={{
-    //         position: 'absolute',
-    //         right: 0,
-    //         top: '50%',
-    //         transform: 'translateY(-50%)',
-    //         zIndex: 2,
-    //         bgcolor: 'background.paper',
-    //         boxShadow: 1,
-    //         '&:hover': { bgcolor: 'grey.100' }
-    //       }}
-    //     >
-    //       <ChevronRight />
-    //     </IconButton>
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
+  };
 
-    //     {/* Slider */}
-    //     <Slider ref={sliderRef} {...sliderSettings}>
-    //       {earnMethods.map((method, index) => (
-    //         <Box key={index} sx={{ px: 1, pb: 2 }}>
-    //           <Card 
-    //             sx={{ 
-    //               height: '100%',
-    //               boxShadow: 3,
-    //               borderRadius: 2,
-    //               background: 'linear-gradient(145deg, #f5f5f5, #e0e0e0)'
-    //             }}
-    //           >
-    //             <CardContent sx={{ p: 3, textAlign: 'center' }}>
-    //               <Typography variant="h6" component="h3" gutterBottom fontWeight="bold">
-    //                 {method.title}
-    //               </Typography>
-                  
-    //               <Chip 
-    //                 label={method.value} 
-    //                 color="primary" 
-    //                 sx={{ 
-    //                   fontSize: '1.2rem',
-    //                   fontWeight: 'bold',
-    //                   height: 40,
-    //                   width: 60,
-    //                   mb: 2
-    //                 }} 
-    //               />
-                  
-    //               <Typography variant="body2" color="text.secondary" paragraph>
-    //                 {method.description}
-    //               </Typography>
-                  
-    //               <Typography variant="caption" color="text.secondary" sx={{ fontStyle: 'italic' }}>
-    //                 {method.maxPerDay}
-    //               </Typography>
-    //             </CardContent>
-    //           </Card>
-    //         </Box>
-    //       ))}
-    //     </Slider>
-    //   </Box>
-    // );
-  // }
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index);
+  };
 
-  // Desktop view - Flexbox
+  // Touch handlers for swipe functionality
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe && totalSlides > 1) {
+      nextSlide();
+    }
+    if (isRightSwipe && totalSlides > 1) {
+      prevSlide();
+    }
+  };
+
+  // Mobile view - Sliding Grid with Dots
+  if (isMobile) {
+    return (
+      <Box sx={{ position: 'relative', px: 2, py: 3 }}>
+        {/* Navigation Arrows */}
+        {totalSlides > 1 && (
+          <>
+            <IconButton
+              onClick={prevSlide}
+              sx={{
+                position: 'absolute',
+                left: 0,
+                top: '50%',
+                transform: 'translateY(-50%)',
+                zIndex: 2,
+                bgcolor: 'background.paper',
+                boxShadow: 2,
+                '&:hover': { bgcolor: 'grey.100' },
+                width: 40,
+                height: 40
+              }}
+            >
+              <ChevronLeft />
+            </IconButton>
+            
+            <IconButton
+              onClick={nextSlide}
+              sx={{
+                position: 'absolute',
+                right: 0,
+                top: '50%',
+                transform: 'translateY(-50%)',
+                zIndex: 2,
+                bgcolor: 'background.paper',
+                boxShadow: 2,
+                '&:hover': { bgcolor: 'grey.100' },
+                width: 40,
+                height: 40
+              }}
+            >
+              <ChevronRight />
+            </IconButton>
+          </>
+        )}
+
+        {/* Sliding Container */}
+        <Box
+          ref={containerRef}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          sx={{
+            overflow: 'hidden',
+            position: 'relative',
+            mx: totalSlides > 1 ? 5 : 0,
+            touchAction: 'pan-y'
+          }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              transition: 'transform 0.3s ease-in-out',
+              transform: `translateX(-${currentSlide * 100}%)`,
+              width: `${totalSlides * 100}%`
+            }}
+          >
+            {Array.from({ length: totalSlides }).map((_, slideIndex) => (
+              <Box
+                key={slideIndex}
+                sx={{
+                  width: `${100 / totalSlides}%`,
+                  display: 'flex',
+                  gap: 2,
+                  px: 1
+                }}
+              >
+                {earnMethods
+                  .slice(slideIndex * cardsPerSlide, (slideIndex + 1) * cardsPerSlide)
+                  .map((method, cardIndex) => (
+                    <Card
+                      key={slideIndex * cardsPerSlide + cardIndex}
+                      sx={{
+                        flex: 1,
+                        minWidth: 0,
+                        height: '280px',
+                        borderRadius: '16px',
+                        border: '0.5px solid #B6C9D9',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        textAlign: 'center',
+                        p: 2
+                      }}
+                    >
+                      <img 
+                        src={GOLDEN_BADGE} 
+                        alt="badge-image" 
+                        style={{ width: '48px', height: '48px', marginBottom: '8px' }}
+                      />
+                      <Typography sx={{ ...TYPOGRAPHY.body1, mt: '0.5rem', mb: '0.8rem' }}>
+                        {method.title}
+                      </Typography>
+                      
+                      <Chip 
+                        label={
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                            {method.value}
+                            <img 
+                              src={lpicon || ''} 
+                              alt="lp-icon" 
+                              style={{ width: '16px', height: '16px' }} 
+                            />
+                          </Box>
+                        }
+                        color="primary" 
+                        sx={{ 
+                          ...TYPOGRAPHY.body3,
+                          fontWeight: 600,
+                          mb: '1rem'
+                        }} 
+                      />
+                      
+                      <Typography sx={{ ...TYPOGRAPHY.caption, color: 'info.dark' }}>
+                        {method.description}<br/>({method.maxPerDay})
+                      </Typography>
+                    </Card>
+                  ))}
+              </Box>
+            ))}
+          </Box>
+        </Box>
+
+        {/* Dots Indicator */}
+        {totalSlides > 1 && (
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              gap: 1,
+              mt: 3
+            }}
+          >
+            {Array.from({ length: totalSlides }).map((_, index) => (
+              <Box
+                key={index}
+                onClick={() => goToSlide(index)}
+                sx={{
+                  width: 8,
+                  height: 8,
+                  borderRadius: '50%',
+                  bgcolor: currentSlide === index ? 'primary.main' : 'grey.300',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  '&:hover': {
+                    bgcolor: currentSlide === index ? 'primary.dark' : 'grey.400'
+                  }
+                }}
+              />
+            ))}
+          </Box>
+        )}
+      </Box>
+    );
+  }
+
+
   return (
     <Box sx={{ p: 3, display: 'flex', justifyContent: 'center' }}>
       <Box sx={{ 
@@ -159,7 +278,7 @@ const LPEarningMethods: React.FC<LPEarningMethodsProps> = ({ earnMethods, isMobi
                 label={
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     {method.value}
-                    <img src={lpicon} alt="lp-icon" style={{ width: '16px', height: '16px' }} />
+                    <img src={lpicon || ''} alt="lp-icon" style={{ width: '16px', height: '16px' }} />
                   </Box>
                 }
                 color="primary" 
