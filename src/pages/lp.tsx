@@ -8,7 +8,7 @@ export default function LpPage() {
   return (
     <>
       <Helmet>
-        <title> {`Liquidity Pool - ${CONFIG.appName}`}</title>
+        <title> {`Loyalty Program - ${CONFIG.appName}`}</title>
       </Helmet>
 
       <LpView />

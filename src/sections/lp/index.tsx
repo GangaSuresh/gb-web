@@ -1,33 +1,63 @@
-import { Box, Typography, Grid, Card, CardContent, CircularProgress, Alert, Button } from "@mui/material";
-import { TYPOGRAPHY } from "src/theme/styles/fonts";
-import { useRouteData } from "src/hooks/useRouteData";
+import FAQ from 'src/components/faq';
+import { useNavigate } from 'react-router-dom';
+import { TYPOGRAPHY } from 'src/theme/styles/fonts';
+import { useRouteData } from 'src/hooks/useRouteData';
+import {
+  Box,
+  Alert,
+  Button,
+  useTheme,
+  Typography,
+  useMediaQuery,
+  CircularProgress,
+  List,
+  ListItemIcon,
+  ListItemText,
+  Chip,
+  ListItem,
+} from '@mui/material';
 
-export default function LpView() {
-  const { 
-    data, 
-    isLoading, 
-    isError, 
-    error, 
-    refetch, 
-    hasImages, 
-    hasStaticText, 
-    hasFaq 
-  } = useRouteData('lp');
+import {
+  LP_NAME,
+  GOLDEN_BADGE,
+  LP_SUBTITLE,
+  LP_INFO_IMAGE,
+  LP_DESCRIPTION,
+  LP_EARN_METHODS,
+  LP_INFO_IMAGE_MOBILE,
+} from './constants';
+import LPEarningMethods from './lp-earning-cards';
+
+export default function LPView() {
+  const { data, isLoading, isError, error, refetch, hasFaq } = useRouteData('lp');
+  const navigate = useNavigate();
+  const lpData = {
+    images: data?.images || {},
+    staticText: data?.staticText || {},
+  };
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   if (isLoading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" height="calc(100vh - 72px)">
         <CircularProgress />
-        <Typography sx={{ ml: 2 }}>Loading LP data...</Typography>
+        <Typography sx={{ ml: 2 }}>Loading coin data...</Typography>
       </Box>
     );
   }
 
   if (isError) {
     return (
-      <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" height="calc(100vh - 72px)">
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        height="calc(100vh - 72px)"
+      >
         <Alert severity="error" sx={{ mb: 2 }}>
-          {error?.message || 'Failed to load LP data. Please try again.'}
+          {error?.message || 'Failed to load coin data. Please try again.'}
         </Alert>
         <Button variant="contained" onClick={() => refetch()}>
           Retry
@@ -38,14 +68,53 @@ export default function LpView() {
 
   if (!data) {
     return (
-      <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" height="calc(100vh - 72px)">
-        <Typography variant="h6" sx={{ mb: 2 }}>No LP data available</Typography>
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        justifyContent="center"
+        height="calc(100vh - 72px)"
+      >
+        <Typography variant="h6" sx={{ mb: 2 }}>
+          No LP data available
+        </Typography>
         <Button variant="contained" onClick={() => refetch()}>
           Load Data
         </Button>
       </Box>
     );
   }
+
+  const getFaqData = () => {
+    try {
+      return hasFaq && Array.isArray(lpData.staticText.faq) ? lpData.staticText.faq : [];
+    } catch {
+      return [];
+    }
+  };
+
+  const getLPImage = () => {
+    try {
+      return lpData.images['lp-shadow'] || null;
+    } catch {
+      return null;
+    }
+  };
+  const getLPIcon = () => {
+    try {
+      return lpData.images.lp || null;
+    } catch {
+      return null;
+    }
+  };
+
+  const getEarnMethodsData = () => {
+    try {
+      return hasFaq && Array.isArray(lpData.staticText.earnMethods) ? lpData.staticText.earnMethods : [];
+    } catch {
+      return [];
+    }
+  };
 
   return (
     <Box
@@ -54,89 +123,89 @@ export default function LpView() {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        height: 'calc(100vh - 72px)',
-        p: 3,
+        width: '100%',
       }}
     >
-      {/* Header Section */}
-      {data.staticText?.title && (
-        <Typography sx={{ ...TYPOGRAPHY.headline2, color: 'primary.main', mb: 2 }}>
-          {data.staticText.title}
+      <Box
+        sx={{
+          width: '100%',
+          textAlign: 'center',
+          background: 'radial-gradient(ellipse at 104.35% 264%, #008AFA 12.86%, #0032AA 100%)',
+          color: 'white',
+          pb: isMobile ? '2rem' : '4rem',
+        }}
+      >
+        {/* Header Section */}
+        <Typography
+          sx={{
+            fontSize: { xs: '1.5rem', sm: '2.5rem', md: '3.75rem' },
+            fontFamily: 'Lora',
+            color: 'info.light',
+            mt: isMobile ? '1rem' : '2.5rem',
+            fontWeight: 700,
+            textAlign: 'center',
+          }}
+        >
+          {LP_NAME}
         </Typography>
-      )}
-      
-      {data.staticText?.description && (
-        <Typography sx={{ ...TYPOGRAPHY.body1, textAlign: 'center', mb: 4, maxWidth: 600 }}>
-          {data.staticText.description}
+        <Typography
+          sx={{
+            ...(isMobile ? TYPOGRAPHY.body1 : TYPOGRAPHY.headline5),
+          }}
+        >
+          {LP_SUBTITLE}
         </Typography>
-      )}
-
-      {/* Images Section */}
-      {hasImages && (
-        <Box sx={{ width: '100%', mb: 4 }}>
-          <Typography sx={{ ...TYPOGRAPHY.headline5, mb: 2 }}>
-            {data.staticText?.imagesTitle || 'Pool Gallery'}
-          </Typography>
-          <Grid container spacing={2}>
-            {Object.entries(data.images).map(([key, imageUrl]) => (
-              <Grid item xs={12} sm={6} md={4} key={key}>
-                <Card>
-                  <img 
-                    src={imageUrl} 
-                    alt={key.replace(/-/g, ' ')}
-                    style={{ 
-                      width: '100%', 
-                      height: '200px', 
-                      objectFit: 'cover', 
-                      borderRadius: '8px 8px 0 0' 
-                    }}
-                    onError={(e) => {
-                      // Fallback for broken images
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                    }}
-                  />
-                  <CardContent>
-                    <Typography variant="body2" sx={{ textTransform: 'capitalize' }}>
-                      {key.replace(/-/g, ' ')}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
-      )}
+        <img
+          src={getLPImage() || ''}
+          alt={LP_NAME}
+          style={{
+            width: isMobile ? '84px' : 'auto',
+            height: isMobile ? '84px' : 'auto',
+            marginTop: isMobile ? '2rem' : '3.5rem',
+          }}
+        />
+        {/* Main Section */}
+        <Typography
+          sx={{
+            ...(isMobile ? TYPOGRAPHY.headline6 : TYPOGRAPHY.headline2),
+            fontFamily: 'Lora',
+            fontWeight: isMobile ? 600 : 400,
+            mt: isMobile ? '2rem' : '3.5rem',
+          }}
+        >
+          What are Loyalty Points & their Benefits?
+        </Typography>
+        <Typography sx={{ ...(isMobile ? TYPOGRAPHY.body1 : TYPOGRAPHY.headline6) }}>
+          {LP_DESCRIPTION}
+        </Typography>
+        {isMobile ? (
+          <img src={LP_INFO_IMAGE_MOBILE} alt="lp-info-image" style={{ marginTop: '1rem' }} />
+        ) : (
+          <img src={LP_INFO_IMAGE} alt="lp-info-image" style={{ marginTop: '3rem' }} />
+        )}
+      </Box>
+      <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',border:'solid',textAlign:'center',width:'100%'}}>
+        <Typography
+          sx={{
+            ...(isMobile ? TYPOGRAPHY.headline6 : TYPOGRAPHY.headline4),
+            mt: isMobile ? '1rem' : '2rem',
+            color: 'primary.main',
+            fontFamily: 'Lora',
+            fontWeight: isMobile ? 600 : 500,
+          }}
+        >
+          How to Earn Loyalty Points?
+        </Typography>
+        <Typography sx={{ ...(isMobile ? TYPOGRAPHY.body2 : TYPOGRAPHY.headline6) }}>
+          Engage with the GBN community through
+          <br />
+          various activities to earn loyalty points
+        </Typography>
+        <LPEarningMethods earnMethods={getEarnMethodsData()} isMobile={isMobile} lpicon={getLPIcon()} />
+      </Box>
 
       {/* FAQ Section */}
-      {hasFaq && (
-        <Box sx={{ width: '100%', mb: 4 }}>
-          <Typography sx={{ ...TYPOGRAPHY.headline5, mb: 2 }}>
-            Frequently Asked Questions
-          </Typography>
-          <Grid container spacing={2}>
-            {Array.isArray(data.staticText.faq) && data.staticText.faq.map((faqItem: string, index: number) => {
-              const [question, answer] = faqItem.split(' - ');
-              return (
-                <Grid item xs={12} key={index}>
-                  <Card>
-                    <CardContent>
-                      <Typography variant="h6" sx={{ mb: 1 }}>
-                        {question}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        {answer}
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              );
-            })}
-          </Grid>
-        </Box>
-      )}
-
-
+      {hasFaq && <FAQ faqs={getFaqData()} />}
     </Box>
   );
 }

@@ -62,7 +62,7 @@ export const TYPOGRAPHY = {
   headline5: {
     fontFamily: FONTS.primary,
     fontSize: '1.5rem',     // 24px
-    fontWeight: FONT_WEIGHTS.bold,
+    fontWeight: FONT_WEIGHTS.regular,
   },
   
   headline6: {

@@ -13,6 +13,7 @@ interface LPSectionProps {
   lpcurrPoints: number;
   lpcurrBadge: string;
   onViewHistory: () => void;
+  onKnowMore: () => void;
   tier: TierItem[];
   isMobile: boolean;
 }
@@ -113,13 +114,13 @@ const BadgeSection = ({
   </Box>
 );
 
-const KnowMoreButton = ({ isMobile }: { isMobile: boolean }) => (
+const KnowMoreButton = ({ isMobile, onKnowMore }: { isMobile: boolean, onKnowMore: () => void }) => (
   <Button
     className="button-primary-outlined"
     variant="outlined"
     size={isMobile ? "small" : "large"}
     sx={{ backgroundColor: 'transparent' }}
-    onClick={() => {}}
+    onClick={onKnowMore}
   >
     Know More
     <Iconify icon="icon-park-outline:right" />
@@ -131,6 +132,7 @@ export default function LPSection({
   lpcurrPoints,
   lpcurrBadge,
   onViewHistory,
+  onKnowMore,
   tier,
   isMobile
 }: LPSectionProps) {
@@ -199,7 +201,7 @@ export default function LPSection({
 
           {/* Right side - Button */}
           <Box display="flex" alignItems="flex-start">
-            <KnowMoreButton isMobile={false} />
+            <KnowMoreButton isMobile={false} onKnowMore={onKnowMore}/>
           </Box>
         </Box>
       ) : (
@@ -227,7 +229,7 @@ export default function LPSection({
             >
               GBN Loyalty Programme
             </Typography>
-            <KnowMoreButton isMobile />
+            <KnowMoreButton isMobile onKnowMore={onKnowMore}/>
           </Box>
           <Box sx={{ display: 'flex', p: '1.5rem 2.5rem 0 2.5rem', gap: '4rem' }}>
             {/* Points Section */}

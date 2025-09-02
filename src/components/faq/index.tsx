@@ -30,8 +30,8 @@ export default function FAQComponent({faqs }: FAQProps) {
         display:'flex',
         flexDirection:'column',
         alignItems:'center',
-        borderTopLeftRadius:'40px',
-        borderTopRightRadius:'40px'
+        borderTopLeftRadius:'12px',
+        borderTopRightRadius:'12px'
       }}
     >
       <Typography

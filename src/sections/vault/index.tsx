@@ -116,21 +116,24 @@ export default function VaultView() {
 
   // Handler functions for coin section
   const handleTopUp = () => {
-    navigate('/coin/add');
+   
   };
 
-  const handleKnowMore = () => {
+  const handleCoinKnowMore = () => {
     navigate('/coin/info');
   };
 
   const handleUJViewHistory = () => {
-    navigate('/coin/history');
+
   };
 
   // Handler function for LP section
   const handleLPViewHistory = () => {
     // Handle LP view history logic
     console.log('LP view history clicked');
+  };
+  const handleLPKnowMore = () => {
+    navigate('/lp/info');
   };
 
   return (
@@ -166,7 +169,7 @@ export default function VaultView() {
           coinCount={0}
           coinName="UJ Coins"
           onTopUp={handleTopUp}
-          onKnowMore={handleKnowMore}
+          onKnowMore={handleCoinKnowMore}
           onViewHistory={handleUJViewHistory}
           isMobile={isMobile}
         />
@@ -178,6 +181,7 @@ export default function VaultView() {
             lpcurrPoints={500}
             lpcurrBadge="Bronze"
             onViewHistory={handleLPViewHistory}
+            onKnowMore={handleLPKnowMore}
             tier={getTierData()}
             isMobile={isMobile}
           />
