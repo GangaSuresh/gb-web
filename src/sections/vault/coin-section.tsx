@@ -10,6 +10,7 @@ interface CoinSectionProps {
   onKnowMore: () => void;
   onViewHistory: () => void;
   isMobile: boolean;
+  isTablet: boolean;
 }
 
 export default function CoinSection({
@@ -19,7 +20,8 @@ export default function CoinSection({
   onTopUp,
   onKnowMore,
   onViewHistory,
-  isMobile
+  isMobile,
+  isTablet
 }: CoinSectionProps) {
 
 
@@ -28,7 +30,8 @@ export default function CoinSection({
       display="flex"
       flexDirection={isMobile ? 'column' : 'row'}
       sx={{
-        width: { xs: '95%', sm: '100%',md:'1140px' },
+        width: '90%',
+        maxWidth: '1140px',
         mt: { xs: '1.5rem', sm: '2rem' },
         p: {
           xs: '1rem',
@@ -90,7 +93,7 @@ export default function CoinSection({
         <Button 
           className="button-yellow" 
           variant="outlined" 
-          size={isMobile ? 'medium' : 'large'} 
+          size={isMobile ? 'medium' : isTablet ? 'medium' : 'large'} 
           onClick={onTopUp}
           sx={{ flex: isMobile ? 1 : 'auto' }}
         >
@@ -100,7 +103,7 @@ export default function CoinSection({
         <Button
           className="button-primary-outlined"
           variant="outlined"
-          size={isMobile ? 'medium' : 'large'}
+          size={isMobile ? 'medium' : isTablet ? 'medium' : 'large'} 
           onClick={onKnowMore}
           sx={{backgroundColor:'transparent', flex: isMobile ? 1 : 'auto' }}
         >

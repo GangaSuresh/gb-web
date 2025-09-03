@@ -16,6 +16,7 @@ interface LPSectionProps {
   onKnowMore: () => void;
   tier: TierItem[];
   isMobile: boolean;
+  isTablet: boolean;
 }
 
 // Extracted reusable components for better maintainability
@@ -105,7 +106,9 @@ const BadgeSection = ({
         sx={{
           ...(isMobile ? TYPOGRAPHY.caption : TYPOGRAPHY.body2),
           color: 'primary.lighter',
-          whiteSpace: 'nowrap',
+          whiteSpace: isMobile ? 'nowrap' : undefined,
+          wordBreak: !isMobile ? 'break-word' : undefined,
+          overflowWrap: !isMobile ? 'break-word' : undefined,
         }}
       >
         Your Current Badge
@@ -114,11 +117,11 @@ const BadgeSection = ({
   </Box>
 );
 
-const KnowMoreButton = ({ isMobile, onKnowMore }: { isMobile: boolean, onKnowMore: () => void }) => (
+const KnowMoreButton = ({ isMobile, onKnowMore,isTablet }: { isMobile: boolean, onKnowMore: () => void,isTablet: boolean }) => (
   <Button
     className="button-primary-outlined"
     variant="outlined"
-    size={isMobile ? "small" : "large"}
+    size={isMobile ? "small" : isTablet ? "medium" : "large"}
     sx={{ backgroundColor: 'transparent' }}
     onClick={onKnowMore}
   >
@@ -134,7 +137,8 @@ export default function LPSection({
   onViewHistory,
   onKnowMore,
   tier,
-  isMobile
+  isMobile,
+  isTablet
 }: LPSectionProps) {
   const [benefitsExpanded, setBenefitsExpanded] = useState(true);
 
@@ -165,7 +169,8 @@ export default function LPSection({
     <Box
       sx={{
         mt: { xs: '1.25rem', sm: '2rem' },
-        width: { xs: '95%', sm: '100%',md:'1140px' },
+        width: '90%',
+        maxWidth: '1140px',
         mx: 'auto',
       }}
     >
@@ -201,7 +206,7 @@ export default function LPSection({
 
           {/* Right side - Button */}
           <Box display="flex" alignItems="flex-start">
-            <KnowMoreButton isMobile={false} onKnowMore={onKnowMore}/>
+            <KnowMoreButton isMobile={false} onKnowMore={onKnowMore} isTablet={isTablet}/>
           </Box>
         </Box>
       ) : (
@@ -229,9 +234,9 @@ export default function LPSection({
             >
               GBN Loyalty Programme
             </Typography>
-            <KnowMoreButton isMobile onKnowMore={onKnowMore}/>
+            <KnowMoreButton isMobile onKnowMore={onKnowMore} isTablet={isTablet}/>
           </Box>
-          <Box sx={{ display: 'flex', p: '1.5rem 2.5rem 0 2.5rem', gap: '4rem' }}>
+          <Box sx={{ display: 'flex', p: '1.5rem 2.5rem 0 2.5rem', alignItems: 'center' }}>
             {/* Points Section */}
             <Box
               sx={{
@@ -239,6 +244,7 @@ export default function LPSection({
                 flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
+                flex: 1
               }}
             >
               <PointsSection 
@@ -253,6 +259,7 @@ export default function LPSection({
               flexItem
               sx={{
                 borderRightWidth: '2px',
+                alignSelf: 'stretch'
               }}
             />
             {/* Badge Section */}
@@ -262,6 +269,7 @@ export default function LPSection({
                 flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
+                flex: 1,
               }}
             >
               <BadgeSection 
@@ -290,6 +298,7 @@ export default function LPSection({
         tiers={tier}
         images={images}
         isMobile={isMobile}
+        isTablet={isTablet}
       />
     </Box>
   );

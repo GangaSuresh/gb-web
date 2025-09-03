@@ -147,7 +147,7 @@ export default function MilestoneComponent({
               <Typography
                 sx={{
                   ...(isMobile ? TYPOGRAPHY.body4 : TYPOGRAPHY.body2),
-                  color: 'info.light',
+                  color: 'info.dark',
                   whiteSpace: 'nowrap',
                 }}
               >
@@ -243,7 +243,7 @@ export default function MilestoneComponent({
       >
         <Box sx={{ display: 'flex', alignItems: 'center', flex: 1,flexDirection:isMobile ? 'column' : 'row' }}>
           <Iconify icon="mdi:information-outline" sx={{ mr: 1, color: 'primary.main' }} />
-          <Typography variant="body2">
+          <Typography variant="body2" sx={{textAlign:isMobile ? 'center' : 'left'}}>
             {nextBadge.name !== 'Max'
               ? `Almost there! Earn your next badge "The ${nextBadge.name}" and get 1.5× LP on all activities.`
               : "You've unlocked all benefits! Keep earning to maintain your status."}

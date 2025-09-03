@@ -12,6 +12,7 @@ export default function VaultView() {
   const theme = useTheme();
   const navigate = useNavigate();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isTablet = useMediaQuery(theme.breakpoints.down('md'));
   const { data, isLoading, isError, error, refetch, hasImages, hasStaticText, hasFaq, hasTier } =
     useRouteData('vault');
 
@@ -172,6 +173,7 @@ export default function VaultView() {
           onKnowMore={handleCoinKnowMore}
           onViewHistory={handleUJViewHistory}
           isMobile={isMobile}
+          isTablet={isTablet}
         />
 
         {/* LP Section - Only render if tier data exists */}
@@ -184,6 +186,7 @@ export default function VaultView() {
             onKnowMore={handleLPKnowMore}
             tier={getTierData()}
             isMobile={isMobile}
+            isTablet={isTablet}
           />
         )}
         {/* FAQ Section - Only render if FAQ data exists */}
