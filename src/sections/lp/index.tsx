@@ -21,6 +21,7 @@ import {
   LP_INFO_IMAGE_MOBILE,
 } from './constants';
 import BenefitsComponent from '../vault/benefits-section';
+import MilestoneRewards from './milestone-activity';
 
 export default function LPView() {
   const { data, isLoading, isError, error, refetch, hasFaq } = useRouteData('lp');
@@ -235,6 +236,7 @@ export default function LPView() {
           As you accumulate Loyalty Points, you&apos;ll climb through loyalty tiers, each offering
           increasingly valuable perks and exclusive access within the GBN community.
         </Typography>
+        <MilestoneRewards/>
         <Box sx={{ width: { xs: '95%', sm: '100%', md: '1140px' }, mb: '1rem',mt:isMobile?'1rem':'3rem' }}>
           <BenefitsComponent
             tiers={lpData.staticText.tier}
