@@ -31,6 +31,7 @@ const navigate = useNavigate();
   };
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isTablet = useMediaQuery(theme.breakpoints.down('md'));
 
   if (isLoading) {
     return (
@@ -106,7 +107,7 @@ const navigate = useNavigate();
         color: 'white',
       }}
     >
-      <Box sx={{ textAlign: 'center' }}>
+      <Box sx={{ textAlign: 'center',width: '90%',maxWidth: '1140px' }}>
         {/* Header Section */}
         <Typography
           sx={{
