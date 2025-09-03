@@ -31,6 +31,7 @@ export default function LPView() {
   };
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isTablet = useMediaQuery(theme.breakpoints.down('md'));
 
   if (isLoading) {
     return (

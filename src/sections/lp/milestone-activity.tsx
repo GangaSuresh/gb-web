@@ -11,6 +11,8 @@ import {
   useMediaQuery,
 } from "@mui/material";
 
+import { Iconify } from "../../components/iconify";
+
 /* Data */
 const MILESTONE_DATA = [
   { title: "Signup Bonus", points: 100 },
@@ -33,7 +35,7 @@ function a11yProps(index: number) {
   };
 }
 
-/* Styled Tabs to resemble the screenshot */
+/* Styled Tabs to match the image design */
 const CardTabs = styled(Tabs)(({ theme }) => ({
   minHeight: 56,
   "& .MuiTabs-flexContainer": {
@@ -49,30 +51,35 @@ const StyledTab = styled(Tab)(({ theme }) => ({
   fontWeight: 600,
   minHeight: 56,
   padding: theme.spacing(1.25, 2),
-  borderTopLeftRadius: theme.shape.borderRadius,
-  borderTopRightRadius: theme.shape.borderRadius,
+  borderTopLeftRadius: 12,
+  borderTopRightRadius: 12,
   color: "rgba(255, 255, 255, 0.7)",
   textDecoration: "underline",
   backgroundColor: "transparent",
-  minWidth: 160,
+  flex: 1,
+  fontSize: "1rem",
   "&.Mui-selected": {
     background:
-      "linear-gradient(180deg, rgba(255,234,167,1) 0%, rgba(247,208,92,1) 100%)",
-    color: theme.palette.text.primary,
-    boxShadow: theme.shadows[1],
+      "linear-gradient(180deg, #E6B84D 0%, #F2D078 100%)",
+    color: "#1A1A1A",
+    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
     textDecoration: "none",
     fontWeight: 700,
   },
 }));
 
+
+
 /* Wrapper that looks like the blue panel in the image */
 const PanelPaper = styled(Paper)(({ theme }) => ({
   background:
-    "linear-gradient(180deg, rgba(13,87,196,1) 0%, rgba(9,65,152,1) 100%)",
+    "linear-gradient(180deg, #2142C2 0%, #1A3399 100%)",
   borderRadius: 12,
   padding: theme.spacing(2),
-  boxShadow: theme.shadows[3],
-  border: "1px solid rgba(255,255,255,0.15)",
+  boxShadow: "0 8px 32px rgba(0,0,0,0.3)",
+  border: "2px solid rgba(255,255,255,0.3)",
+  width: 800,
+  margin: "0 auto",
 }));
 
 /* Inner card with subtle outline */
@@ -85,8 +92,8 @@ const CardBody = styled(Box)(({ theme }) => ({
 
 /* Individual milestone item card */
 const MilestoneCard = styled(Box)(({ theme }) => ({
-  backgroundColor: "rgba(255, 255, 255, 0.05)",
-  border: "1px solid rgba(255, 255, 255, 0.2)",
+  backgroundColor: "#3A60E0",
+  border: "1px solid rgba(255, 255, 255, 0.1)",
   borderRadius: 8,
   padding: theme.spacing(2),
   display: "flex",
@@ -95,19 +102,20 @@ const MilestoneCard = styled(Box)(({ theme }) => ({
   minHeight: 60,
 }));
 
-/* Circular LP badge */
+/* Oval LP badge with star icon */
 const LPBadge = styled(Box)(({ theme }) => ({
-  backgroundColor: "rgba(255, 255, 255, 0.2)",
-  borderRadius: "50%",
-  width: 40,
-  height: 40,
+  backgroundColor: "white",
+  borderRadius: "20px",
+  padding: theme.spacing(0.5, 1.5),
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  color: "white",
+  gap: theme.spacing(0.5),
+  color: "#2142C2",
   fontWeight: 700,
-  fontSize: "0.75rem",
-  border: "1px solid rgba(255, 255, 255, 0.3)",
+  fontSize: "0.875rem",
+  border: "1px solid #2142C2",
+  minWidth: 60,
 }));
 
 /* TabPanel */
@@ -122,8 +130,9 @@ const TabPanel: React.FC<TabPanelProps> = ({ children, value, index }) => (
     hidden={value !== index}
     id={`rewards-tabpanel-${index}`}
     aria-labelledby={`rewards-tab-${index}`}
+    style={{ width: "100%" }}
   >
-    {value === index && <Box sx={{ pt: 2 }}>{children}</Box>}
+    {value === index && <Box sx={{ pt: 2, width: "100%" }}>{children}</Box>}
   </div>
 );
 
@@ -137,87 +146,88 @@ const MilestoneRewards: React.FC = () => {
   };
 
   return (
-    <PanelPaper>
-      {/* Tabs header row */}
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          gap: 2,
-          px: { xs: 0.5, sm: 1 },
-        }}
-      >
-        <CardTabs
-          value={tabValue}
-          onChange={handleTabChange}
-          variant={isMobile ? "fullWidth" : "standard"}
-          aria-label="Milestones and Activity Tabs"
+      <PanelPaper>
+        {/* Tabs header row */}
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            width: "100%",
+          }}
         >
-          {/* Both tabs use the same styled component */}
-          <StyledTab label="Milestone Rewards" {...a11yProps(0)} />
-          <StyledTab label="Activity Streaks" {...a11yProps(1)} />
-        </CardTabs>
-      </Box>
-
-      {/* Content area - fixed width to prevent layout shift */}
-      <Box sx={{ mt: 2, minHeight: 400 }}>
-        {/* Milestone Rewards */}
-        <TabPanel value={tabValue} index={0}>
-          <Typography
-            variant="body1"
-            sx={{ color: "rgba(255, 255, 255, 0.9)", mb: 3 }}
+          <CardTabs
+            value={tabValue}
+            onChange={handleTabChange}
+            variant="fullWidth"
+            aria-label="Milestones and Activity Tabs"
+            sx={{ width: "100%" }}
           >
-            Achieve special milestones and earn bonus LP for dedication to the
-            community.
-          </Typography>
+            {/* Both tabs use the same styled component */}
+            <StyledTab label="Milestone Rewards" {...a11yProps(0)} />
+            <StyledTab label="Activity Streaks" {...a11yProps(1)} />
+          </CardTabs>
+        </Box>
 
-          <Grid container spacing={2}>
-            {MILESTONE_DATA.map((item, idx) => (
-              <Grid item xs={12} sm={6} key={item.title + idx}>
-                <MilestoneCard>
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      color: "white",
-                      fontWeight: 500,
-                      flex: 1,
-                    }}
-                  >
-                    {item.title}
-                  </Typography>
-                  <LPBadge>
-                    {item.points}
-                  </LPBadge>
-                </MilestoneCard>
-              </Grid>
-            ))}
-          </Grid>
-        </TabPanel>
-
-        {/* Activity Streaks */}
-        <TabPanel value={tabValue} index={1}>
-          <Typography
-            variant="body1"
-            sx={{ color: "rgba(255, 255, 255, 0.9)", mb: 3 }}
-          >
-            Activity Streaks
-          </Typography>
-          <CardBody>
+        {/* Content area - fixed width to prevent layout shift */}
+        <Box sx={{ mt: 2, minHeight: 400, width: "100%" }}>
+          {/* Milestone Rewards */}
+          <TabPanel value={tabValue} index={0}>
             <Typography
-              variant="h6"
-              sx={{ fontWeight: "bold", fontSize: "1.1rem", mb: 1 }}
+              variant="body1"
+              sx={{ color: "white", mb: 3, fontSize: "1rem" }}
+            >
+              Achieve special milestones and earn bonus LP for your dedication to the community.
+            </Typography>
+
+            <Grid container spacing={2}>
+              {MILESTONE_DATA.map((item, idx) => (
+                <Grid item xs={12} sm={6} key={item.title + idx}>
+                  <MilestoneCard>
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        color: "white",
+                        fontWeight: 500,
+                        flex: 1,
+                        fontSize: "0.95rem",
+                      }}
+                    >
+                      {item.title}
+                    </Typography>
+                    <LPBadge>
+                      {item.points}
+                      <Iconify icon="eva:star-fill" width={16} sx={{ color: "#9E9E9E" }} />
+                    </LPBadge>
+                  </MilestoneCard>
+                </Grid>
+              ))}
+            </Grid>
+          </TabPanel>
+
+          {/* Activity Streaks */}
+          <TabPanel value={tabValue} index={1}>
+            <Typography
+              variant="body1"
+              sx={{ color: "white", mb: 3, fontSize: "1rem" }}
             >
               Activity Streaks
             </Typography>
-            {STREAK_DATA.map((t, i) => (
-              <Typography key={i} variant="body1" sx={{ mb: 1 }}>
-                {t}
+            <CardBody>
+              <Typography
+                variant="h6"
+                sx={{ fontWeight: "bold", fontSize: "1.1rem", mb: 1 }}
+              >
+                Activity Streaks
               </Typography>
-            ))}
-          </CardBody>
-        </TabPanel>
-      </Box>
-    </PanelPaper>
+              {STREAK_DATA.map((t, i) => (
+                <Typography key={i} variant="body1" sx={{ mb: 1 }}>
+                  {t}
+                </Typography>
+              ))}
+            </CardBody>
+          </TabPanel>
+        </Box>
+      </PanelPaper>
   );
 };
 
