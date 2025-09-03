@@ -11,6 +11,7 @@ interface BenefitsProps {
   tiers: TierItem[];
   images: Record<string, string>;
   isMobile:boolean;
+  isTablet:boolean;
 }
 
 export default function BenefitsComponent({
@@ -18,6 +19,7 @@ export default function BenefitsComponent({
   isMobile,
   tiers,
   images,
+  isTablet
 }: BenefitsProps) {
   // Extract all benefit keys except title and range
   const benefitKeys = Object.keys(tiers[0]).filter(
@@ -36,7 +38,7 @@ export default function BenefitsComponent({
       );
     }
     return (
-        <Typography sx={{ ...(isMobile ? TYPOGRAPHY.caption:TYPOGRAPHY.body2), fontWeight: 600, textAlign: 'center' }}>
+        <Typography sx={{ ...((isMobile || isTablet) ? TYPOGRAPHY.caption:TYPOGRAPHY.body2), fontWeight: 600, textAlign: 'center' }}>
           {value}
         </Typography>
     );
@@ -57,7 +59,7 @@ export default function BenefitsComponent({
           sx={{
             display: 'flex',
             minWidth: 0, // Allow flex item to shrink below content size
-            ...(isMobile && {
+            ...((isMobile || isTablet) && {
               overflowX: 'auto',
               '&::-webkit-scrollbar': {
                 height: '6px',
@@ -75,9 +77,9 @@ export default function BenefitsComponent({
           {/* Sticky Benefits Column */}
           <Box
             sx={{
-              maxWidth: isMobile ? '150px' : 'auto',
+              maxWidth: (isMobile || isTablet) ? '150px' : 'auto',
               flexShrink: 0,
-              position: isMobile ? 'sticky' : 'static',
+              position: (isMobile || isTablet) ? 'sticky' : 'static',
               left: 0,
               zIndex: 1,
               backgroundColor: 'primary.dark',
@@ -91,11 +93,11 @@ export default function BenefitsComponent({
                 alignItems: 'flex-start',
                 gap: '0.5rem',
                 p: '1.875rem 1.875rem 0 1.875rem',
-                height:isMobile?'8rem':'10rem',
+                height:(isMobile || isTablet)?'8rem':'10rem',
               }}
             >
               <img src={images.benefits} alt="benefits" />
-              <Typography sx={{ ...(isMobile ? TYPOGRAPHY.caption:TYPOGRAPHY.body1), fontWeight: 600 }}>Benefits</Typography>
+              <Typography sx={{ ...((isMobile || isTablet) ? TYPOGRAPHY.caption:TYPOGRAPHY.body1), fontWeight: 600 }}>Benefits</Typography>
             </Box>
 
             {/* Benefits Rows */}
@@ -109,7 +111,7 @@ export default function BenefitsComponent({
                 }}
               >
                 <Box sx={{ p: '1.2rem', width: '100%' }}>
-                  <Typography sx={{ ...(isMobile ? TYPOGRAPHY.caption:TYPOGRAPHY.body2) }}>{camelToTitle(benefitKey)}</Typography>
+                  <Typography sx={{ ...((isMobile || isTablet) ? TYPOGRAPHY.caption:TYPOGRAPHY.body2) }}>{camelToTitle(benefitKey)}</Typography>
                 </Box>
               </Box>
             ))}
@@ -119,7 +121,7 @@ export default function BenefitsComponent({
           <Box
             sx={{
               display: 'flex',
-              maxWidth: isMobile ? `${tiers.length * 150}px` : 'auto',
+              maxWidth: (isMobile || isTablet) ? `${tiers.length * 150}px` : 'auto',
               flex: 1,
             }}
           >
@@ -127,8 +129,8 @@ export default function BenefitsComponent({
               <Box
                 key={`tier-column-${tierIndex}`}
                 sx={{
-                  maxWidth: isMobile ? '150px' : 'auto',
-                  flex: isMobile ? 'none' : 1,
+                  maxWidth: (isMobile || isTablet) ? '150px' : 'auto',
+                  flex: (isMobile || isTablet) ? 'none' : 1,
                   backgroundColor: 'primary.main',
                 }}
               >
@@ -140,17 +142,17 @@ export default function BenefitsComponent({
                     alignItems: 'center',
                     gap: '0.5rem',
                     p: '1.875rem 1.875rem 0 1.875rem',
-                    height:isMobile?'8rem':'10rem',
+                    height:(isMobile || isTablet)?'8rem':'10rem',
                     textAlign: 'center',
                   }}
                 >
                   <img
                     src={images[`${tier.title.toLowerCase()}-badge`]}
                     alt={`${tier.title}-badge`}
-                    style={{  width: isMobile ? '30px' : 'auto', height: isMobile ? '40px' : 'auto'  }}
+                    style={{  width: (isMobile || isTablet) ? '30px' : 'auto', height: (isMobile || isTablet) ? '40px' : 'auto'  }}
                   />
-                  <Typography sx={{ ...(isMobile ? TYPOGRAPHY.caption : TYPOGRAPHY.body1), fontWeight: 500 }}>{tier.title}</Typography>
-                  <Typography sx={{ ...(isMobile ? TYPOGRAPHY.caption : TYPOGRAPHY.body2) }}>{tier.range}</Typography>
+                  <Typography sx={{ ...((isMobile || isTablet) ? TYPOGRAPHY.caption : TYPOGRAPHY.body1), fontWeight: 500 }}>{tier.title}</Typography>
+                  <Typography sx={{ ...((isMobile || isTablet) ? TYPOGRAPHY.caption : TYPOGRAPHY.body2) }}>{tier.range}</Typography>
                 </Box>
 
                 {/* Tier Benefit Rows */}
