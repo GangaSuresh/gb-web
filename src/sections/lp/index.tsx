@@ -221,12 +221,12 @@ export default function LPView() {
           flexDirection: 'column',
           alignItems: 'center',
           color: 'white',
+          pt:'5rem'
         }}
       >
-        <p>Milestone Benefits</p>
-
+        <MilestoneRewards/>
         <Typography
-          sx={{ ...(isMobile ? TYPOGRAPHY.headline6 : TYPOGRAPHY.headline4), fontFamily: 'Lora' }}
+          sx={{ ...(isMobile ? TYPOGRAPHY.headline6 : TYPOGRAPHY.headline4), fontFamily: 'Lora',mt:'2rem' }}
         >
           Your LP Unlock Exclusive Perks
         </Typography>
@@ -236,7 +236,6 @@ export default function LPView() {
           As you accumulate Loyalty Points, you&apos;ll climb through loyalty tiers, each offering
           increasingly valuable perks and exclusive access within the GBN community.
         </Typography>
-        <MilestoneRewards/>
         <Box sx={{ width: { xs: '95%', sm: '100%', md: '1140px' }, mb: '1rem',mt:isMobile?'1rem':'3rem' }}>
           <BenefitsComponent
             tiers={lpData.staticText.tier}
