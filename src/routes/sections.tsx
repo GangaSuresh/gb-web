@@ -65,7 +65,8 @@ export function Router() {
         {
           element: (
 
-              <HomePage />
+              // <HomePage />
+              <VaultPage/> 
           ),
           index: true,
         },
