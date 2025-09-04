@@ -1,4 +1,5 @@
 import { Iconify } from 'src/components/iconify';
+import Container from 'src/components/container';
 import { TYPOGRAPHY } from 'src/theme/styles/fonts';
 import { useMemo, useState, useCallback } from 'react';
 import { Box, Button, Divider, Typography } from '@mui/material';
