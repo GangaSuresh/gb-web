@@ -12,6 +12,7 @@ interface BenefitsProps {
   images: Record<string, string>;
   isMobile:boolean;
   isTablet:boolean;
+  addBorderRadiusOnTop?:boolean;
 }
 
 export default function BenefitsComponent({
@@ -19,7 +20,8 @@ export default function BenefitsComponent({
   isMobile,
   tiers,
   images,
-  isTablet
+  isTablet,
+  addBorderRadiusOnTop=false
 }: BenefitsProps) {
   // Extract all benefit keys except title and range
   const benefitKeys = Object.keys(tiers[0]).filter(
@@ -51,6 +53,7 @@ export default function BenefitsComponent({
           color: 'white',
           borderBottomLeftRadius: '16px',
           borderBottomRightRadius: '16px',
+          borderRadius: addBorderRadiusOnTop ? '16px' : undefined,
           overflow: 'hidden',
         }}
       >
