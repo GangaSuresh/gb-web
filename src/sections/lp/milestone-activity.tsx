@@ -4,7 +4,6 @@ import {
   Tab,
   Tabs,
   Grid,
-  styled,
   useTheme,
   Typography,
   useMediaQuery,
@@ -34,115 +33,6 @@ function a11yProps(index: number) {
   };
 }
 
-/* Styled Tabs to match the image design */
-const CardTabs = styled(Tabs)(({ theme }) => ({
-  minHeight: 56,
-  background: "red",
-  "& .MuiTabs-flexContainer": {
-   // gap: theme.spacing(0),
-  },
-  "& .MuiTabs-indicator": {
-    display: "none",
-  },
-  [theme.breakpoints.down("sm")]: {
-    minHeight: 48,
-  },
-}));
-
-const StyledTab = styled(Tab)(({ theme }) => ({
-  textTransform: "none",
-  fontWeight: 600,
-  minHeight: 56,
-  margin: theme.spacing(0.5),
-  borderTopLeftRadius: 12,
-  borderTopRightRadius: 12,
-  color: "rgba(255, 255, 255, 0.7)",
-  textDecoration: "underline",
-  flex: 1,
-  fontSize: "1rem",
-  [theme.breakpoints.down("sm")]: {
-    minHeight: 48,
-    fontSize: "0.875rem",
-    margin: theme.spacing(0.25),
-  },
-  "&.Mui-selected": {
-    background:
-      "linear-gradient(180deg, #E6B84D 0%, #F2D078 100%)",
-    color: "#1A1A1A",
-    boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
-    textDecoration: "none",
-    fontWeight: 700,
-    borderTop: "2px solid rgba(255,255,255,0.3)",
-    borderLeft: "2px solid rgba(255,255,255,0.3)",
-    borderRight: "2px solid rgba(255,255,255,0.3)",
-  },
-}));
-
-
-
-/* Content wrapper with padding */
-const ContentWrapper = styled(Box)(({ theme }) => ({
-  padding: theme.spacing(2),
-  width: "100%",
-  maxWidth: 800,
-  margin: "0 auto",
-  [theme.breakpoints.down("sm")]: {
-    padding: theme.spacing(1.5),
-  },
-}));
-
-/* Inner card with subtle outline */
-const CardBody = styled(Box)(({ theme }) => ({
-  //backgroundColor: theme.palette.background.paper,
-  borderRadius: 10,
-  border: "1px solid #e0e0e0",
-  padding: theme.spacing(2),
-  [theme.breakpoints.down("sm")]: {
-    padding: theme.spacing(1.5),
-    borderRadius: 8,
-  },
-}));
-
-/* Individual milestone item card */
-const MilestoneCard = styled(Box)(({ theme }) => ({
-  //backgroundColor: "#3A60E0",
-  border: "1px solid rgba(255, 255, 255, 0.1)",
-  borderRadius: 8,
-  padding: theme.spacing(2),
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-  minHeight: 60,
-  [theme.breakpoints.down("sm")]: {
-    padding: theme.spacing(1.5),
-    minHeight: 50,
-    flexDirection: "column",
-    gap: theme.spacing(1),
-    textAlign: "center",
-  },
-}));
-
-/* Oval LP badge with star icon */
-const LPBadge = styled(Box)(({ theme }) => ({
-  backgroundColor: "white",
-  borderRadius: "20px",
-  padding: theme.spacing(0.5, 1.5),
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  gap: theme.spacing(0.5),
-  color: "#2142C2",
-  fontWeight: 700,
-  fontSize: "0.875rem",
-  border: "1px solid #2142C2",
-  minWidth: 60,
-  [theme.breakpoints.down("sm")]: {
-    fontSize: "0.75rem",
-    padding: theme.spacing(0.4, 1.2),
-    minWidth: 50,
-  },
-}));
-
 /* TabPanel */
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -171,30 +61,112 @@ const MilestoneRewards: React.FC = () => {
   };
 
   return (
-    <ContentWrapper>
+    <Box
+      sx={{
+        width: "100%",
+        maxWidth: '60rem',
+      }}
+    >
       {/* Tabs header row */}
       <Box
         sx={{
           display: "flex",
           alignItems: "center",
           width: "100%",
-          borderRadius: "12px 12px 0 0",
-          boxShadow: "0 8px 32px rgba(0,0,0,0.3)",
-          border: "2px solid rgba(255,255,255,0.3)",
-          borderBottom: "none",
+          // borderRadius: "12px 12px 0 0",
+          // border: "2px solid rgba(255,255,255,0.3)",
+          // borderBottom: "none",
         }}
       >
-        <CardTabs
+        <Tabs
           value={tabValue}
           onChange={handleTabChange}
           variant="fullWidth"
           aria-label="Milestones and Activity Tabs"
-          sx={{ width: "100%" }}
+          sx={{
+            width: "100%",
+            minHeight: 56,
+            p:0,
+            "& .MuiTabs-flexContainer": {
+              // gap: theme.spacing(0),
+            },
+            "& .MuiTabs-indicator": {
+              display: "none",
+            },
+            [theme.breakpoints.down("sm")]: {
+              minHeight: 48,
+            },
+          }}
         >
-          {/* Both tabs use the same styled component */}
-          <StyledTab label="Milestone Rewards" {...a11yProps(0)} />
-          <StyledTab label="Activity Streaks" {...a11yProps(1)} />
-        </CardTabs>
+          <Tab
+            label="Milestone Rewards"
+            {...a11yProps(0)}
+            sx={{
+              textTransform: "none",
+              fontWeight: 600,
+              minHeight: 56,
+              margin: 0,
+              borderTopLeftRadius: 12,
+              borderTopRightRadius: 12,
+              color: "rgba(255, 255, 255, 0.7)",
+              textDecoration: "underline",
+              flex: 1,
+              fontSize: "1rem",
+              borderBottom: "2px solid rgba(255,255,255,0.3)",
+              [theme.breakpoints.down("sm")]: {
+                minHeight: 48,
+                fontSize: "0.875rem",
+                margin: 0,
+              },
+              borderBottomRightRadius:'12px',
+              "&.Mui-selected": {
+                // background: "linear-gradient(180deg, #E6B84D 0%, #F2D078 100%)",
+                color: "black",
+                fontWeight: 700,
+                borderTop: "2px solid rgba(255,255,255,0.3)",
+                borderLeft: "2px solid rgba(255,255,255,0.3)",
+                borderRight: "2px solid rgba(255,255,255,0.3)",
+                borderBottom: "none",
+                borderBottomRightRadius:'0px',
+                textDecoration:'none'
+              },
+            }}
+          />
+          <Tab
+            label="Activity Streaks"
+            {...a11yProps(1)}
+            sx={{
+              textTransform: "none",
+              fontWeight: 600,
+              minHeight: 56,
+              margin: 0,
+              borderTopLeftRadius: 12,
+              borderTopRightRadius: 12,
+              color: "rgba(255, 255, 255, 0.7)",
+              textDecoration: "underline",
+              flex: 1,
+              fontSize: "1rem",
+              borderBottom: "2px solid rgba(255,255,255,0.3)",
+              borderBottomLeftRadius:'12px',
+              [theme.breakpoints.down("sm")]: {
+                minHeight: 48,
+                fontSize: "0.875rem",
+                margin: 0,
+              },
+              "&.Mui-selected": {
+                // background: "linear-gradient(180deg, #E6B84D 0%, #F2D078 100%)",
+                color: "black",
+                fontWeight: 700,
+                borderTop: "2px solid rgba(255,255,255,0.3)",
+                borderLeft: "2px solid rgba(255,255,255,0.3)",
+                borderRight: "2px solid rgba(255,255,255,0.3)",
+                borderBottom: "none",
+                borderBottomLeftRadius:'0',
+                textDecoration:'none'
+              },
+            }}
+          />
+        </Tabs>
       </Box>
 
       {/* Content area - fixed width to prevent layout shift */}
@@ -203,12 +175,15 @@ const MilestoneRewards: React.FC = () => {
         width: "100%",
         borderRadius: "0 0 12px 12px",
         padding: theme.spacing(2),
-        boxShadow: "0 8px 32px rgba(0,0,0,0.3)",
+        paddingTop: 0,
         border: "2px solid rgba(255,255,255,0.3)",
+        borderTopLeftRadius:tabValue === 1 ? '12px' : '0',
+        borderTopRightRadius:tabValue === 0 ? '12px' : '0',
         borderTop: "none",
         [theme.breakpoints.down("sm")]: {
           minHeight: 300,
           padding: theme.spacing(1.5),
+          paddingTop: 0,
         }
       }}>
           {/* Milestone Rewards */}
@@ -231,7 +206,25 @@ const MilestoneRewards: React.FC = () => {
             <Grid container spacing={2}>
               {MILESTONE_DATA.map((item, idx) => (
                 <Grid item xs={12} sm={6} key={item.title + idx}>
-                  <MilestoneCard>
+                  <Box
+                    sx={{
+                      // backgroundColor: "#3A60E0",
+                      border: "1px solid rgba(255, 255, 255, 0.1)",
+                      borderRadius: 8,
+                      padding: theme.spacing(2),
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      minHeight: 60,
+                      [theme.breakpoints.down("sm")]: {
+                        padding: theme.spacing(1.5),
+                        minHeight: 50,
+                        flexDirection: "column",
+                        gap: theme.spacing(1),
+                        textAlign: "center",
+                      },
+                    }}
+                  >
                     <Typography
                       variant="body1"
                       sx={{
@@ -247,15 +240,35 @@ const MilestoneRewards: React.FC = () => {
                     >
                       {item.title}
                     </Typography>
-                    <LPBadge>
+                    <Box
+                      sx={{
+                        backgroundColor: "white",
+                        borderRadius: "20px",
+                        padding: theme.spacing(0.5, 1.5),
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: theme.spacing(0.5),
+                        color: "#2142C2",
+                        fontWeight: 700,
+                        fontSize: "0.875rem",
+                        border: "1px solid #2142C2",
+                        minWidth: 60,
+                        [theme.breakpoints.down("sm")]: {
+                          fontSize: "0.75rem",
+                          padding: theme.spacing(0.4, 1.2),
+                          minWidth: 50,
+                        },
+                      }}
+                    >
                       {item.points}
                       <Iconify 
                         icon="eva:star-fill" 
                         width={isMobile ? 14 : 16} 
                         sx={{ color: "#9E9E9E" }} 
                       />
-                    </LPBadge>
-                  </MilestoneCard>
+                    </Box>
+                  </Box>
                 </Grid>
               ))}
             </Grid>
@@ -277,7 +290,18 @@ const MilestoneRewards: React.FC = () => {
             >
               Activity Streaks
             </Typography>
-            <CardBody>
+            <Box
+              sx={{
+                // backgroundColor: theme.palette.background.paper,
+                borderRadius: 10,
+                border: "1px solid #e0e0e0",
+                padding: theme.spacing(2),
+                [theme.breakpoints.down("sm")]: {
+                  padding: theme.spacing(1.5),
+                  borderRadius: 8,
+                },
+              }}
+            >
               <Typography
                 variant="h6"
                 sx={{ 
@@ -305,10 +329,10 @@ const MilestoneRewards: React.FC = () => {
                   {t}
                 </Typography>
               ))}
-            </CardBody>
+            </Box>
           </TabPanel>
         </Box>
-    </ContentWrapper>
+    </Box>
   );
 };
 
