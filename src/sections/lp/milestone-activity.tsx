@@ -30,7 +30,7 @@ const MilestoneRewards: React.FC<MilestoneRewardsProps> = ({ lpIcon, isMobile, i
   return (
     <Box
       sx={{
-        width: '100%',
+        width: '90%',
         maxWidth: '60rem',
       }}
     >
