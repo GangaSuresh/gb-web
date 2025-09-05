@@ -33,6 +33,7 @@ export default function TransactionHeader({
       sx={{
         display: 'flex',
         justifyContent: 'center',
+        width:'100%',
         background: 'radial-gradient(ellipse at 0% 264%, #D70000 12.86%, #004BE3 100%)',
       }}
     >
