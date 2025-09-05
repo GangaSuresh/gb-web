@@ -11,8 +11,8 @@ import {
   CircularProgress,
 } from '@mui/material';
 
-import LPEarningMethods from './lp-earning-cards';
-import MilestoneRewards from './milestone-activity';
+import LPEarningMethods from './info/lp-earning-cards';
+import MilestoneRewards from './info/milestone-activity';
 import BenefitsComponent from '../vault/benefits-section';
 import {
   LP_NAME,

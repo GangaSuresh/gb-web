@@ -125,6 +125,8 @@ export default function VaultView() {
   };
 
   const handleUJViewHistory = () => {
+    console.log(9)
+    navigate('/coin/transaction');
 
   };
 

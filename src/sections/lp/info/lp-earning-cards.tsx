@@ -9,7 +9,7 @@ import {
   Typography,
 } from '@mui/material';
 
-import { GOLDEN_BADGE } from './constants';
+import { GOLDEN_BADGE } from '../constants';
 
 interface EarnMethod {
   title: string;
