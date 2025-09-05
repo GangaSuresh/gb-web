@@ -30,17 +30,20 @@ interface MilestoneRewardsProps {
 }
 
 /* Helper functions */
-const getTabLabelStyles = (isActive: boolean) => ({
+const getTabLabelStyles = (isActive: boolean,isMobile:boolean) => ({
   background: isActive ? GRADIENT_BACKGROUND : 'transparent',
   borderRadius: BORDER_RADIUS,
-  padding: '8px 16px',
+  padding: isMobile?'0.5rem':'1.25rem',
   color: isActive ? TEXT_COLOR_ACTIVE : TEXT_COLOR_INACTIVE,
   fontWeight: isActive ? 700 : 600,
   textDecoration: isActive ? 'none' : 'underline',
   width: '100%',
   fontFamily: 'Lora',
-  fontSize: '1.25rem',
+  fontSize: isMobile ?'1rem':'1.25rem',
   height: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
 });
 
 const getTabStyles = (isMobile: boolean) => ({
@@ -50,7 +53,6 @@ const getTabStyles = (isMobile: boolean) => ({
   borderTopLeftRadius: CONTENT_BORDER_RADIUS,
   borderTopRightRadius: CONTENT_BORDER_RADIUS,
   flex: 1,
-  fontSize: isMobile ? '0.875rem' : '1rem',
   borderBottom: `2px solid ${BORDER_COLOR}`,
   '&.Mui-selected': {
     borderTop: `2px solid ${BORDER_COLOR}`,
@@ -73,20 +75,20 @@ const MilestoneItem = React.memo<MilestoneItemProps>(({ title,points, lpIcon, is
     <Box
       sx={{
         border: '1px solid #FDEFAF',
-        borderRadius: '20px',
+        borderRadius: '8px',
         padding: isMobile ? 1.5 : '0.5rem 1rem',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
         minHeight: isMobile ? 50 : 60,
-        flexDirection: isMobile ? 'column' : 'row',
+        flexDirection: 'row',
         gap: isMobile ? '1rem' : 0,
-        textAlign: isMobile ? 'center' : 'left',
+        textAlign: 'left',
       }}
     >
       <Typography
         sx={{
-          ...TYPOGRAPHY.body1,
+          ...(isMobile?TYPOGRAPHY.body2:TYPOGRAPHY.body1),
           fontWeight: 600,
         }}
       >
@@ -147,7 +149,7 @@ const MilestoneRewards: React.FC<MilestoneRewardsProps> = ({ lpIcon, isMobile, i
   return (
     <Box
       sx={{
-        width: '100%',
+        width: '90%',
         maxWidth: '60rem',
       }}
     >
@@ -177,7 +179,7 @@ const MilestoneRewards: React.FC<MilestoneRewardsProps> = ({ lpIcon, isMobile, i
             <Tab
               key={tab.value}
               label={
-                <Box sx={getTabLabelStyles(tabValue === tab.value)}>
+                <Box sx={getTabLabelStyles(tabValue === tab.value,isMobile)}>
                   {tab.label}
                 </Box>
               }
@@ -209,7 +211,7 @@ const MilestoneRewards: React.FC<MilestoneRewardsProps> = ({ lpIcon, isMobile, i
         <Box sx={{ display: tabValue === 0 ? 'block' : 'none', pt: 2, width: '100%' }}>
           <Typography
             sx={{
-              ...TYPOGRAPHY.body1,
+              ...(isMobile?TYPOGRAPHY.body2:TYPOGRAPHY.body1)
             }}
           >
             Achieve special milestones and earn bonus LP for your dedication to the community.
