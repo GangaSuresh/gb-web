@@ -129,38 +129,39 @@ export default function LPView() {
           background: 'radial-gradient(ellipse at 104.35% 264%, #008AFA 12.86%, #0032AA 100%)',
           color: 'white',
           pb: isMobile ? '2rem' : '4rem',
-          p:'2rem'
+          p: '2rem',
         }}
       >
         {/* Header Section */}
         <Box
           sx={{
-            background: 'radial-gradient(50% 50% at 50% 50%, rgba(147, 244, 255, 0.3) 0%, rgba(147, 244, 255, 0) 93.75%)',
+            background:
+              'radial-gradient(50% 50% at 50% 50%, rgba(147, 244, 255, 0.3) 0%, rgba(147, 244, 255, 0) 93.75%)',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
             flexDirection: 'column',
           }}
         >
-        <Typography
-          sx={{
-            fontSize: { xs: '1.5rem', sm: '2.5rem', md: '3.75rem' },
-            fontFamily: 'Lora',
-            color: 'info.light',
-            mt: isMobile ? '1rem' : '2.5rem',
-            fontWeight: 700,
-            textAlign: 'center',
-          }}
-        >
-          {LP_NAME}
-        </Typography>
-        <Typography
-          sx={{
-            ...(isMobile ? TYPOGRAPHY.body1 : TYPOGRAPHY.headline5),
-          }}
-        >
-          {LP_SUBTITLE}
-        </Typography>
+          <Typography
+            sx={{
+              fontSize: { xs: '1.5rem', sm: '2.5rem', md: '3.75rem' },
+              fontFamily: 'Lora',
+              color: 'info.light',
+              mt: isMobile ? '1rem' : '2.5rem',
+              fontWeight: 700,
+              textAlign: 'center',
+            }}
+          >
+            {LP_NAME}
+          </Typography>
+          <Typography
+            sx={{
+              ...(isMobile ? TYPOGRAPHY.body1 : TYPOGRAPHY.headline5),
+            }}
+          >
+            {LP_SUBTITLE}
+          </Typography>
           <img
             src={getLPImage() || ''}
             alt={LP_NAME}
@@ -170,20 +171,20 @@ export default function LPView() {
               marginTop: isMobile ? '2rem' : '3.5rem',
             }}
           />
-        {/* Main Section */}
-        <Typography
-          sx={{
-            ...(isMobile ? TYPOGRAPHY.headline6 : TYPOGRAPHY.headline2),
-            fontFamily: 'Lora',
-            fontWeight: isMobile ? 600 : 400,
-            mt: isMobile ? '2rem' : '3.5rem',
-          }}
-        >
-          What are Loyalty Points & their Benefits?
-        </Typography>
-        <Typography sx={{ ...(isMobile ? TYPOGRAPHY.body1 : TYPOGRAPHY.headline6) }}>
-          {LP_DESCRIPTION}
-        </Typography>
+          {/* Main Section */}
+          <Typography
+            sx={{
+              ...(isMobile ? TYPOGRAPHY.headline6 : TYPOGRAPHY.headline2),
+              fontFamily: 'Lora',
+              fontWeight: isMobile ? 600 : 400,
+              mt: isMobile ? '2rem' : '3.5rem',
+            }}
+          >
+            What are Loyalty Points & their Benefits?
+          </Typography>
+          <Typography sx={{ ...(isMobile ? TYPOGRAPHY.body1 : TYPOGRAPHY.headline6) }}>
+            {LP_DESCRIPTION}
+          </Typography>
         </Box>
         {isMobile ? (
           <img src={LP_INFO_IMAGE_MOBILE} alt="lp-info-image" style={{ marginTop: '1rem' }} />
@@ -232,41 +233,52 @@ export default function LPView() {
           flexDirection: 'column',
           alignItems: 'center',
           color: 'white',
-          pt:'5rem'
+          pt: '5rem',
         }}
       >
-        <MilestoneRewards lpIcon={getLPIcon()} isMobile={isMobile} isTab={isTablet}/>
-        <Box sx={{ 
-          width:'100%',      
-          mt:'2.5rem',
-          display:'flex',
-          flexDirection:'column',
-          alignItems:'center',
-          textAlign:'center',
-          background:'linear-gradient(180deg, rgba(0, 51, 133, 0.3) 0%, rgba(1, 82, 199, 0.3) 51.77%)'}}>
-        <Typography
-          sx={{ ...(isMobile ? TYPOGRAPHY.headline6 : TYPOGRAPHY.headline4), fontFamily: 'Lora',mt:'2rem' }}
+        <MilestoneRewards lpIcon={getLPIcon()} isMobile={isMobile} isTab={isTablet} />
+        <Box
+          sx={{
+            width: '100%',
+            mt: '2.5rem',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            textAlign: 'center',
+            background:
+              'linear-gradient(180deg, rgba(0, 51, 133, 0.3) 0%, rgba(1, 82, 199, 0.3) 51.77%)',
+          }}
         >
-          Your LP Unlock Exclusive Perks
-        </Typography>
-        <Typography
-          sx={{ ...(isMobile ? TYPOGRAPHY.body2 : TYPOGRAPHY.body1), fontFamily: 'Lora' }}
-        >
-          As you accumulate Loyalty Points, you&apos;ll climb through loyalty tiers, each offering
-          increasingly valuable perks<br/> and exclusive access within the GBN community.
-        </Typography>
-        <Box sx={{ mb: '1rem',mt:isMobile?'1rem':'3rem',width: '90%',maxWidth: '1140px' }}>
-          <BenefitsComponent
-            tiers={lpData.staticText.tier}
-            images={lpData.images}
-            benefitsExpanded
-            isMobile={isMobile}
-            isTablet={isTablet}
-            addBorderRadiusOnTop
-          />
+          <Box sx={{ width: '90%', maxWidth: '1140px' }}>
+            <Typography
+              sx={{
+                ...(isMobile ? TYPOGRAPHY.headline6 : TYPOGRAPHY.headline4),
+                fontFamily: 'Lora',
+                mt: '2rem',
+              }}
+            >
+              Your LP Unlock Exclusive Perks
+            </Typography>
+            <Typography
+              sx={{ ...(isMobile ? TYPOGRAPHY.body2 : TYPOGRAPHY.body1), fontFamily: 'Lora' }}
+            >
+              As you accumulate Loyalty Points, you&apos;ll climb through loyalty tiers, each
+              offering increasingly valuable perks
+              <br /> and exclusive access within the GBN community.
+            </Typography>
+            <Box sx={{ mb: '1rem', mt: isMobile ? '1rem' : '3rem' }}>
+              {' '}
+              <BenefitsComponent
+                tiers={lpData.staticText.tier}
+                images={lpData.images}
+                benefitsExpanded
+                isMobile={isMobile}
+                isTablet={isTablet}
+                addBorderRadiusOnTop
+              />
+            </Box>
+          </Box>
         </Box>
-        </Box>
-        
 
         {/* FAQ Section */}
         {hasFaq && <FAQ faqs={getFaqData()} />}
