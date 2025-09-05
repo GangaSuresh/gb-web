@@ -235,7 +235,7 @@ export default function LPView() {
           pt:'5rem'
         }}
       >
-        <MilestoneRewards/>
+        <MilestoneRewards lpIcon={getLPIcon()}/>
         <Box sx={{ 
           width:'100%',      
           mt:'2.5rem',
