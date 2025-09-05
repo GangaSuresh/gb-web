@@ -110,7 +110,7 @@ export default function BenefitsComponent({
                 sx={{
                   height: '80px',
                   display: 'flex',
-                  alignItems: 'center'
+                  textAlign:'left'
                 }}
               >
                 <Box sx={{ p: '1.2rem', width: '100%' }}>
