@@ -125,15 +125,13 @@ export default function VaultView() {
   };
 
   const handleUJViewHistory = () => {
-    console.log(9)
     navigate('/coin/transaction');
 
   };
 
   // Handler function for LP section
   const handleLPViewHistory = () => {
-    // Handle LP view history logic
-    console.log('LP view history clicked');
+    navigate('/lp/transaction');
   };
   const handleLPKnowMore = () => {
     navigate('/lp/info');
