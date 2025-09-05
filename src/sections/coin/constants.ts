@@ -17,4 +17,6 @@ export const COIN_EARN_METHODS=[
         buttonText: 'Compete & Earn',
         buttonLink: '/coin/compete'
     }
-]
+];
+
+export const BADGE_STAR='/assets/icons/star-badge.png';
