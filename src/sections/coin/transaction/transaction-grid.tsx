@@ -157,9 +157,10 @@ export default function TransactionGrid({
           width: '100%',
           minHeight: isMobile ? '400px' : '475px',
           borderRadius: isMobile ? '0' : '8px',
-          p: isMobile ? '1.2rem 0.8rem' : '2rem',
+         
         }}
       >
+        <Box sx={{ p: isMobile ? '1.2rem 0.8rem' : '2rem',}}>
         {currentTransactions.length === 0 ? (
           <Box
             sx={{
@@ -284,20 +285,40 @@ export default function TransactionGrid({
             ))}
           </Stack>
         )}
-      </Card>
-
-      {/* Pagination */}
+        </Box>
+          {/* Pagination */}
       {totalPages > 1 && (
-        <Box sx={{ display: 'flex', justifyContent: 'center',width:'100%' }}>
+        <Box sx={{ display: 'flex',p:'1rem', justifyContent: 'center',width:'100%',borderTop:'1px solid #E0E6F1' }}>
           <Pagination
             count={totalPages}
             page={currentPage}
             onChange={handlePageChange}
             color="primary"
             size={isMobile ? 'small' : 'medium'}
+            sx={{
+              '& .MuiPaginationItem-root': {
+                color: '#666666',
+                '&.Mui-selected': {
+                  backgroundColor: '#E4EDFD',
+                  color: 'primary.main',
+                  '&:hover': {
+                    backgroundColor: '#E4EDFD',
+                  },
+                },
+                '&:hover': {
+                  backgroundColor: 'rgba(0, 0, 0, 0.04)',
+                },
+              },
+              '& .MuiPaginationItem-icon': {
+                color: '#222222',
+              },
+            }}
           />
         </Box>
       )}
+      </Card>
+
+    
     </Box>
   );
 }
