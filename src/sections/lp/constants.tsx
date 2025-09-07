@@ -4,7 +4,7 @@ export const LP_DESCRIPTION = 'LP are our loyalty currency, earned through readi
 export const LP_INFO_IMAGE = '/assets/images/lp/lp-benefits.png';
 export const LP_INFO_IMAGE_MOBILE = '/assets/images/lp/lp-benefits-mobile.png';
 export const GOLDEN_BADGE = '/assets/icons/golden-badge.png';
-export const BADGE_STAR = '/assets/icons/star-badge.png';
+export const SHIELD = '/assets/icons/silver-badge.png';
 export const LP_EARN_METHODS = [
   {
     title: 'Read Articles',
