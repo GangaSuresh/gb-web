@@ -19,3 +19,85 @@ export const LP_EARN_METHODS = [
     buttonLink: '/lp/polls'
   }
 ];
+
+interface ActivityData {
+  id: string;
+  title: string;
+  description: string;
+  lpAmount: number;
+  progress?: {
+    current: number;
+    total: number;
+  };
+  callToAction?: string;
+  isCompleted?: boolean;
+  completedText?: string;
+}
+
+export const activities: ActivityData[] =
+ [
+  {
+    id: '1',
+    title: 'Articles Read',
+    description: 'Earned from article read',
+    lpAmount: 600,
+    progress: { current: 120, total: 200 },
+    callToAction: 'Read 80 more and grab 450 LP (includes 50 bonus)',
+  },
+  {
+    id: '2',
+    title: 'Articles Liked',
+    description: 'Earned from article read',
+    lpAmount: 600,
+    progress: { current: 120, total: 200 },
+    callToAction: 'Read 80 more and grab 450 LP (includes 50 bonus)',
+  },
+  {
+    id: '3',
+    title: 'Articles Shared',
+    description: 'Earned from article read',
+    lpAmount: 600,
+    progress: { current: 120, total: 200 },
+    callToAction: 'Read 80 more and grab 450 LP (includes 50 bonus)',
+  },
+  {
+    id: '4',
+    title: 'Articles Left comments',
+    description: 'Earned from article read',
+    lpAmount: 600,
+    progress: { current: 120, total: 200 },
+    callToAction: 'Read 80 more and grab 450 LP (includes 50 bonus)',
+  },
+  {
+    id: '5',
+    title: 'Poll/Surveys',
+    description: 'Earned from Poll/Surveys',
+    lpAmount: 600,
+    isCompleted: true,
+    completedText: '12 Surveys Done',
+  },
+  {
+    id: '6',
+    title: 'Poll/Surveys',
+    description: 'Earned from Poll/Surveys',
+    lpAmount: 600,
+    isCompleted: true,
+    completedText: '12 Surveys Done',
+  },
+  {
+    id: '7',
+    title: 'Poll/Surveys',
+    description: 'Earned from Poll/Surveys',
+    lpAmount: 600,
+    isCompleted: true,
+    completedText: '12 Surveys Done',
+  },
+  {
+    id: '8',
+    title: 'Poll/Surveys',
+    description: 'Earned from Poll/Surveys',
+    lpAmount: 600,
+    isCompleted: true,
+    completedText: '12 Surveys Done',
+  },
+];

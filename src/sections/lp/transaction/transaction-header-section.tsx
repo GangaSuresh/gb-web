@@ -65,7 +65,7 @@ export default function TransactionHeader({
           alignItems: 'center',
           justifyContent: 'center',
           color: 'white',
-          p: isMobile ? '2rem' : '3rem',
+          py: isMobile ? '2rem' : '3rem',
           textAlign: 'center',
         }}
       >
