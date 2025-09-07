@@ -3,7 +3,7 @@ import { Iconify } from 'src/components/iconify';
 import { TYPOGRAPHY } from 'src/theme/styles/fonts';
 import { Box, Card, Chip, Typography, LinearProgress, Grid2 } from '@mui/material';
 
-import { activities } from '../constants';
+import { activities, GOLDEN_BADGE } from '../constants';
 
 interface LpActivitiesSectionProps {
   isMobile: boolean;
@@ -119,7 +119,7 @@ export default function LpActivitiesSection({ isMobile, isTablet }: LpActivities
         </Box>
       ) : (
         <>
-          <Grid2 container spacing={2} sx={{ border:'solid' }}>
+          <Grid2 container spacing={2}>
             {activities.map((activity) => (
               <Grid2 key={activity.id} size={{ xs: 6, sm: 4, md: 3 }}>
                 <Card
@@ -133,60 +133,41 @@ export default function LpActivitiesSection({ isMobile, isTablet }: LpActivities
                     boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
                   }}
                 >
-                  {/* LP Amount */}
-                  <Typography
-                    sx={{
-                      ...TYPOGRAPHY.headline6,
-                      fontWeight: 700,
-                      color: '#333333',
-                      mb: 0.5,
-                    }}
-                  >
-                    {activity.lpAmount} LP
-                  </Typography>
+                  <Box sx={{display:'flex',justifyContent:'space-between'}}>
+                    <Box sx={{display:'flex',flexDirection:'column'}}>
+                      {/* LP Amount */}
+                      <Typography
+                        sx={{
+                          ...(isMobile ? TYPOGRAPHY.body1 : TYPOGRAPHY.headline6),
+                          fontWeight: 700,
+                          color: 'primary.main',
+                        }}
+                      >
+                        {activity.lpAmount} LP
+                      </Typography>
 
-                  {/* Description */}
-                  <Typography
-                    sx={{
-                      ...TYPOGRAPHY.caption,
-                      color: '#666666',
-                      mb: 1,
-                    }}
-                  >
-                    {activity.description}
-                  </Typography>
-
-                  {/* Badge Icon */}
-                  <Box
-                    sx={{
-                      position: 'absolute',
-                      top: 8,
-                      right: 8,
-                      width: '24px',
-                      height: '24px',
-                      backgroundColor: '#ff9800',
-                      borderRadius: '50%',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    <Iconify icon="material-symbols:star-rounded" width={16} color="white" />
+                      {/* Description */}
+                      <Typography
+                        sx={{
+                          ...TYPOGRAPHY.caption,
+                          color: 'info.dark',
+                        }}
+                      >
+                        {activity.description}
+                      </Typography>
+                    </Box>
+                    <img
+                      src={GOLDEN_BADGE}
+                      alt="badge-image"
+                      style={{
+                        width: isMobile ? '30px' : '32px',
+                        height: isMobile ? '30px' : '32px',
+                      }}
+                    />
                   </Box>
 
                   {/* Activity Content */}
                   <Box sx={{ flex: 1, mt: 1 }}>
-                    <Typography
-                      sx={{
-                        ...TYPOGRAPHY.body2,
-                        fontWeight: 600,
-                        color: '#333333',
-                        mb: 1,
-                      }}
-                    >
-                      {activity.title}
-                    </Typography>
-
                     {activity.progress && (
                       <>
                         <Box
@@ -199,17 +180,18 @@ export default function LpActivitiesSection({ isMobile, isTablet }: LpActivities
                         >
                           <Typography
                             sx={{
-                              ...TYPOGRAPHY.caption,
-                              color: '#666666',
+                              ...TYPOGRAPHY.body2,
+                              fontWeight: 700,
+                              color: ' #1F1F1F'
                             }}
                           >
                             {activity.title}
                           </Typography>
                           <Typography
                             sx={{
-                              ...TYPOGRAPHY.caption,
-                              fontWeight: 600,
-                              color: '#333333',
+                              ...TYPOGRAPHY.body2,
+                              fontWeight: 700,
+                              color: 'primary.main'
                             }}
                           >
                             {activity.progress.current}/{activity.progress.total}
@@ -224,40 +206,34 @@ export default function LpActivitiesSection({ isMobile, isTablet }: LpActivities
                           sx={{
                             height: 6,
                             borderRadius: 3,
-                            backgroundColor: '#E0E0E0',
+                            backgroundColor: '#D9E9F3',
                             '& .MuiLinearProgress-bar': {
-                              backgroundColor: '#4CAF50',
+                              backgroundColor: '#22AB00',
                               borderRadius: 3,
                             },
                             mb: 1,
                           }}
                         />
+                        <Box sx={{mt:'1rem',backgroundColor:' #EDF4FE',p:'0.75rem 0.625rem',borderRadius:'8px'}}>
                         <Typography
                           sx={{
                             ...TYPOGRAPHY.caption,
-                            color: '#f44336',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: 0.5,
+                            color: 'black'
                           }}
                         >
-                          <Box
-                            sx={{
-                              width: 6,
-                              height: 6,
-                              borderRadius: '50%',
-                              backgroundColor: '#f44336',
-                            }}
-                          />
-                          {activity.callToAction}
+                         🏆 {activity.callToAction}
                         </Typography>
+
+
+                        </Box>
+                        
                       </>
                     )}
 
                     {activity.isCompleted && (
                       <Box
                         sx={{
-                          backgroundColor: '#E3F2FD',
+                          backgroundColor: '#EDF4FE',
                           borderRadius: '8px',
                           p: 1,
                           textAlign: 'center',
@@ -266,8 +242,7 @@ export default function LpActivitiesSection({ isMobile, isTablet }: LpActivities
                         <Typography
                           sx={{
                             ...TYPOGRAPHY.caption,
-                            fontWeight: 600,
-                            color: '#1976d2',
+                            color: 'black',
                           }}
                         >
                           {activity.completedText}
