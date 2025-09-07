@@ -16,7 +16,7 @@ interface TransactionProps {
 }
 
 export default function Transaction({ isMobile, isTablet }: TransactionProps) {
-  const { data, isLoading, isError, error, refetch } = useRouteData('coin');
+  const { data, isLoading, isError, error, refetch } = useRouteData('coin-transation');
   if (isLoading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" height="calc(100vh - 72px)">

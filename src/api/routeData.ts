@@ -111,6 +111,14 @@ export const fetchRouteData = async (route: string): Promise<RouteDataResponse> 
         staticText: {}
       };
 
+      case 'lp-transation':
+        return {
+          images: {
+            lp: '/assets/icons/loyalty-icon.png',
+          },
+          staticText: {}
+        };
+
     case 'coin':
       return {
         images: {

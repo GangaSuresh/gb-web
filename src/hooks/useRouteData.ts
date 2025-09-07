@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { fetchRouteData, RouteDataResponse } from 'src/api/routeData';
 
-export const useRouteData = (route: 'vault' | 'coin' | 'lp') => {
+export const useRouteData = (route: 'vault' | 'coin' | 'lp' | 'coin-transation' | 'lp-transation') => {
   const {
     data,
     isLoading,
