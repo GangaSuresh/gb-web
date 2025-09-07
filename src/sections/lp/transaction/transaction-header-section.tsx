@@ -33,6 +33,10 @@ export default function TransactionHeader({
         width: '100%',
         background: 'radial-gradient(ellipse at 104.35% 264%, #008AFA 12.86%, #0032AA 100%)',
         position: 'relative',
+        flexDirection: 'column',
+        alignItems: 'center',
+        borderBottomLeftRadius: (isMobile||isTablet)?'12px':'0px',
+        borderBottomRightRadius: (isMobile||isTablet)?'12px':'0px',
       }}
     >
       {/* Back Button */}
@@ -61,7 +65,7 @@ export default function TransactionHeader({
           alignItems: 'center',
           justifyContent: 'center',
           color: 'white',
-          p: isMobile ? '2rem 0' : '3rem 0',
+          p: isMobile ? '2rem' : '3rem',
           textAlign: 'center',
         }}
       >
@@ -73,7 +77,7 @@ export default function TransactionHeader({
         <Box sx={{ width: '100%', mt: isMobile ? '1.875rem' : '2.5rem' }}>
           <Grid2 container spacing={2}>
             {/* Available Balance Card */}
-            <Grid2 size={{ xs: 12, sm: 12,md:3 }}>
+            <Grid2 size={{ xs: 12, sm: 12, md: 3 }}>
               <Box
                 sx={{
                   background: ' #0000004D',
@@ -82,7 +86,7 @@ export default function TransactionHeader({
                   height: '100%',
                 }}
               >
-                {isMobile || isTablet? (
+                {isMobile || isTablet ? (
                   <Box sx={{ p: '1rem', display: 'flex', alignItems: 'center', height: '100%' }}>
                     {/* Available Balance Section */}
                     <Box
@@ -187,39 +191,51 @@ export default function TransactionHeader({
 
             {/* LP Earned Card */}
             <Grid2 size={{ md: 9 }}>
-             { !(isMobile||isTablet)&&<Box
-                sx={{
+              {!(isMobile || isTablet) && (
+                <Box
+                  sx={{
                     background: ' #0000004D',
                     border: '1px solid #FFFFFF80',
                     borderRadius: '12px',
                     height: '100%',
-                }}
-              >
-                <Box sx={{ px: '2rem', py: '1.5rem', display: 'flex', alignItems: 'center', height: '100%' }}>
-                  {/* LP Earned Display */}
-                  <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                    <Typography
-                      sx={{
-                        ...TYPOGRAPHY.body1,
-                        color: 'white',
-                        opacity: 0.7,
-                      }}
-                    >
-                      LP Earned
-                    </Typography>
-                    <Typography
-                      sx={{
-                        ...TYPOGRAPHY.headline4,
-                        fontWeight: 600,
-                        color: 'white',
-                      }}
-                    >
-                      {totalEarned} LP
-                    </Typography>
-                  </Box>
-
-                  {/* Separator */}
+                  }}
+                >
                   <Box
+                    sx={{
+                      pl: '2rem',
+                      pr: '5rem',
+                      py: '1.5rem',
+                      display: 'flex',
+                      alignItems: 'center',
+                      height: '100%',
+                    }}
+                  >
+                    {/* LP Earned Display */}
+                    <Box
+                      sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}
+                    >
+                      <Typography
+                        sx={{
+                          ...TYPOGRAPHY.body1,
+                          color: 'white',
+                          opacity: 0.7,
+                        }}
+                      >
+                        LP Earned
+                      </Typography>
+                      <Typography
+                        sx={{
+                          ...TYPOGRAPHY.headline4,
+                          fontWeight: 600,
+                          color: 'white',
+                        }}
+                      >
+                        {totalEarned} LP
+                      </Typography>
+                    </Box>
+
+                    {/* Separator */}
+                    <Box
                       sx={{
                         width: '1px',
                         height: '100%',
@@ -229,50 +245,107 @@ export default function TransactionHeader({
                       }}
                     />
 
-                  {/* Badge Icon */}
-                  <Box
-                    sx={{
-                      width: '48px',
-                      height: '48px',
-                      backgroundColor: 'primary.amin',
-                      borderRadius: '50%',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      mr: '1rem',
-                    }}
-                  >
-                    <img src={SHIELD} alt="badge" />
-                  </Box>
-
-                  {/* Progress Message */}
-                  <Box sx={{ flex: 1 ,textAlign:'left'}}>
-                    <Typography
+                    {/* Badge Icon */}
+                    <Box
                       sx={{
-                        ...TYPOGRAPHY.body1,
-                        fontWeight: 600,
-                        color: ' #F5FBFF',
+                        width: '48px',
+                        height: '48px',
+                        backgroundColor: 'primary.light',
+                        borderRadius: '50%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        mr: '1rem',
                       }}
                     >
-                      Good going, almost there!<br/>
-                      Earn 123 LP and level up your badge
-                    </Typography>
-                  </Box>
+                      <img src={SHIELD} alt="badge" style={{ height: '36px', width: '26px' }} />
+                    </Box>
 
-                  {/* Keep Earning Button */}
-                  <Button
-                    className="button-primary-outlined"
-          variant="outlined"
-                    onClick={onRedeemLp}
-                  >
-                    Keep Earning
-                  </Button>
+                    {/* Progress Message */}
+                    <Box sx={{ flex: 1, textAlign: 'left' }}>
+                      <Typography
+                        sx={{
+                          ...TYPOGRAPHY.body1,
+                          fontWeight: 600,
+                          color: ' #F5FBFF',
+                        }}
+                      >
+                        Good going, almost there!
+                        <br />
+                        Earn 123 LP and level up your badge
+                      </Typography>
+                    </Box>
+
+                    {/* Keep Earning Button */}
+                    <Button
+                      className="button-primary-outlined"
+                      variant="outlined"
+                      onClick={onRedeemLp}
+                      sx={{ background: 'none' }}
+                    >
+                      Keep Earning
+                    </Button>
+                  </Box>
                 </Box>
-              </Box>}
+              )}
             </Grid2>
           </Grid2>
         </Box>
       </Box>
+
+      {(isMobile || isTablet) && (
+        <Box
+          sx={{
+            borderTop: 'solid 1px #FFFFFF80',
+            width: '100%',
+            background: ' #0000004D',
+            display: 'flex',
+            p: '0.6875rem',
+            borderBottomLeftRadius:'12px',
+            borderBottomRightRadius:'12px',
+          }}
+        >
+          <Box
+            sx={{
+              width: '28px',
+              height: '28px',
+              backgroundColor: 'primary.light',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              mr: '1rem',
+            }}
+          >
+            <img src={SHIELD} alt="badge" style={{ height: '21px', width: '16px' }} />
+          </Box>
+
+          {/* Progress Message */}
+          <Box sx={{ flex: 1, textAlign: 'left' }}>
+            <Typography
+              sx={{
+                ...TYPOGRAPHY.caption,
+                fontWeight: 600,
+                color: ' white',
+              }}
+            >
+              Almost there! Earn 123 LP and
+              <br /> level up your badge
+            </Typography>
+          </Box>
+
+          {/* Keep Earning Button */}
+          <Button
+            className="button-primary-outlined"
+            variant="outlined"
+            size="small"
+            onClick={onRedeemLp}
+            sx={{ background: 'none' }}
+          >
+            Keep Earning
+          </Button>
+        </Box>
+      )}
     </Box>
   );
 }
