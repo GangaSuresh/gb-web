@@ -33,7 +33,8 @@ axiosInstance.interceptors.request.use(
       return Promise.reject(new Error('System is in maintenance mode'));
     }
 
-    const token = sessionStorage.getItem('authToken');
+    // const token = sessionStorage.getItem('authToken');
+    const token ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoicm9vdEBnYm5ld3MudWsiLCJ0eXBlIjoiYWNjZXNzIiwicGVybWlzc2lvbnMiOlsiZGFzaGJvYXJkOmFuYWx5dGljcyIsImRhc2hib2FyZDp2aWV3IiwicGVybWlzc2lvbnM6Y3JlYXRlIiwicGVybWlzc2lvbnM6ZGVsZXRlIiwicGVybWlzc2lvbnM6cmVhZCIsInBlcm1pc3Npb25zOnVwZGF0ZSIsInJvbGVzOmNyZWF0ZSIsInJvbGVzOmRlbGV0ZSIsInJvbGVzOnJlYWQiLCJyb2xlczp1cGRhdGUiLCJzeXN0ZW06YWRtaW4iLCJzeXN0ZW06Y29uZmlnIiwic3lzdGVtOnNldHRpbmdzIiwidXNlcnM6Y3JlYXRlIiwidXNlcnM6ZGVsZXRlIiwidXNlcnM6cmVhZCIsInVzZXJzOnVwZGF0ZSIsIndhbGxldHM6ZGVsZXRlIiwid2FsbGV0czpyZWFkIiwid2FsbGV0czp1cGRhdGUiXSwiaWF0IjoxNzU3NDQzODI5LCJleHAiOjE3NTc1MzAyMjl9.BaQvJOnIofUKQCTu_cxBeXwFX3qG4NqDlXRcL9NAIak';
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

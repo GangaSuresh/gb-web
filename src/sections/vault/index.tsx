@@ -2,6 +2,8 @@ import FAQ from 'src/components/faq';
 import { varAlpha } from 'src/theme/styles';
 import { useNavigate } from 'react-router-dom';
 import { useRouteData } from 'src/hooks/useRouteData';
+import { useAssetsData } from 'src/hooks/useAssetsData';
+import AssetsLoader from 'src/components/assetsLoader';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import { Box, Alert, Button, useTheme, Typography, useMediaQuery } from '@mui/material';
 
@@ -13,8 +15,17 @@ export default function VaultView() {
   const navigate = useNavigate();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const isTablet = useMediaQuery(theme.breakpoints.down('md'));
-  const { data, isLoading, isError, error, refetch, hasImages, hasStaticText, hasFaq, hasTier } =
-    useRouteData('vault');
+  
+  // Fetch assets data
+  const assetsData = useAssetsData();
+  console.log(assetsData.getAssetsByType('text'))
+  
+  const { data, isLoading, isError, error, refetch, hasImages, hasStaticText, hasFaq, hasTier } =useRouteData('vault');
+
+  // Show assets loader if assets are still loading
+  if (assetsData.isLoading) {
+    return <AssetsLoader message="Loading vault assets..." />;
+  }
 
   // Data extraction with fallbacks to prevent crashes
   const vaultData = {
