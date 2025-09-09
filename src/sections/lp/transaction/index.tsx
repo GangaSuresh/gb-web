@@ -7,6 +7,7 @@ import {
   CircularProgress,
 } from '@mui/material';
 
+import StreaksSection from './streaks-section';
 import LpActivitiesSection from './lp-activities-section';
 import TransactionHeader from './transaction-header-section';
 
@@ -101,6 +102,7 @@ export default function Transaction({ isMobile, isTablet }: TransactionProps) {
         isMobile={isMobile}
         isTablet={isTablet}
       />
+                <StreaksSection isMobile={isMobile} isTablet={isTablet} />
     </Box>
   );
 }

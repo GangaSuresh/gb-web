@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { Iconify } from 'src/components/iconify';
 import { TYPOGRAPHY } from 'src/theme/styles/fonts';
-import { Box, Card, Chip, Grid2, LinearProgress, Typography } from '@mui/material';
+import { Box, Card, Chip, Grid2, Typography, LinearProgress } from '@mui/material';
 
 import { activities, GOLDEN_BADGE } from '../constants';
 
@@ -118,8 +117,7 @@ export default function LpActivitiesSection({ isMobile, isTablet }: LpActivities
           <Typography>No Transaction found</Typography>
         </Box>
       ) : (
-        <>
-          <Grid2 container spacing={2}>
+        <Grid2 container spacing={2}>
             {activities.map((activity) => (
               <Grid2 key={activity.id} size={{ xs: 6, sm: 4, md: 3 }}>
                 <Card
@@ -254,115 +252,6 @@ export default function LpActivitiesSection({ isMobile, isTablet }: LpActivities
               </Grid2>
             ))}
           </Grid2>
-          {/* Streak Reward Section */}
-          <Card
-            sx={{
-              width: '100%',
-              mt: 3,
-              p: 2,
-              borderRadius: '12px',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-            }}
-          >
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
-              <Box
-                sx={{
-                  width: '32px',
-                  height: '32px',
-                  backgroundColor: '#ff9800',
-                  borderRadius: '50%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Iconify
-                  icon="material-symbols:local-fire-department-rounded"
-                  width={20}
-                  color="white"
-                />
-              </Box>
-              <Typography
-                sx={{
-                  ...TYPOGRAPHY.body1,
-                  fontWeight: 600,
-                  color: '#333333',
-                }}
-              >
-                Streak Reward 60 LP
-              </Typography>
-            </Box>
-
-            {/* Streak Progress */}
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
-              {[
-                { day: 1, completed: true, lp: 10 },
-                { day: 3, completed: true, lp: 20 },
-                { day: 5, completed: true, lp: 30 },
-                { day: 7, completed: false, lp: 50 },
-                { day: 15, completed: false, lp: 100 },
-                { day: 30, completed: false, lp: 200 },
-              ].map((streak, index) => (
-                <Box key={streak.day} sx={{ display: 'flex', alignItems: 'center' }}>
-                  <Box
-                    sx={{
-                      width: '40px',
-                      height: '40px',
-                      borderRadius: '50%',
-                      backgroundColor: streak.completed ? '#4CAF50' : '#E0E0E0',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      position: 'relative',
-                    }}
-                  >
-                    {streak.completed && (
-                      <Iconify icon="material-symbols:check-rounded" width={20} color="white" />
-                    )}
-                    <Typography
-                      sx={{
-                        ...TYPOGRAPHY.caption,
-                        fontWeight: 600,
-                        color: streak.completed ? 'white' : '#666666',
-                        position: 'absolute',
-                        bottom: '-20px',
-                        left: '50%',
-                        transform: 'translateX(-50%)',
-                        whiteSpace: 'nowrap',
-                      }}
-                    >
-                      Day {streak.day}
-                    </Typography>
-                    <Typography
-                      sx={{
-                        ...TYPOGRAPHY.caption,
-                        fontWeight: 600,
-                        color: streak.completed ? '#4CAF50' : '#666666',
-                        position: 'absolute',
-                        bottom: '-35px',
-                        left: '50%',
-                        transform: 'translateX(-50%)',
-                        whiteSpace: 'nowrap',
-                      }}
-                    >
-                      +{streak.lp} LP
-                    </Typography>
-                  </Box>
-                  {index < 5 && (
-                    <Box
-                      sx={{
-                        width: '20px',
-                        height: '2px',
-                        backgroundColor: streak.completed ? '#4CAF50' : '#E0E0E0',
-                        mx: 0.5,
-                      }}
-                    />
-                  )}
-                </Box>
-              ))}
-            </Box>
-          </Card>
-        </>
       )}
     </Box>
   );

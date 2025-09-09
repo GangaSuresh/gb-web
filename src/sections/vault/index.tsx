@@ -2,8 +2,8 @@ import FAQ from 'src/components/faq';
 import { varAlpha } from 'src/theme/styles';
 import { useNavigate } from 'react-router-dom';
 import { useRouteData } from 'src/hooks/useRouteData';
-import { useAssetsData } from 'src/hooks/useAssetsData';
 import AssetsLoader from 'src/components/assetsLoader';
+import { useAssetsData } from 'src/hooks/useAssetsData';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import { Box, Alert, Button, useTheme, Typography, useMediaQuery } from '@mui/material';
 
