@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Iconify } from 'src/components/iconify';
 import { TYPOGRAPHY } from 'src/theme/styles/fonts';
-import { Box, Card, Chip, Typography, LinearProgress, Grid2 } from '@mui/material';
+import { Box, Card, Chip, Grid2, LinearProgress, Typography } from '@mui/material';
 
 import { activities, GOLDEN_BADGE } from '../constants';
 

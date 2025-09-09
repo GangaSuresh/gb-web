@@ -108,16 +108,16 @@ export const fetchRouteData = async (route: string): Promise<RouteDataResponse> 
         images: {
           'uj-coin': '/assets/images/coin/coin-with-shadow.png',
         },
-        staticText: {}
+        staticText: {},
       };
 
-      case 'lp-transation':
-        return {
-          images: {
-            lp: '/assets/icons/loyalty-icon.png',
-          },
-          staticText: {}
-        };
+    case 'lp-transation':
+      return {
+        images: {
+          lp: '/assets/icons/loyalty-icon.png',
+        },
+        staticText: {},
+      };
 
     case 'coin':
       return {
@@ -307,7 +307,6 @@ export const fetchRouteData = async (route: string): Promise<RouteDataResponse> 
   }
 };
 
-// Real API implementation would look like this:
 /*
 export const fetchRouteData = async (route: string): Promise<RouteDataResponse> => {
   const response = await fetch(`/api/route-data/${route}`, {
