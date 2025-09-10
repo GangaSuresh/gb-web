@@ -73,8 +73,32 @@ export default function StreaksSection({ isMobile, isTablet }: StreaksSectionPro
         </Box>
       </Box>
       <Box sx={{width:'70%'}}>
+        {/* Day Labels Above Progress Bar */}
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            mb: 1,
+          }}
+        >
+          {streakMilestones.map((milestone, index) => (
+            <Typography
+              key={`day-${index}`}
+              sx={{
+                ...TYPOGRAPHY.caption,
+                fontWeight: 600,
+                color: 'info.dark',
+                textAlign: 'center',
+                minWidth: isMobile ? '50px' : '60px',
+              }}
+            >
+              {milestone.day}
+            </Typography>
+          ))}
+        </Box>
+
         {/* Progress Bar */}
-        <Box sx={{ position: 'relative', width: '100%', mt: 2 }}>
+        <Box sx={{ position: 'relative', width: '100%' }}>
           <LinearProgress
             variant="determinate"
             value={progressValue}
@@ -129,45 +153,27 @@ export default function StreaksSection({ isMobile, isTablet }: StreaksSectionPro
           </Box>
         </Box>
 
-        {/* Milestone Labels */}
+        {/* Points Labels Below Progress Bar */}
         <Box
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
-            mt: 3,
+            mt: 2,
           }}
         >
           {streakMilestones.map((milestone, index) => (
-            <Box
-              key={index}
+            <Typography
+              key={`points-${index}`}
               sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
+                ...TYPOGRAPHY.body2,
+                fontWeight: 700,
+                color: milestone.completed ? 'primary.main' : 'text.secondary',
+                textAlign: 'center',
                 minWidth: isMobile ? '50px' : '60px',
               }}
             >
-              <Typography
-                sx={{
-                  ...TYPOGRAPHY.caption,
-                  fontWeight: 600,
-                  color: 'info.dark',
-                  textAlign: 'center',
-                  mb: 0.5,
-                }}
-              >
-                {milestone.day}
-              </Typography>
-              <Typography
-                sx={{
-                  ...TYPOGRAPHY.body2,
-                  fontWeight: 700,
-                  color: milestone.completed ? 'primary.main' : 'text.secondary',
-                }}
-              >
-                +{milestone.points} LP
-              </Typography>
-            </Box>
+              +{milestone.points} LP
+            </Typography>
           ))}
         </Box>
       </Box>
