@@ -117,9 +117,9 @@ export default function LpActivitiesSection({ isMobile, isTablet }: LpActivities
           <Typography>No Transaction found</Typography>
         </Box>
       ) : (
-        <Grid2 container spacing={2}>
+        <Grid2 container spacing={2} sx={{px: isMobile ? '0.7rem' : '0rem'}}>
             {activities.map((activity) => (
-              <Grid2 key={activity.id} size={{ xs: 6, sm: 4, md: 3 }}>
+              <Grid2 key={activity.id} size={{ xs: 12, sm: 6, md: 3 }}>
                 <Card
                   sx={{
                     p: 2,
