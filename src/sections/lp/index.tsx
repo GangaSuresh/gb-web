@@ -1,7 +1,8 @@
 import { useLocation } from 'react-router-dom';
+import { useFaqData } from 'src/hooks/useFaqData';
+import AssetsLoader from 'src/components/assetsLoader';
 import { useTheme, useMediaQuery } from '@mui/material';
 import { useAssetsData } from 'src/hooks/useAssetsData';
-import AssetsLoader from 'src/components/assetsLoader';
 
 import Info from './info';
 import Transaction from './transaction';
@@ -15,20 +16,29 @@ export default function LP() {
   
   // Fetch assets data
   const assetsData = useAssetsData();
+  const faqData = useFaqData();
 
   // Show assets loader if assets are still loading
-  if (assetsData.isLoading) {
+  if (assetsData.isLoading || faqData.isLoading) {
     return <AssetsLoader message="Loading loyalty program assets..." />;
   }
+
+  const getFaqData = () => {
+    try {
+      return faqData.hasFaqs? faqData.getFaqsByType('loyalty') : [];
+    } catch {
+      return [];
+    }
+  };
 
   const content = () => {
     switch (path) {
       case "info":
-        return <Info isMobile={isMobile} isTablet={isTablet} />;
+        return <Info isMobile={isMobile} isTablet={isTablet} faqData={getFaqData()} />;
       case "transaction":
         return <Transaction isMobile={isMobile} isTablet={isTablet} />;
       default:
-        return <Info isMobile={isMobile} isTablet={isTablet} />;
+        return <Info isMobile={isMobile} isTablet={isTablet} faqData={getFaqData()} />;
     }
   };
 

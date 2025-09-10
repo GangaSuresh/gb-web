@@ -1,3 +1,5 @@
+import type { FaqDataResponse } from 'src/types';
+
 import FAQ from 'src/components/faq';
 import { TYPOGRAPHY } from 'src/theme/styles/fonts';
 import { useRouteData } from 'src/hooks/useRouteData';
@@ -23,9 +25,10 @@ import {
 interface InfoProps {
   isMobile: boolean;
   isTablet: boolean;
+  faqData:FaqDataResponse[]
 }
 
-export default function Info({ isMobile, isTablet }: InfoProps) {
+export default function Info({ isMobile, isTablet,faqData }: InfoProps) {
   const { data, isLoading, isError, error, refetch, hasFaq } = useRouteData('lp');
   const lpData = {
     images: data?.images || {},
@@ -79,13 +82,7 @@ export default function Info({ isMobile, isTablet }: InfoProps) {
     );
   }
 
-  const getFaqData = () => {
-    try {
-      return hasFaq && Array.isArray(lpData.staticText.faq) ? lpData.staticText.faq : [];
-    } catch {
-      return [];
-    }
-  };
+
 
   const getLPImage = () => {
     try {
@@ -281,7 +278,7 @@ export default function Info({ isMobile, isTablet }: InfoProps) {
         </Box>
 
         {/* FAQ Section */}
-        {hasFaq && <FAQ faqs={getFaqData()} />}
+        {hasFaq && <FAQ faqs={faqData} />}
       </Box>
     </Box>
   );
