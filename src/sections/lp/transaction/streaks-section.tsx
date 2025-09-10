@@ -1,6 +1,6 @@
 import { Iconify } from 'src/components/iconify';
 import { TYPOGRAPHY } from 'src/theme/styles/fonts';
-import { Box, Card, Typography } from '@mui/material';
+import { Box, Card, Typography, LinearProgress } from '@mui/material';
 
 import { FIRE_ICON } from '../constants';
 
@@ -10,30 +10,44 @@ interface StreaksSectionProps {
 }
 
 export default function StreaksSection({ isMobile, isTablet }: StreaksSectionProps) {
+  // Mock data for streak milestones
+  const streakMilestones = [
+    { day: 'Day 1', points: 10, completed: true },
+    { day: 'Day 3', points: 15, completed: true },
+    { day: 'Day 7', points: 30, completed: true },
+    { day: 'Day 15', points: 45, completed: false },
+    { day: 'Day 30', points: 60, completed: false },
+  ];
+
+  // Calculate progress percentage (assuming Day 7 is completed)
+  const progressValue = 60; // 3 out of 5 milestones completed
+
   return (
     <Card
       sx={{
         width: isMobile ? '95%' : '90%',
         maxWidth: '1140px',
         mt: isMobile ? '0.6rem ' : '1.2rem',
-        p: isMobile ? '0.8rem 1rem' : '1.5rem',
+        p: isMobile ? '1rem' : '1.5rem',
         mb: '5rem',
         borderRadius: '8px',
-        display:'flex',
-        gap:'4rem'
+        display: 'flex',
+        flexDirection: 'row',
+        gap: '5rem',
       }}
     >
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2}}>
+      {/* Header with fire icon */}
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
         <Box
           sx={{
-            width: '65px',
-            height: '65px',
+            width: isMobile ? '50px' : '65px',
+            height: isMobile ? '50px' : '65px',
             background: '#FF662C1A',
             borderRadius: '50%',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize:'1.5rem'
+            fontSize: '1.5rem',
           }}
         >
           <img src={FIRE_ICON} alt="fire icon" />
@@ -58,9 +72,105 @@ export default function StreaksSection({ isMobile, isTablet }: StreaksSectionPro
           </Typography>
         </Box>
       </Box>
+      <Box sx={{width:'70%'}}>
+        {/* Progress Bar */}
+        <Box sx={{ position: 'relative', width: '100%', mt: 2 }}>
+          <LinearProgress
+            variant="determinate"
+            value={progressValue}
+            sx={{
+              height: 8,
+              borderRadius: 4,
+              backgroundColor: 'backgroundColor.dark',
+              '& .MuiLinearProgress-bar': {
+                backgroundColor: 'success.main',
+                borderRadius: 4,
+              },
+            }}
+          />
 
-      {/* Streak Progress */}
- 
+          {/* Milestone Markers */}
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              position: 'absolute',
+              top: '-5px',
+              width: '100%',
+            }}
+          >
+            {streakMilestones.map((milestone, index) => (
+              <Box
+                key={index}
+                sx={{
+                  width: 20,
+                  height: 20,
+                  borderRadius: '50%',
+                  backgroundColor: milestone.completed ? 'success.main' : 'backgroundColor.lighter',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  border: milestone.completed ? 'none' : '2px solid',
+                  borderColor: 'backgroundColor.lighter',
+                }}
+              >
+                {milestone.completed && (
+                  <Iconify
+                    icon="mdi:check"
+                    sx={{
+                      color: 'white',
+                      fontSize: 14,
+                      fontWeight: 'bold',
+                    }}
+                  />
+                )}
+              </Box>
+            ))}
+          </Box>
+        </Box>
+
+        {/* Milestone Labels */}
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            mt: 3,
+          }}
+        >
+          {streakMilestones.map((milestone, index) => (
+            <Box
+              key={index}
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                minWidth: isMobile ? '50px' : '60px',
+              }}
+            >
+              <Typography
+                sx={{
+                  ...TYPOGRAPHY.caption,
+                  fontWeight: 600,
+                  color: 'info.dark',
+                  textAlign: 'center',
+                  mb: 0.5,
+                }}
+              >
+                {milestone.day}
+              </Typography>
+              <Typography
+                sx={{
+                  ...TYPOGRAPHY.body2,
+                  fontWeight: 700,
+                  color: milestone.completed ? 'primary.main' : 'text.secondary',
+                }}
+              >
+                +{milestone.points} LP
+              </Typography>
+            </Box>
+          ))}
+        </Box>
+      </Box>
     </Card>
   );
 }
