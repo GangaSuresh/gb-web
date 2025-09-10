@@ -204,9 +204,9 @@ export default function LpActivitiesSection({ isMobile, isTablet }: LpActivities
                           sx={{
                             height: 6,
                             borderRadius: 3,
-                            backgroundColor: '#D9E9F3',
+                            backgroundColor: 'backgroundColor.dark',
                             '& .MuiLinearProgress-bar': {
-                              backgroundColor: '#22AB00',
+                              backgroundColor: 'success.main',
                               borderRadius: 3,
                             },
                             mb: 1,
