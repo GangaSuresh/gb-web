@@ -1,3 +1,5 @@
+import type { FaqDataResponse } from 'src/types';
+
 import FAQ from 'src/components/faq';
 import { useNavigate } from 'react-router-dom';
 import { TYPOGRAPHY } from 'src/theme/styles/fonts';
@@ -23,9 +25,10 @@ import {
 interface InfoProps {
   isMobile: boolean;
   isTablet: boolean;
+  faqData:FaqDataResponse[]
 }
 
-export default function Info({ isMobile, isTablet }: InfoProps) {
+export default function Info({ isMobile, isTablet,faqData }: InfoProps) {
   const { data, isLoading, isError, error, refetch, hasFaq } = useRouteData('coin');
   const navigate = useNavigate();
   const coinData = {
@@ -80,13 +83,7 @@ export default function Info({ isMobile, isTablet }: InfoProps) {
     );
   }
 
-  const getFaqData = () => {
-    try {
-      return hasFaq && Array.isArray(coinData.staticText.faq) ? coinData.staticText.faq : [];
-    } catch {
-      return [];
-    }
-  };
+
 
   const getCoinImage = () => {
     try {
@@ -204,7 +201,7 @@ export default function Info({ isMobile, isTablet }: InfoProps) {
       </Box>
 
       {/* FAQ Section */}
-      {hasFaq && <FAQ faqs={getFaqData()} />}
+      {hasFaq && <FAQ faqs={faqData} />}
     </Box>
   );
 }
