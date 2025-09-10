@@ -166,7 +166,7 @@ export default function MilestoneComponent({
             sx={{
               height: 8,
               borderRadius: 4,
-              backgroundColor: 'backgroundColor.lighter',
+              backgroundColor: 'backgroundColor.light',
               '& .MuiLinearProgress-bar': {
                 backgroundColor: 'primary.main',
                 borderRadius: 4,
@@ -187,7 +187,7 @@ export default function MilestoneComponent({
                 borderRadius: '50%',
                 backgroundColor: isReached(milestone.points)
                   ? 'success.main'
-                  : 'backgroundColor.lighter',
+                  : 'backgroundColor.light',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -205,7 +205,7 @@ export default function MilestoneComponent({
               ) : (
                 <Box
                   sx={{
-                    backgroundColor: 'backgroundColor.lighter',
+                    backgroundColor: 'backgroundColor.light',
                   }}
                 />
               )}
@@ -232,7 +232,7 @@ export default function MilestoneComponent({
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          backgroundColor: 'backgroundColor.lighter',
+          backgroundColor: 'backgroundColor.light',
           borderBottomLeftRadius: !benefitsExpanded ? '16px' : undefined,
           borderBottomRightRadius: !benefitsExpanded ? '16px' : undefined,
           flexDirection:isMobile ? 'column' : 'row',
