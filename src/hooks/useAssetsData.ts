@@ -1,7 +1,7 @@
-import type { AssetDataResponse } from 'src/api/assetData';
+import type { AssetDataResponse } from 'src/types';
 
 import { useQuery } from '@tanstack/react-query';
-import { fetchAssetsConfig } from 'src/api/assetData';
+import { fetchAssetsConfig } from 'src/api/assetAndFaqData';
 
 export const useAssetsData = () => {
   const {

@@ -1,6 +1,7 @@
 import FAQ from 'src/components/faq';
 import { varAlpha } from 'src/theme/styles';
 import { useNavigate } from 'react-router-dom';
+import { useFaqData } from 'src/hooks/useFaqData';
 import { useRouteData } from 'src/hooks/useRouteData';
 import AssetsLoader from 'src/components/assetsLoader';
 import { useAssetsData } from 'src/hooks/useAssetsData';
@@ -18,9 +19,9 @@ export default function VaultView() {
   
   // Fetch assets data
   const assetsData = useAssetsData();
-  console.log(assetsData.getAssetsByType('text'))
-  
-  const { data, isLoading, isError, error, refetch, hasImages, hasStaticText, hasFaq, hasTier } =useRouteData('vault');
+  const faqData = useFaqData();
+  const { data, isLoading, isError, error, refetch, hasImages, hasStaticText, hasFaq, hasTier } =useRouteData('vault'); // to do remove
+
 
   // Show assets loader if assets are still loading
   if (assetsData.isLoading) {
@@ -54,7 +55,7 @@ export default function VaultView() {
   // Safe FAQ data extraction
   const getFaqData = () => {
     try {
-      return hasFaq ? vaultData.staticText.faq : [];
+      return faqData.hasFaqs? faqData.getFaqsByType('vault') : [];
     } catch {
       return [];
     }
@@ -147,6 +148,7 @@ export default function VaultView() {
   const handleLPKnowMore = () => {
     navigate('/lp/info');
   };
+  // const imageData = assetsData.getAssetByName('coin')?.value;
 
   return (
     <Box
@@ -174,6 +176,10 @@ export default function VaultView() {
       >
         GBN Vault
       </Typography>
+      {/* <img
+  src={`data:image/png;base64,${imageData}` } // to do rpelace with api
+  alt="coin"
+/> */}
 
       {/* Coin Section */}
         <CoinSection
