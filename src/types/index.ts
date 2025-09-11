@@ -12,14 +12,20 @@ export interface AssetDataResponse {
     answer: string;
   }
 
+  export interface AdditionalPerk {
+    label: string;
+    value: boolean;
+  }
+
   export interface TierItem {
-    title: string;
-    range: string;
-    loyaltyPoints: string;
-    complimentaryPremiumContent: string;
-    accessToExclusiveMerch: boolean;
-    earlyAccessToEventRegistrations: boolean;
-    invitationToExclusiveEvents: boolean;
-    exclusiveWelcomeKit: boolean;
+    tierId: number;
+    name: string;
+    label: string;
+    startRange: number;
+    endRange: number;
+    multiplier: number;
+    monthlyArticleLimit: number;
+    additionalPerks: AdditionalPerk[];
+    tierImageUrl: string;
   }
   

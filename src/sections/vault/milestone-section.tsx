@@ -28,24 +28,13 @@ export default function MilestoneComponent({
     return null;
   }
 
-  // Extract milestone thresholds from tier data
-  const extractPointsFromRange = (range: string): { min: number; max: number | null } => {
-    const match = range.match(/(\d+)(?:-(\d+))?/);
-    if (!match) return { min: 0, max: null };
-
-    const min = parseInt(match[1], 10);
-    const max = match[2] ? parseInt(match[2], 10) : null;
-    return { min, max };
-  };
-
   // Create milestones from tier data
   const milestones = tier.map((tierItem, index) => {
-    const { min } = extractPointsFromRange(tierItem.range);
     const position = (index / (tier.length - 1)) * 100; // Evenly distributed
 
     return {
-      name: tierItem.title,
-      points: min,
+      name: tierItem.label,
+      points: tierItem.startRange,
       position,
       tierData: tierItem,
     };
@@ -136,7 +125,7 @@ export default function MilestoneComponent({
               }}
             >
               <img
-                src={images[`${milestone.name.toLowerCase()}-badge`]}
+                src={milestone.tierData.tierImageUrl}
                 alt={`${milestone.name}-badge`}
                 style={{ width: isMobile ? '30px' : 'auto', height: isMobile ? '40px' : 'auto' }}
               />
@@ -156,7 +145,10 @@ export default function MilestoneComponent({
                   whiteSpace: 'nowrap',
                 }}
               >
-                {milestone.tierData.range}
+                {milestone.tierData.endRange === 999999 
+                  ? `${milestone.tierData.startRange}+ Points`
+                  : `${milestone.tierData.startRange}-${milestone.tierData.endRange} Points`
+                }
               </Typography>
             </Box>
           ))}

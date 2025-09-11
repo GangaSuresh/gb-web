@@ -10,9 +10,9 @@ interface BenefitsProps {
   benefitsExpanded: boolean;
   tiers: TierItem[];
   images: Record<string, string>;
-  isMobile:boolean;
-  isTablet:boolean;
-  addBorderRadiusOnTop?:boolean;
+  isMobile: boolean;
+  isTablet: boolean;
+  addBorderRadiusOnTop?: boolean;
 }
 
 export default function BenefitsComponent({
@@ -28,27 +28,43 @@ export default function BenefitsComponent({
     return null;
   }
 
-  // Extract all benefit keys except title and range
-  const benefitKeys = Object.keys(tiers[0]).filter(
-    (key) => key !== 'title' && key !== 'range'
-  ) as Array<keyof Omit<TierItem, 'title' | 'range'>>;
-
-  // Note: Grid-based sizing removed in favor of flexbox layout for better responsiveness
+  // Get all unique perk labels from all tiers
+  const allPerkLabels = Array.from(
+    new Set(
+      tiers.flatMap(tier => 
+        tier.additionalPerks.map(perk => perk.label)
+      )
+    )
+  );
 
   // Format benefit values for display
   const formatBenefitValue = (value: any): React.ReactNode => {
     if (typeof value === 'boolean') {
       return (
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center',height:'100%' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
           <Iconify icon={value ? 'mdi:check' : 'mdi:close'} />
         </Box>
       );
     }
     return (
-        <Typography sx={{ ...((isMobile || isTablet) ? TYPOGRAPHY.caption:TYPOGRAPHY.body2), fontWeight: 600, textAlign: 'center' }}>
-          {value}
-        </Typography>
+      <Typography sx={{ ...((isMobile || isTablet) ? TYPOGRAPHY.caption : TYPOGRAPHY.body2), fontWeight: 600, textAlign: 'center' }}>
+        {value}
+      </Typography>
     );
+  };
+
+  // Get perk value for a specific tier and perk label
+  const getPerkValue = (tier: TierItem, perkLabel: string) => {
+    const perk = tier.additionalPerks.find(p => p.label === perkLabel);
+    return perk ? perk.value : false;
+  };
+
+  // Format range display
+  const formatRange = (tier: TierItem) => {
+    if (tier.endRange === 999999) {
+      return `${tier.startRange}+ Points`;
+    }
+    return `${tier.startRange}-${tier.endRange} Points`;
   };
 
   return (
@@ -109,17 +125,19 @@ export default function BenefitsComponent({
             </Box>
 
             {/* Benefits Rows */}
-            {benefitKeys.map((benefitKey, index) => (
+            {allPerkLabels.map((perkLabel, index) => (
               <Box
                 key={`benefit-row-${index}`}
                 sx={{
                   height: '80px',
                   display: 'flex',
-                  textAlign:'left'
+                  textAlign: 'left'
                 }}
               >
                 <Box sx={{ p: '1.2rem', width: '100%' }}>
-                  <Typography sx={{ ...((isMobile || isTablet) ? TYPOGRAPHY.caption:TYPOGRAPHY.body2) }}>{camelToTitle(benefitKey)}</Typography>
+                  <Typography sx={{ ...((isMobile || isTablet) ? TYPOGRAPHY.caption : TYPOGRAPHY.body2) }}>
+                    {camelToTitle(perkLabel)}
+                  </Typography>
                 </Box>
               </Box>
             ))}
@@ -150,32 +168,35 @@ export default function BenefitsComponent({
                     alignItems: 'center',
                     gap: '0.5rem',
                     p: '1.875rem 1.875rem 0 1.875rem',
-                    height:(isMobile || isTablet)?'8rem':'10rem',
+                    height: (isMobile || isTablet) ? '8rem' : '10rem',
                     textAlign: 'center',
                   }}
                 >
                   <img
-                    src={images[`${tier.title.toLowerCase()}-badge`]}
-                    alt={`${tier.title}-badge`}
-                    style={{  width: (isMobile || isTablet) ? '30px' : 'auto', height: (isMobile || isTablet) ? '40px' : 'auto'  }}
+                    src={tier.tierImageUrl}
+                    alt={`${tier.label}-badge`}
+                    style={{ width: (isMobile || isTablet) ? '30px' : 'auto', height: (isMobile || isTablet) ? '40px' : 'auto' }}
                   />
-                  <Typography sx={{ ...((isMobile || isTablet) ? TYPOGRAPHY.caption : TYPOGRAPHY.body1), fontWeight: 500 }}>{tier.title}</Typography>
-                  <Typography sx={{ ...((isMobile || isTablet) ? TYPOGRAPHY.caption : TYPOGRAPHY.body2) }}>{tier.range}</Typography>
+                  <Typography sx={{ ...((isMobile || isTablet) ? TYPOGRAPHY.caption : TYPOGRAPHY.body1), fontWeight: 500 }}>
+                    {tier.label}
+                  </Typography>
+                  <Typography sx={{ ...((isMobile || isTablet) ? TYPOGRAPHY.caption : TYPOGRAPHY.body2) }}>
+                    {formatRange(tier)}
+                  </Typography>
                 </Box>
 
                 {/* Tier Benefit Rows */}
-                {benefitKeys.map((benefitKey, benefitIndex) => (
+                {allPerkLabels.map((perkLabel, benefitIndex) => (
                   <Box
                     key={`tier-benefit-${tierIndex}-${benefitIndex}`}
                     sx={{
                       height: '80px',
                       display: 'flex',
                       alignItems: 'center',
-                    
                     }}
                   >
                     <Box sx={{ p: '1.2rem', width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      {formatBenefitValue(tier[benefitKey])}
+                      {formatBenefitValue(getPerkValue(tier, perkLabel))}
                     </Box>
                   </Box>
                 ))}
