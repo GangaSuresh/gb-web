@@ -4,9 +4,9 @@ import { TYPOGRAPHY } from 'src/theme/styles/fonts';
 import { useMemo, useState, useCallback } from 'react';
 import { Box, Button, Divider, Typography } from '@mui/material';
 
-import type { TierItem } from './types';
+import type { TierItem } from 'src/components/benefits-section/types';
 
-import Benefits from './benefits-section';
+import Benefits from 'src/components/benefits-section';
 import Milestone from './milestone-section';
 
 interface LPSectionProps {

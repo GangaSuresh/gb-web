@@ -13,7 +13,7 @@ import {
 
 import LPEarningMethods from './lp-earning-cards';
 import MilestoneRewards from './milestone-activity';
-import BenefitsComponent from '../../vault/benefits-section';
+import BenefitsComponent from 'src/components/benefits-section';
 import {
   LP_NAME,
   LP_SUBTITLE,
