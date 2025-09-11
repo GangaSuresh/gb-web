@@ -3,6 +3,8 @@ import type { FaqDataResponse } from 'src/types';
 import FAQ from 'src/components/faq';
 import { TYPOGRAPHY } from 'src/theme/styles/fonts';
 import { useRouteData } from 'src/hooks/useRouteData';
+import { useBenefitsData } from 'src/hooks/useBenefitsData';
+import BenefitsComponent from 'src/components/benefits-section';
 import {
   Box,
   Alert,
@@ -13,7 +15,6 @@ import {
 
 import LPEarningMethods from './lp-earning-cards';
 import MilestoneRewards from './milestone-activity';
-import BenefitsComponent from 'src/components/benefits-section';
 import {
   LP_NAME,
   LP_SUBTITLE,
@@ -30,12 +31,14 @@ interface InfoProps {
 
 export default function Info({ isMobile, isTablet,faqData }: InfoProps) {
   const { data, isLoading, isError, error, refetch, hasFaq } = useRouteData('lp');
+  const { tiers, images: benefitsImages, isLoading: benefitsLoading, isError: benefitsError, error: benefitsErrorMsg, refetch: refetchBenefits } = useBenefitsData();
+  
   const lpData = {
     images: data?.images || {},
     staticText: data?.staticText || {},
   };
 
-  if (isLoading) {
+  if (isLoading || benefitsLoading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" height="calc(100vh - 72px)">
         <CircularProgress />
@@ -44,7 +47,7 @@ export default function Info({ isMobile, isTablet,faqData }: InfoProps) {
     );
   }
 
-  if (isError) {
+  if (isError || benefitsError) {
     return (
       <Box
         display="flex"
@@ -54,9 +57,9 @@ export default function Info({ isMobile, isTablet,faqData }: InfoProps) {
         height="calc(100vh - 72px)"
       >
         <Alert severity="error" sx={{ mb: 2 }}>
-          {error?.message || 'Failed to load LP data. Please try again.'}
+          {error?.message || benefitsErrorMsg?.message || 'Failed to load LP data. Please try again.'}
         </Alert>
-        <Button variant="contained" onClick={() => refetch()}>
+        <Button variant="contained" onClick={() => { refetch(); refetchBenefits(); }}>
           Retry
         </Button>
       </Box>
@@ -265,14 +268,16 @@ export default function Info({ isMobile, isTablet,faqData }: InfoProps) {
             </Typography>
             <Box sx={{ mb: '1rem', mt: isMobile ? '1rem' : '3rem' }}>
               {' '}
-              <BenefitsComponent
-                tiers={lpData.staticText.tier}
-                images={lpData.images}
-                benefitsExpanded
-                isMobile={isMobile}
-                isTablet={isTablet}
-                addBorderRadiusOnTop
-              />
+              {tiers.length > 0 && (
+                <BenefitsComponent
+                  tiers={tiers}
+                  images={benefitsImages}
+                  benefitsExpanded
+                  isMobile={isMobile}
+                  isTablet={isTablet}
+                  addBorderRadiusOnTop
+                />
+              )}
             </Box>
           </Box>
         </Box>

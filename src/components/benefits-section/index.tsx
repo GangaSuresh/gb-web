@@ -1,10 +1,10 @@
+import type { TierItem } from 'src/types';
+
 import React from 'react';
 import { Iconify } from 'src/components/iconify';
 import { TYPOGRAPHY } from 'src/theme/styles/fonts';
 import { camelToTitle } from 'src/utils/camel-to-title';
 import { Box, Collapse, Typography } from '@mui/material';
-
-import type { TierItem } from './types';
 
 interface BenefitsProps {
   benefitsExpanded: boolean;
@@ -23,6 +23,11 @@ export default function BenefitsComponent({
   isTablet,
   addBorderRadiusOnTop=false
 }: BenefitsProps) {
+  // Early return if no tiers data
+  if (!tiers || tiers.length === 0) {
+    return null;
+  }
+
   // Extract all benefit keys except title and range
   const benefitKeys = Object.keys(tiers[0]).filter(
     (key) => key !== 'title' && key !== 'range'

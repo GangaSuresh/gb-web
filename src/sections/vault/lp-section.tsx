@@ -1,12 +1,10 @@
 import { Iconify } from 'src/components/iconify';
-import Container from 'src/components/container';
 import { TYPOGRAPHY } from 'src/theme/styles/fonts';
 import { useMemo, useState, useCallback } from 'react';
-import { Box, Button, Divider, Typography } from '@mui/material';
-
-import type { TierItem } from 'src/components/benefits-section/types';
-
 import Benefits from 'src/components/benefits-section';
+import { useBenefitsData } from 'src/hooks/useBenefitsData';
+import { Box, Button, Divider, Typography, CircularProgress } from '@mui/material';
+
 import Milestone from './milestone-section';
 
 interface LPSectionProps {
@@ -15,7 +13,6 @@ interface LPSectionProps {
   lpcurrBadge: string;
   onViewHistory: () => void;
   onKnowMore: () => void;
-  tier: TierItem[];
   isMobile: boolean;
   isTablet: boolean;
 }
@@ -137,10 +134,11 @@ export default function LPSection({
   lpcurrBadge,
   onViewHistory,
   onKnowMore,
-  tier,
   isMobile,
   isTablet
 }: LPSectionProps) {
+  // Fetch benefits data using the new hook
+  const { tiers, images: benefitsImages, isLoading: benefitsLoading } = useBenefitsData();
   const [benefitsExpanded, setBenefitsExpanded] = useState(true);
 
   // Memoize the gradient background to prevent unnecessary recalculations
@@ -284,23 +282,32 @@ export default function LPSection({
       )}
 
       {/* Milestone Section */}
-      <Milestone
-        tier={tier}
-        lpcurrPoints={lpcurrPoints}
-        images={images}
-        benefitsExpanded={benefitsExpanded}
-        setBenefitsExpanded={handleBenefitsExpandedChange}
-        isMobile={isMobile}
-      />
+      {benefitsLoading ? (
+        <Box display="flex" justifyContent="center" alignItems="center" py={4}>
+          <CircularProgress size={24} />
+          <Typography sx={{ ml: 2 }}>Loading benefits data...</Typography>
+        </Box>
+      ) : (
+        <>
+          <Milestone
+            tier={tiers}
+            lpcurrPoints={lpcurrPoints}
+            images={benefitsImages}
+            benefitsExpanded={benefitsExpanded}
+            setBenefitsExpanded={handleBenefitsExpandedChange}
+            isMobile={isMobile}
+          />
 
-      {/* Benefits Section */}
-      <Benefits
-        benefitsExpanded={benefitsExpanded}
-        tiers={tier}
-        images={images}
-        isMobile={isMobile}
-        isTablet={isTablet}
-      />
+          {/* Benefits Section */}
+          <Benefits
+            benefitsExpanded={benefitsExpanded}
+            tiers={tiers}
+            images={benefitsImages}
+            isMobile={isMobile}
+            isTablet={isTablet}
+          />
+        </>
+      )}
     </Box>
   );
 } 

@@ -11,3 +11,15 @@ export interface AssetDataResponse {
     question: string;
     answer: string;
   }
+
+  export interface TierItem {
+    title: string;
+    range: string;
+    loyaltyPoints: string;
+    complimentaryPremiumContent: string;
+    accessToExclusiveMerch: boolean;
+    earlyAccessToEventRegistrations: boolean;
+    invitationToExclusiveEvents: boolean;
+    exclusiveWelcomeKit: boolean;
+  }
+  

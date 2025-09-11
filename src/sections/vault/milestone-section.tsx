@@ -1,8 +1,8 @@
+import type { TierItem } from 'src/types';
+
 import { Iconify } from 'src/components/iconify';
 import { TYPOGRAPHY } from 'src/theme/styles/fonts';
 import { Box, Button, Typography, LinearProgress } from '@mui/material';
-
-import type { TierItem } from './types';
 
 import { ProgressTooltip } from './progress-tooltip';
 
@@ -23,6 +23,11 @@ export default function MilestoneComponent({
   setBenefitsExpanded,
   isMobile,
 }: MilestoneProps) {
+  // Early return if no tier data
+  if (!tier || tier.length === 0) {
+    return null;
+  }
+
   // Extract milestone thresholds from tier data
   const extractPointsFromRange = (range: string): { min: number; max: number | null } => {
     const match = range.match(/(\d+)(?:-(\d+))?/);

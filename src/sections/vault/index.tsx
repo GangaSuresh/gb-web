@@ -193,19 +193,16 @@ export default function VaultView() {
           isTablet={isTablet}
         />
 
-        {/* LP Section - Only render if tier data exists */}
-        {hasTier && (
-          <LPSection
-            images={vaultData.images}
-            lpcurrPoints={500}
-            lpcurrBadge="Bronze"
-            onViewHistory={handleLPViewHistory}
-            onKnowMore={handleLPKnowMore}
-            tier={getTierData()}
-            isMobile={isMobile}
-            isTablet={isTablet}
-          />
-        )}
+        {/* LP Section */}
+        <LPSection
+          images={vaultData.images}
+          lpcurrPoints={500}
+          lpcurrBadge="Bronze"
+          onViewHistory={handleLPViewHistory}
+          onKnowMore={handleLPKnowMore}
+          isMobile={isMobile}
+          isTablet={isTablet}
+        />
         {/* FAQ Section - Only render if FAQ data exists */}
         {hasFaq && <FAQ faqs={getFaqData()} />}
 
