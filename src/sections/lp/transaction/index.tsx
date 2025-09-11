@@ -102,7 +102,7 @@ export default function Transaction({ isMobile, isTablet }: TransactionProps) {
         isMobile={isMobile}
         isTablet={isTablet}
       />
-                <StreaksSection isMobile={isMobile} isTablet={isTablet} />
+      <StreaksSection isMobile={isMobile} isTablet={isTablet} />
     </Box>
   );
 }
