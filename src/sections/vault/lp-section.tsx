@@ -138,8 +138,9 @@ export default function LPSection({
   isTablet
 }: LPSectionProps) {
   // Fetch benefits data using the new hook
-  const { tiers, images: benefitsImages, isLoading: benefitsLoading } = useBenefitsData();
+  const { tiers, isLoading: benefitsLoading } = useBenefitsData();
   const [benefitsExpanded, setBenefitsExpanded] = useState(true);
+  console.log(tiers)
 
   // Memoize the gradient background to prevent unnecessary recalculations
   const gradientBackground = useMemo(() => 
@@ -292,7 +293,6 @@ export default function LPSection({
           <Milestone
             tier={tiers}
             lpcurrPoints={lpcurrPoints}
-            images={benefitsImages}
             benefitsExpanded={benefitsExpanded}
             setBenefitsExpanded={handleBenefitsExpandedChange}
             isMobile={isMobile}
@@ -302,7 +302,6 @@ export default function LPSection({
           <Benefits
             benefitsExpanded={benefitsExpanded}
             tiers={tiers}
-            images={benefitsImages}
             isMobile={isMobile}
             isTablet={isTablet}
           />

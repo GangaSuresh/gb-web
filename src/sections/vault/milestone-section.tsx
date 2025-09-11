@@ -8,7 +8,6 @@ import { ProgressTooltip } from './progress-tooltip';
 
 interface MilestoneProps {
   tier: TierItem[];
-  images: Record<string, string>;
   lpcurrPoints: number;
   benefitsExpanded: boolean;
   setBenefitsExpanded: (expanded: boolean) => void;
@@ -17,7 +16,6 @@ interface MilestoneProps {
 
 export default function MilestoneComponent({
   tier,
-  images,
   lpcurrPoints,
   benefitsExpanded,
   setBenefitsExpanded,

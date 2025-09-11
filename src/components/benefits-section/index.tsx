@@ -9,7 +9,6 @@ import { Box, Collapse, Typography } from '@mui/material';
 interface BenefitsProps {
   benefitsExpanded: boolean;
   tiers: TierItem[];
-  images: Record<string, string>;
   isMobile: boolean;
   isTablet: boolean;
   addBorderRadiusOnTop?: boolean;
@@ -19,7 +18,6 @@ export default function BenefitsComponent({
   benefitsExpanded,
   isMobile,
   tiers,
-  images,
   isTablet,
   addBorderRadiusOnTop=false
 }: BenefitsProps) {
@@ -120,7 +118,7 @@ export default function BenefitsComponent({
                 height:(isMobile || isTablet)?'8rem':'10rem',
               }}
             >
-              <img src={images.benefits} alt="benefits" />
+              <img src="/assets/icons/benefits-icon.png" alt="benefits" />
               <Typography sx={{ ...((isMobile || isTablet) ? TYPOGRAPHY.caption:TYPOGRAPHY.body1), fontWeight: 600 }}>Benefits</Typography>
             </Box>
 

@@ -31,8 +31,8 @@ interface InfoProps {
 
 export default function Info({ isMobile, isTablet,faqData }: InfoProps) {
   const { data, isLoading, isError, error, refetch, hasFaq } = useRouteData('lp');
-  const { tiers, images: benefitsImages, isLoading: benefitsLoading, isError: benefitsError, error: benefitsErrorMsg, refetch: refetchBenefits } = useBenefitsData();
-  
+  const { tiers, isLoading: benefitsLoading, isError: benefitsError, error: benefitsErrorMsg, refetch: refetchBenefits } = useBenefitsData();
+
   const lpData = {
     images: data?.images || {},
     staticText: data?.staticText || {},
@@ -271,7 +271,6 @@ export default function Info({ isMobile, isTablet,faqData }: InfoProps) {
               {tiers.length > 0 && (
                 <BenefitsComponent
                   tiers={tiers}
-                  images={benefitsImages}
                   benefitsExpanded
                   isMobile={isMobile}
                   isTablet={isTablet}
